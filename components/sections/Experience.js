@@ -5,10 +5,10 @@ import { Briefcase, GraduationCap } from "lucide-react";
 
 const workData = [
   {
-    title: "Web Developer Intern",
-    organization: "Irys Middle East LLC",
+    title: "Software Developer Intern (Data & AI)",
+    organization: "Irys Group",
     date: "Mar 2026 - May 2026",
-    description: "Designed and developed a web-based application to improve internal inventory tracking and operational efficiency. Translated business requirements into technical specifications.",
+    description: "Designed and developed web-based and data-driven solutions to improve internal inventory tracking and operational efficiency. Worked on translating business requirements into technical specifications and contributed to software development initiatives involving data and AI-focused problem solving.",
     icon: Briefcase,
   },
   {
