@@ -58,7 +58,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
             className="text-2xl sm:text-4xl font-semibold text-neutral-300 mb-6"
           >
-            Software Engineer <span className="text-neutral-600 font-light">|</span> Data Science Student
+            Aspiring Software Engineer <span className="text-neutral-600 font-light">|</span> Data Scientist
           </motion.h2>
 
           {/* Description */}
@@ -66,7 +66,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
             className="text-lg sm:text-xl text-neutral-400 mb-10 max-w-2xl leading-relaxed"
           >
-            I build data-driven applications, scalable systems, and modern web solutions. Passionate about turning ideas into real-world products using AI, full-stack development, and clean architecture.
+            I build data-driven applications, scalable systems, and modern web solutions. Passionate about turning ideas into real-world products using software development, data science, and clean architecture.
           </motion.p>
 
           {/* Buttons */}
