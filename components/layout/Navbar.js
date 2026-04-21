@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Navbar() {
   return (
@@ -33,8 +33,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right GitHub Button */}
-        <div className="flex items-center">
+        {/* Right Social Buttons */}
+        <div className="flex items-center gap-3">
           <a
             href="https://github.com/Ruki-Diaz"
             target="_blank"
@@ -43,6 +43,15 @@ export default function Navbar() {
           >
             <FaGithub className="text-lg" />
             <span className="hidden sm:inline">GitHub</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/rukshan-dias-a088921a6/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-sm font-medium text-white hover:bg-neutral-800 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300"
+          >
+            <FaLinkedin className="text-lg" />
+            <span className="hidden sm:inline">LinkedIn</span>
           </a>
         </div>
       </div>
