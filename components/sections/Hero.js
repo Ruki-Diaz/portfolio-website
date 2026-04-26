@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Download, Mail, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import MagneticEffect from "@/components/ui/MagneticEffect";
 
 export default function Hero() {
   return (
@@ -38,7 +39,7 @@ export default function Hero() {
           
           {/* Top Label */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm mb-8 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] hover:border-neutral-700 transition-all duration-300 cursor-default"
           >
             <Sparkles className="w-4 h-4 text-blue-400" />
@@ -47,7 +48,7 @@ export default function Hero() {
 
           {/* Main Heading */}
           <motion.h1
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-4"
           >
             Rukshan <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Dias.</span>
@@ -55,7 +56,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <motion.h2
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-2xl sm:text-4xl font-semibold text-neutral-300 mb-6"
           >
             Aspiring Software Engineer <span className="text-neutral-600 font-light">|</span> Data Scientist
@@ -63,7 +64,7 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-lg sm:text-xl text-neutral-400 mb-10 max-w-2xl leading-relaxed"
           >
             I build data-driven applications, scalable systems, and modern web solutions. Passionate about turning ideas into real-world products using software development, data science, and clean architecture.
@@ -71,46 +72,52 @@ export default function Hero() {
 
           {/* Buttons */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="flex flex-wrap items-center gap-4"
           >
             {/* Primary Button */}
-            <Link
-              href="#projects"
-              className="group relative flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10">View Projects</span>
-              <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <MagneticEffect>
+              <Link
+                href="#projects"
+                className="group relative flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="relative z-10">View Projects</span>
+                <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticEffect>
             
             {/* Secondary Button */}
-            <Link
-              href="#contact"
-              className="flex items-center gap-2 px-8 py-4 bg-neutral-900/80 backdrop-blur-md text-white font-medium rounded-full border border-neutral-700 hover:bg-neutral-800 transition-all hover:scale-105 hover:border-neutral-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-            >
-              <Mail size={18} className="text-neutral-400 group-hover:text-white transition-colors" />
-              Contact Me
-            </Link>
+            <MagneticEffect>
+              <Link
+                href="#contact"
+                className="flex items-center gap-2 px-8 py-4 bg-neutral-900/80 backdrop-blur-md text-white font-medium rounded-full border border-neutral-700 hover:bg-neutral-800 transition-all hover:border-neutral-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+              >
+                <Mail size={18} className="text-neutral-400 group-hover:text-white transition-colors" />
+                Contact Me
+              </Link>
+            </MagneticEffect>
 
             {/* Icon Button */}
-            <a
-              href="/cv.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-14 h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:scale-105 hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-              aria-label="Download CV"
-            >
-              <Download size={20} className="group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            <MagneticEffect>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-14 h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                aria-label="Download CV"
+              >
+                <Download size={20} className="group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            </MagneticEffect>
           </motion.div>
         </motion.div>
 
         {/* Right/Top: Profile Image */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="flex-shrink-0 relative"
         >
           {/* Animated floating effect container */}

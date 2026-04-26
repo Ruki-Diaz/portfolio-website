@@ -84,7 +84,7 @@ export default function Contact() {
             </a>
 
             <a
-              href="https://github.com/rukshandias"
+              href="https://github.com/Ruki-Diaz"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:bg-neutral-800/50 hover:border-neutral-700 transition-colors group"
@@ -94,7 +94,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-sm text-neutral-500 font-medium">GitHub</p>
-                <p className="text-white font-medium">@rukshandias</p>
+                <p className="text-white font-medium">@Ruki-Diaz</p>
               </div>
             </a>
           </div>

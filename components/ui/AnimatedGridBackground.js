@@ -1,14 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function AnimatedGridBackground() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div className="fixed inset-0 -z-50 overflow-hidden pointer-events-none bg-neutral-950">
       {/* Animated Subtle Grid */}
       <motion.div 
         className="absolute inset-[-100%] opacity-[0.04]"
-        animate={{
+        animate={shouldReduceMotion ? {} : {
           y: [0, -50],
           x: [0, -50]
         }}
@@ -26,7 +28,7 @@ export default function AnimatedGridBackground() {
       {/* Large Glowing Orbs for Depth */}
       <motion.div 
         className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] rounded-full bg-blue-900/20 blur-[120px] mix-blend-screen"
-        animate={{
+        animate={shouldReduceMotion ? {} : {
           scale: [1, 1.1, 1],
           opacity: [0.3, 0.5, 0.3],
         }}
@@ -38,7 +40,7 @@ export default function AnimatedGridBackground() {
       />
       <motion.div 
         className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full bg-purple-900/20 blur-[150px] mix-blend-screen"
-        animate={{
+        animate={shouldReduceMotion ? {} : {
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.4, 0.2],
         }}

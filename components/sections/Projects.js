@@ -46,15 +46,33 @@ export default function Projects() {
           <div className="h-px bg-neutral-800 flex-1 ml-4" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+          className="grid md:grid-cols-2 gap-8"
+        >
           {projectsData.map((project, index) => (
             <motion.div
               key={index}
-              whileHover={{ y: -8 }}
-              className="group relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 overflow-hidden hover:bg-neutral-800/80 hover:border-blue-500/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] transition-all duration-500"
+              variants={{
+                hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
+                visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+              }}
+              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.4, ease: "easeOut" } }}
+              className="group relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 overflow-hidden hover:bg-neutral-800/80 hover:border-blue-500/30 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] transition-all duration-500"
             >
               {/* Subtle background glow on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-transparent to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-transparent to-purple-500/0 group-hover:from-blue-500/15 group-hover:to-purple-500/15 transition-all duration-500" />
               
               <div className="relative z-10 flex flex-col h-full">
                 <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
@@ -75,7 +93,7 @@ export default function Projects() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Global GitHub CTA */}
         <motion.div 
