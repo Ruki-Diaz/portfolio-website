@@ -107,7 +107,7 @@ export default function Contact() {
                   <CheckCircle2 className="w-8 h-8 text-emerald-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
-                <p className="text-neutral-400">Thanks for reaching out. I'll get back to you as soon as possible.</p>
+                <p className="text-neutral-400">Thanks for reaching out. I&apos;ll get back to you as soon as possible.</p>
                 <button 
                   onClick={() => setStatus({ submitted: false, submitting: false, error: null })}
                   className="mt-4 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"

@@ -6,14 +6,14 @@ import { FaGithub } from "react-icons/fa";
 
 const projectsData = [
   {
-    title: "Invoice Management System",
-    description: "A comprehensive web application to manage invoices, clients, and billing cycles securely.",
-    tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
+    title: "Weather Impact on Public Transport",
+    description: "Built an AI-assisted data science system that integrates Melbourne transport activity with BOM rainfall data. Developed data cleaning pipelines, performed EDA, and trained/fine-tuned ML models to predict congestion. Built a RAG-style LLM explanation layer to translate predictions into natural language insights.",
+    tech: ["Python", "Pandas", "Scikit-Learn", "Machine Learning", "LLM Prompting", "RAG"],
   },
   {
-    title: "Data Analysis Project",
-    description: "An exploratory data analysis tool built to extract insights from large datasets using modern data science libraries.",
-    tech: ["Python", "Pandas", "NumPy", "Matplotlib"],
+    title: "Irys Invoice Management System",
+    description: "Designed and developed a secure, data-driven web application during my software engineering internship at Irys Group to manage invoices, clients, and billing cycles. Translated business requirements into database schemas and technical specifications, successfully improving internal tracking and operational efficiency.",
+    tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
   },
   {
     title: "Momentum Todo",
