@@ -5,24 +5,40 @@ import { Briefcase, GraduationCap } from "lucide-react";
 
 const workData = [
   {
+    title: "Data Science Team Lead",
+    organization: "Chameleon (Deakin University Capstone Project)",
+    date: "Jul 2026 – Present",
+    description: [
+      "Led the Data Science team in the Melbourne Open Playground (MOP) project, focusing on quality, consistency, and maintainability of 200+ data science use cases.",
+      "Developed and implemented a standardized Jupyter Notebook template governing structure, documentation, visual presentation, and code organization.",
+      "Coordinated workflow and task allocation between Quality Managers and Data Scientists using Microsoft Planner and a central quality tracker.",
+      "Guided the team through codebase reviews, quality issue identification, branch management, and GitHub repository contributions."
+    ],
+    tech: ["Python", "Jupyter", "Pandas", "Data Visualisation", "Git", "GitHub", "Microsoft Planner", "Excel"],
+    icon: Briefcase,
+  },
+  {
     title: "Software Developer Intern (Data & AI)",
     organization: "Irys Group",
-    date: "Mar 2026 - May 2026",
+    date: "Mar 2026 – May 2026",
     description: "Designed and developed web-based and data-driven solutions to improve internal inventory tracking and operational efficiency. Worked on translating business requirements into technical specifications and contributed to software development initiatives involving data and AI-focused problem solving.",
+    tech: ["Python", "Data Science", "AI", "Web Development"],
     icon: Briefcase,
   },
   {
     title: "IT Support & Inventory Specialist",
     organization: "Irys Middle East LLC",
-    date: "Sep 2023 - Feb 2025",
+    date: "Sep 2023 – Feb 2025",
     description: "Resolved 50+ technical issues monthly, configured systems across 100+ endpoints, delivered training sessions for 20+ staff, and improved system performance by 30%.",
+    tech: ["IT Support", "Systems Administration", "Inventory Management"],
     icon: Briefcase,
   },
   {
     title: "Web Developer Intern",
     organization: "RCA Technology",
-    date: "Feb 2023 - Aug 2023",
+    date: "Feb 2023 – Aug 2023",
     description: "Developed web features and improved performance by 20%. Worked in a team to deliver projects on time.",
+    tech: ["Web Development", "Frontend", "JavaScript"],
     icon: Briefcase,
   },
 ];
@@ -33,6 +49,7 @@ const educationData = [
     organization: "Deakin University",
     date: "Jul 2024 – Nov 2026",
     description: "Currently pursuing a Bachelor of Computer Science with a major in Data Science, focusing on software engineering, artificial intelligence, and modern data-driven application development.",
+    tech: ["Data Science", "Software Engineering", "Artificial Intelligence", "Machine Learning"],
     icon: GraduationCap,
   },
   {
@@ -40,6 +57,7 @@ const educationData = [
     organization: "ANC School of Postgraduate Education",
     date: "Sep 2022 – Sep 2023",
     description: "Completed a Higher National Diploma in Information Technology, strengthening foundational knowledge in software development, databases, and core computing concepts.",
+    tech: ["Information Technology", "Databases", "Software Development", "Computer Networks"],
     icon: GraduationCap,
   },
   {
@@ -47,6 +65,7 @@ const educationData = [
     organization: "St. Sebastian's College",
     date: "Jan 2008 – May 2022",
     description: "Completed primary and secondary education while actively participating in basketball, swimming, media, and Western brass band activities.",
+    tech: ["Primary & Secondary Education", "Team Leadership", "Extracurriculars"],
     icon: GraduationCap,
   },
 ];
@@ -106,9 +125,36 @@ const TimelineItem = ({ item, index, type }) => {
           
           <div className="h-px w-full bg-gradient-to-r from-neutral-800 to-transparent my-5" />
           
-          <p className="text-neutral-400 leading-relaxed">
-            {item.description}
-          </p>
+          {Array.isArray(item.description) ? (
+            <ul className="list-disc pl-5 space-y-2 text-neutral-400 leading-relaxed">
+              {item.description.map((bullet, idx) => (
+                <li key={idx} className="relative pl-1">
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-neutral-400 leading-relaxed">
+              {item.description}
+            </p>
+          )}
+
+          {item.tech && (
+            <div className="flex flex-wrap gap-2 mt-6">
+              {item.tech.map((tech, tIndex) => (
+                <span
+                  key={tIndex}
+                  className={`px-2.5 py-1 bg-neutral-950 text-xs font-medium rounded-md border border-neutral-800 transition-colors duration-300 ${
+                    isEducation 
+                      ? "text-blue-400 group-hover:border-blue-500/30 group-hover:bg-blue-500/5" 
+                      : "text-emerald-400 group-hover:border-emerald-500/30 group-hover:bg-emerald-500/5"
+                  }`}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </motion.div>
