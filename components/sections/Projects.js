@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt } from "react-icons/fa";
+import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaFilePdf } from "react-icons/fa";
 import Image from "next/image";
 
 function ProjectCarousel({ image, images, title }) {
@@ -114,6 +114,13 @@ const projectsData = [
     tech: ["HTML", "CSS", "JavaScript", "LocalStorage"],
   },
   {
+    title: "Melbourne Housing Price Prediction",
+    description: "Developed an end-to-end machine learning project to analyse and predict residential property prices across Burwood, Doncaster, and Berwick in Melbourne. Built a dataset of 225 property records, performed data cleaning, exploratory data analysis and feature engineering, and compared Linear Regression, Ridge Regression, Random Forest, and Gradient Boosting models using 5-fold cross-validation. Evaluated model performance using MAE, RMSE and R², applied feature importance and SHAP analysis for model explainability, and deployed the trained prediction pipeline as an interactive Streamlit web application where users can enter property characteristics and receive an estimated sale price.",
+    tech: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "SHAP", "Streamlit", "Joblib", "Jupyter Notebook"],
+    images: ["/melbourne-housing-streamlit.png", "/melbourne-housing-shap.png", "/melbourne-housing-eda.png"],
+    pdf: "/melbourne-housing-price-prediction.pdf",
+  },
+  {
     title: "Wheelchair Navigation System (AI)",
     description: "Developed an AI-based navigation system to optimize wheelchair-accessible routes using graph modelling and the A* search algorithm. The system incorporates terrain and accessibility constraints to prioritize safer paths over shortest distance. Implemented enhanced heuristics and visualized routes using an interactive map, demonstrating real-world application of intelligent pathfinding.",
     tech: ["Python", "A*", "Graph Modelling", "AI", "Pathfinding"],
@@ -187,7 +194,7 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {(project.github || project.demo) && (
+                {(project.github || project.demo || project.pdf) && (
                   <div className="flex gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
                     {project.github && (
                       <a
@@ -198,6 +205,17 @@ export default function Projects() {
                       >
                         <FaGithub className="text-base transition-transform group-hover/link:-translate-y-0.5" />
                         <span>View Code</span>
+                      </a>
+                    )}
+                    {project.pdf && (
+                      <a
+                        href={project.pdf}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                      >
+                        <FaFilePdf className="text-base transition-transform group-hover/link:-translate-y-0.5" />
+                        <span>View PDF Report</span>
                       </a>
                     )}
                     {project.demo && (
