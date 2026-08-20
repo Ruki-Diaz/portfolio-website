@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 
 function ProjectCarousel({ image, images, title }) {
@@ -89,6 +89,13 @@ function ProjectCarousel({ image, images, title }) {
 
 const projectsData = [
   {
+    title: "MOP Data Science Team Lead – Use Case Quality & Publication",
+    description: "Led the Data Science team for the Melbourne Open Data (MOP) project, coordinating the review, standardisation, and publication-readiness of data science use cases across a repository of 200+ use cases. Established consistent Jupyter Notebook standards, conducted technical and GitHub reviews, mentored Data Scientists, managed use case progress, and collaborated with Quality Management and Web teams to improve the end-to-end publication workflow.",
+    tech: ["Python", "Jupyter Notebook", "Pandas", "Git", "GitHub", "Data Analysis", "Data Visualisation", "Microsoft Planner"],
+    images: ["/mop-heatmap.png", "/mop-map.png", "/mop-conclusion.png"],
+    github: "https://github.com/Chameleon-company/MOP-Code/tree/master/usecases/FINALISED",
+  },
+  {
     title: "Invoice Management System",
     description: "Designed and developed a secure, data-driven web application during a software engineering internship to manage invoices, clients, and billing cycles. Translated business requirements into database schemas and technical specifications, successfully improving internal tracking and operational efficiency.",
     tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
@@ -98,6 +105,8 @@ const projectsData = [
     title: "Weather Impact on Public Transport",
     description: "Built an AI-assisted data science system that integrates Melbourne transport activity with BOM rainfall data. Developed data cleaning pipelines, performed EDA, and trained/fine-tuned ML models to predict congestion. Built a RAG-style LLM explanation layer to translate predictions into natural language insights.",
     tech: ["Python", "Pandas", "Scikit-Learn", "Machine Learning", "LLM Prompting", "RAG"],
+    images: ["/weather-actual-vs-predicted.png", "/weather-average-usage.png"],
+    github: "https://github.com/Chameleon-company/MOP-Code/tree/master/usecases/READY%20TO%20PUBLISH/Transport_and_Mobility/2026/T1/UC00216_Weather_Impact_on_Public_Transport_Usage",
   },
   {
     title: "Momentum Todo",
@@ -167,7 +176,7 @@ export default function Projects() {
                 <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
                 <p className="text-neutral-400 mb-6 flex-grow">{project.description}</p>
                 
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech, tIndex) => (
                     <span
                       key={tIndex}
@@ -178,6 +187,32 @@ export default function Projects() {
                   ))}
                 </div>
 
+                {(project.github || project.demo) && (
+                  <div className="flex gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                      >
+                        <FaGithub className="text-base transition-transform group-hover/link:-translate-y-0.5" />
+                        <span>View Code</span>
+                      </a>
+                    )}
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                      >
+                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
+                  </div>
+                )}
 
               </div>
             </motion.div>
