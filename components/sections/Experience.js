@@ -6,15 +6,38 @@ import { Briefcase, GraduationCap } from "lucide-react";
 const workData = [
   {
     title: "Data Science Team Lead",
-    organization: "Chameleon (Deakin University Capstone Project)",
+    organization: "Chameleon - Smarter World Melbourne",
     date: "Jul 2026 – Present",
     description: [
-      "Led the Data Science team in the Melbourne Open Playground (MOP) project, focusing on quality, consistency, and maintainability of 200+ data science use cases.",
-      "Developed and implemented a standardized Jupyter Notebook template governing structure, documentation, visual presentation, and code organization.",
-      "Coordinated workflow and task allocation between Quality Managers and Data Scientists using Microsoft Planner and a central quality tracker.",
-      "Guided the team through codebase reviews, quality issue identification, branch management, and GitHub repository contributions."
+      "Led Data Science delivery across a multidisciplinary technology team, managing priorities, workload allocation, technical standards and day-to-day execution.",
+      "Built and implemented a centralised work allocation and tracking process, improving visibility of ownership, workload and delivery progress across the team.",
+      "Took ownership of technical quality standards by developing the first reference implementation used to guide consistent delivery across future Data Science work.",
+      "Delivered hands-on Data Science solutions alongside leadership responsibilities, taking multiple analytics use cases from review through to production-ready project outputs.",
+      "Led technical reviews across code, analytical notebooks, data visualisations and documentation, providing actionable feedback and driving quality improvements before release.",
+      "Worked cross-functionally with Web Development and Quality Management teams to translate requirements, resolve technical dependencies and coordinate deliverables.",
+      "Led technical walkthroughs and knowledge-sharing sessions to support adoption of new standards, processes and development workflows across the team.",
+      "Mentored team members on Git/GitHub, pull request workflows, code quality and technical troubleshooting, supporting issues through to resolution.",
+      "Improved repository and delivery workflows by introducing clearer release structures and processes for managing reviewed and completed work.",
+      "Partnered with technical leads, project leadership and mentors to manage priorities, resolve delivery blockers and maintain alignment across teams.",
+      "Maintained a strong hands-on engineering contribution while leading the team, ranking as the #1 repository contributor with 64 commits during the project period."
     ],
     tech: ["Python", "Jupyter", "Pandas", "Data Visualisation", "Git", "GitHub", "Microsoft Planner", "Excel"],
+    icon: Briefcase,
+  },
+  {
+    title: "Data Scientist / Data Science Project Contributor",
+    organization: "Chameleon - Smarter World",
+    date: "Mar 2026 – Jun 2026",
+    description: [
+      "Delivered data science solutions for the Melbourne Open Playground (MOP) project, working with real-world Melbourne datasets.",
+      "Owned the development of a transport analytics use case examining the impact of weather conditions on public transport activity.",
+      "Built and maintained data pipelines to clean, integrate and transform transport, weather and event datasets.",
+      "Conducted exploratory analysis and developed data visualisations to uncover patterns and actionable insights.",
+      "Collaborated with Data Science and Web Development teams to align analytical outputs with project requirements.",
+      "Managed development through Git/GitHub, incorporating technical reviews and feedback into production-ready deliverables.",
+      "Delivered the completed solution to MOP’s READY TO PUBLISH repository for integration and future use."
+    ],
+    tech: ["Python", "Pandas", "Data Science", "Data Pipelines", "Data Visualisation", "Git", "GitHub"],
     icon: Briefcase,
   },
   {

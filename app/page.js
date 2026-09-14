@@ -18,8 +18,8 @@ export default function Home() {
         <Hero />
         <SectionReveal><About /></SectionReveal>
         <SectionReveal><Skills /></SectionReveal>
-        <SectionReveal><Projects /></SectionReveal>
         <SectionReveal><Experience /></SectionReveal>
+        <SectionReveal><Projects /></SectionReveal>
         <SectionReveal><Contact /></SectionReveal>
         <Footer />
       </main>
