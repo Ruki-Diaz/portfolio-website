@@ -218,6 +218,7 @@ const projectsData = [
       "/momentum-planning.png",
     ],
     demo: "https://momentumtodo.vercel.app/",
+    github: "https://github.com/Ruki-Diaz/momentum-todo",
   },
   {
     title: "Weather Impact on Public Transport",
