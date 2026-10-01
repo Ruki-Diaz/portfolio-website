@@ -12,6 +12,13 @@ function ProjectCarousel({ image, images, title }) {
   const list = images || (image ? [image] : []);
   if (list.length === 0) return null;
 
+  const getImageData = (item, idx) => {
+    if (typeof item === "string") {
+      return { src: item, alt: `${title} screenshot ${idx + 1}` };
+    }
+    return { src: item.src, alt: item.alt || `${title} screenshot ${idx + 1}` };
+  };
+
   const nextSlide = (e) => {
     e?.stopPropagation();
     e?.preventDefault();
@@ -41,24 +48,27 @@ function ProjectCarousel({ image, images, title }) {
         className="relative w-full h-52 sm:h-60 mb-6 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 group/carousel cursor-zoom-in"
       >
         <div className="relative w-full h-full">
-          {list.map((img, idx) => (
-            <div
-              key={idx}
-              className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
-            >
-              <Image
-                src={img}
-                alt={`${title} screenshot ${idx + 1}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 800px"
-                className="object-cover object-top"
-                priority={idx === 0}
-                unoptimized
-              />
-            </div>
-          ))}
+          {list.map((item, idx) => {
+            const { src, alt } = getImageData(item, idx);
+            return (
+              <div
+                key={idx}
+                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                  idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 800px"
+                  className="object-cover object-top"
+                  priority={idx === 0}
+                  unoptimized
+                />
+              </div>
+            );
+          })}
         </div>
 
         {/* Subtle expand indicator badge on hover */}
@@ -142,8 +152,8 @@ function ProjectCarousel({ image, images, title }) {
 
               <div className="relative w-full h-[50vh] sm:h-[65vh] rounded-xl overflow-hidden bg-neutral-950 flex items-center justify-center">
                 <Image
-                  src={list[current]}
-                  alt={`${title} enlarged screenshot ${current + 1}`}
+                  src={getImageData(list[current], current).src}
+                  alt={getImageData(list[current], current).alt}
                   fill
                   className="object-contain"
                   sizes="100vw"
@@ -194,6 +204,44 @@ function ProjectCarousel({ image, images, title }) {
 }
 
 const projectsData = [
+  {
+    title: "Melbourne Pulse – Live CBD Pedestrian & Parking Forecasting",
+    description: "A live civic analytics platform showing how busy Melbourne's CBD is right now and forecasting the next 24 hours. It ingests City of Melbourne open data from 99 pedestrian counting stations and 6,300+ in-ground parking sensors via an hourly GitHub Actions pipeline with a Pytest validation gate, and stores the data in Neon serverless Postgres. A LightGBM model forecasts hourly foot traffic with no future leakage, beating the 8-week historical baseline by 10% on 132,696 unseen sensor-hours. Gemini Flash generates plain-English summaries. Runs entirely on free tiers ($0/month).",
+    stats: [
+      "10% more accurate than baseline",
+      "132,696 test sensor-hours",
+      "99 stations · 6,300+ sensors",
+      "$0/month",
+    ],
+    tech: [
+      "Python",
+      "LightGBM",
+      "Pandas",
+      "GitHub Actions",
+      "Pytest",
+      "Neon Postgres",
+      "Next.js",
+      "Gemini API",
+      "Vercel",
+    ],
+    images: [
+      {
+        src: "/pulse-home.png",
+        alt: "Melbourne Pulse live pedestrian and parking analytics homepage hero with live stats",
+      },
+      {
+        src: "/pulse-map.png",
+        alt: "Melbourne Pulse live pedestrian map of Melbourne CBD",
+      },
+      {
+        src: "/pulse-forecast.png",
+        alt: "Melbourne Pulse Next 24 Hours LightGBM foot traffic forecast chart",
+      },
+    ],
+    demo: "https://melbourne-pulse-lyart.vercel.app/",
+    github: "https://github.com/Ruki-Diaz/melbourne-pulse",
+    report: "https://github.com/Ruki-Diaz/melbourne-pulse/blob/main/model/REPORT.md",
+  },
   {
     title: "MOP Data Science Team Lead – Use Case Quality & Publication",
     description: "Led the Data Science team for the Melbourne Open Data (MOP) project, coordinating the review, standardisation, and publication-readiness of data science use cases across a repository of 200+ use cases. Established consistent Jupyter Notebook standards, conducted technical and GitHub reviews, mentored Data Scientists, managed use case progress, and collaborated with Quality Management and Web teams to improve the end-to-end publication workflow.",
@@ -297,6 +345,17 @@ export default function Projects() {
                 <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
                 <p className="text-neutral-400 mb-6 flex-grow">{project.description}</p>
 
+                {project.stats && (
+                  <div className="grid grid-cols-2 gap-2 mb-6 p-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80">
+                    {project.stats.map((stat, sIndex) => (
+                      <div key={sIndex} className="text-xs text-neutral-300 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                        <span className="font-mono text-[11px] text-neutral-300">{stat}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech, tIndex) => (
                     <span
@@ -308,8 +367,19 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {(project.github || project.demo || project.pdf) && (
-                  <div className="flex gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
+                {(project.github || project.demo || project.pdf || project.report) && (
+                  <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                      >
+                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
+                        <span>Live Demo</span>
+                      </a>
+                    )}
                     {project.github && (
                       <a
                         href={project.github}
@@ -321,6 +391,17 @@ export default function Projects() {
                         <span>View Code</span>
                       </a>
                     )}
+                    {project.report && (
+                      <a
+                        href={project.report}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                      >
+                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
+                        <span>Model Report</span>
+                      </a>
+                    )}
                     {project.pdf && (
                       <a
                         href={project.pdf}
@@ -330,17 +411,6 @@ export default function Projects() {
                       >
                         <FaFilePdf className="text-base transition-transform group-hover/link:-translate-y-0.5" />
                         <span>View PDF Report</span>
-                      </a>
-                    )}
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
-                      >
-                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
-                        <span>Live Demo</span>
                       </a>
                     )}
                   </div>
