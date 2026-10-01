@@ -53,9 +53,8 @@ function ProjectCarousel({ image, images, title }) {
             return (
               <div
                 key={idx}
-                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                  idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
-                }`}
+                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+                  }`}
               >
                 <Image
                   src={src}
@@ -105,9 +104,8 @@ function ProjectCarousel({ image, images, title }) {
                   e.preventDefault();
                   setCurrent(idx);
                 }}
-                className={`w-1.5 h-1.5 rounded-full transition-all ${
-                  idx === current ? "bg-blue-500 w-3" : "bg-neutral-500 hover:bg-neutral-400"
-                }`}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${idx === current ? "bg-blue-500 w-3" : "bg-neutral-500 hover:bg-neutral-400"
+                  }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -187,9 +185,8 @@ function ProjectCarousel({ image, images, title }) {
                     <button
                       key={idx}
                       onClick={() => setCurrent(idx)}
-                      className={`h-2 rounded-full transition-all ${
-                        idx === current ? "bg-blue-500 w-6" : "bg-neutral-700 hover:bg-neutral-600 w-2"
-                      }`}
+                      className={`h-2 rounded-full transition-all ${idx === current ? "bg-blue-500 w-6" : "bg-neutral-700 hover:bg-neutral-600 w-2"
+                        }`}
                       aria-label={`Go to image ${idx + 1}`}
                     />
                   ))}
@@ -238,7 +235,7 @@ const projectsData = [
         alt: "Melbourne Pulse Next 24 Hours LightGBM foot traffic forecast chart",
       },
     ],
-    demo: "https://melbourne-pulse-lyart.vercel.app/",
+    demo: "https://melbourne-pulse-au.vercel.app/",
     github: "https://github.com/Ruki-Diaz/melbourne-pulse",
     report: "https://github.com/Ruki-Diaz/melbourne-pulse/blob/main/model/REPORT.md",
   },
