@@ -64,6 +64,14 @@ const workData = [
     tech: ["Web Development", "Frontend", "JavaScript"],
     icon: Briefcase,
   },
+  {
+    title: "Fresh Convenience Sorting Team Member (Part-time)",
+    organization: "Woolworths Group, Melbourne",
+    date: "Jun 2025 – Present",
+    description: "Part of the Fresh Convenience team, sorting and preparing fresh products for dispatch under tight time and quality requirements. Maintain accuracy, follow food-safety procedures, and work with the team to hit daily targets, alongside a full-time degree.",
+    tech: ["Teamwork", "Time Management", "Attention to Detail", "Food Safety"],
+    icon: Briefcase,
+  },
 ];
 
 const educationData = [
