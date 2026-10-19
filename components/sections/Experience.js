@@ -7,7 +7,7 @@ const workData = [
   {
     title: "Data Science Team Lead",
     organization: "Chameleon - Smarter World Melbourne",
-    date: "Jul 2026 – Present",
+    date: "Jul 2026 – Oct 2026",
     description: [
       "Led Data Science delivery across a multidisciplinary technology team, managing priorities, workload allocation, technical standards and day-to-day execution.",
       "Built and implemented a centralised work allocation and tracking process, improving visibility of ownership, workload and delivery progress across the team.",
