@@ -199,15 +199,16 @@ function Section({ index, title, items }) {
   );
 }
 
-function Screenshot({ image, sizes, className = "", eager = false }) {
-  // Small source images get padding so they are not stretched past their native size.
-  const isSmall = image.width < 1600;
+function Screenshot({ image, sizes, className = "", eager = false, frameRatio }) {
+  // Small source images get padding so they are not stretched past their native size;
+  // everything else displays at its real aspect ratio, uncropped.
+  const isSmall = image.width < 1200;
   return (
     <figure className={`group ${className}`}>
       <div className="relative rounded-2xl p-px bg-gradient-to-br from-neutral-700/60 via-neutral-800 to-neutral-800 group-hover:from-blue-500/50 group-hover:to-purple-500/40 transition-colors duration-500">
         <div
           className={`relative rounded-[calc(1rem-1px)] overflow-hidden bg-neutral-950 ${isSmall ? "aspect-[16/10] p-4 sm:p-6" : ""}`}
-          style={isSmall ? undefined : { aspectRatio: `${image.width} / ${image.height}` }}
+          style={isSmall ? undefined : { aspectRatio: frameRatio ?? `${image.width} / ${image.height}` }}
         >
           <div className="relative w-full h-full">
             <Image
@@ -216,7 +217,7 @@ function Screenshot({ image, sizes, className = "", eager = false }) {
               fill
               sizes={sizes}
               loading={eager ? "eager" : "lazy"}
-              className={`${isSmall ? "object-contain" : "object-cover"} transition-transform duration-700 ease-out group-hover:scale-[1.02]`}
+              className={`${isSmall || frameRatio ? "object-contain" : "object-cover"} transition-transform duration-700 ease-out group-hover:scale-[1.02]`}
             />
           </div>
         </div>
@@ -238,10 +239,17 @@ export default async function ProjectPage({ params }) {
   const hasTech = project.tech?.length > 0;
   const hasLinks = getProjectLinks(project).length > 0;
   const hasSidebar = hasTech || hasLinks;
+  // Gallery frames share the shape of the tallest screenshot so rows line up;
+  // other screenshots are fitted inside it, never cropped.
+  const tallest = galleryImages.reduce(
+    (best, img) => (img.width && (!best || img.height / img.width > best.height / best.width) ? img : best),
+    null
+  );
+  const galleryFrameRatio = tallest ? `${tallest.width} / ${tallest.height}` : undefined;
   // Odd counts use three columns so no screenshot is left alone on a row.
   const galleryLayout =
     galleryImages.length === 1
-      ? { grid: "max-w-3xl", sizes: "(min-width: 816px) 768px, 100vw" }
+      ? { grid: "max-w-3xl mx-auto", sizes: "(min-width: 816px) 768px, 100vw" }
       : galleryImages.length % 2 === 1
         ? { grid: "md:grid-cols-3", sizes: "(min-width: 1200px) 365px, (min-width: 768px) 33vw, 100vw" }
         : { grid: "md:grid-cols-2", sizes: "(min-width: 1200px) 560px, (min-width: 768px) 50vw, 100vw" };
@@ -393,7 +401,7 @@ export default async function ProjectPage({ params }) {
               </div>
               <div className={`grid gap-8 items-start ${galleryLayout.grid}`}>
                 {galleryImages.map((image) => (
-                  <Screenshot key={image.src} image={image} sizes={galleryLayout.sizes} />
+                  <Screenshot key={image.src} image={image} sizes={galleryLayout.sizes} frameRatio={galleryFrameRatio} />
                 ))}
               </div>
             </div>

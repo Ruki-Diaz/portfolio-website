@@ -19,7 +19,9 @@ function ProjectCarousel({ image, images, title }) {
     if (typeof item === "string") {
       return { src: item, alt: `${title} screenshot ${idx + 1}` };
     }
-    return { src: item.src, alt: item.alt || `${title} screenshot ${idx + 1}` };
+    // Very wide screenshots are fitted rather than cropped to the card's frame.
+    const isWide = item.width && item.height && item.width / item.height > 2.4;
+    return { src: item.src, alt: item.alt || `${title} screenshot ${idx + 1}`, isWide };
   };
 
   const nextSlide = (e) => {
@@ -52,7 +54,7 @@ function ProjectCarousel({ image, images, title }) {
       >
         <div className="relative w-full h-full">
           {list.map((item, idx) => {
-            const { src, alt } = getImageData(item, idx);
+            const { src, alt, isWide } = getImageData(item, idx);
             return (
               <div
                 key={idx}
@@ -64,7 +66,7 @@ function ProjectCarousel({ image, images, title }) {
                   alt={alt}
                   fill
                   sizes="(min-width: 1152px) 448px, (min-width: 768px) calc(50vw - 112px), calc(100vw - 112px)"
-                  className="object-cover object-top"
+                  className={isWide ? "object-contain" : "object-cover object-top"}
                 />
               </div>
             );
