@@ -14,18 +14,18 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="#hero" className="text-2xl font-bold tracking-tighter text-white">
+        <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
           RD<span className="text-blue-500">.</span>
         </Link>
 
         {/* Center Links (Desktop) */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { name: 'Home', href: '#hero' },
-            { name: 'About', href: '#about' },
-            { name: 'Experience', href: '#experience' },
-            { name: 'Projects', href: '#projects' },
-            { name: 'Contact', href: '#contact' }
+            { name: 'Home', href: '/#hero' },
+            { name: 'About', href: '/#about' },
+            { name: 'Experience', href: '/#experience' },
+            { name: 'Projects', href: '/#projects' },
+            { name: 'Contact', href: '/#contact' }
           ].map((link) => (
             <Link key={link.name} href={link.href} className="relative group text-sm font-medium text-neutral-400 hover:text-white transition-colors">
               {link.name}

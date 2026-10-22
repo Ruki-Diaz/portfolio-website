@@ -104,15 +104,15 @@ const educationData = [
 const TimelineItem = ({ item, index, type }) => {
   const Icon = item.icon;
   const isEducation = type === "education";
-  
+
   // Theme variables based on type
   const textColor = isEducation ? "text-blue-400" : "text-emerald-400";
   const borderColor = isEducation ? "group-hover:border-blue-500/40" : "group-hover:border-emerald-500/40";
-  const bgGlow = isEducation 
-    ? "group-hover:from-blue-500/10 group-hover:to-purple-500/5" 
+  const bgGlow = isEducation
+    ? "group-hover:from-blue-500/10 group-hover:to-purple-500/5"
     : "group-hover:from-emerald-500/10 group-hover:to-teal-500/5";
-  const iconGlow = isEducation 
-    ? "group-hover:shadow-[0_0_20px_rgba(96,165,250,0.5)]" 
+  const iconGlow = isEducation
+    ? "group-hover:shadow-[0_0_20px_rgba(96,165,250,0.5)]"
     : "group-hover:shadow-[0_0_20px_rgba(52,211,153,0.5)]";
 
   return (
@@ -153,9 +153,9 @@ const TimelineItem = ({ item, index, type }) => {
               </span>
             </div>
           </div>
-          
+
           <div className="h-px w-full bg-gradient-to-r from-neutral-800 to-transparent my-5" />
-          
+
           {Array.isArray(item.description) ? (
             <ul className="list-disc pl-5 space-y-2 text-neutral-400 leading-relaxed">
               {item.description.map((bullet, idx) => (
@@ -175,11 +175,10 @@ const TimelineItem = ({ item, index, type }) => {
               {item.tech.map((tech, tIndex) => (
                 <span
                   key={tIndex}
-                  className={`px-2.5 py-1 bg-neutral-950 text-xs font-medium rounded-md border border-neutral-800 transition-colors duration-300 ${
-                    isEducation 
-                      ? "text-blue-400 group-hover:border-blue-500/30 group-hover:bg-blue-500/5" 
+                  className={`px-2.5 py-1 bg-neutral-950 text-xs font-medium rounded-md border border-neutral-800 transition-colors duration-300 ${isEducation
+                      ? "text-blue-400 group-hover:border-blue-500/30 group-hover:bg-blue-500/5"
                       : "text-emerald-400 group-hover:border-emerald-500/30 group-hover:bg-emerald-500/5"
-                  }`}
+                    }`}
                 >
                   {tech}
                 </span>

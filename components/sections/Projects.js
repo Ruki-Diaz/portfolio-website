@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaFilePdf, FaExpand, FaTimes } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { projects, hasProjectPage } from "@/data/projects";
 
 function ProjectCarousel({ image, images, title }) {
   const [current, setCurrent] = useState(0);
@@ -60,10 +63,8 @@ function ProjectCarousel({ image, images, title }) {
                   src={src}
                   alt={alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 800px"
+                  sizes="(min-width: 1152px) 448px, (min-width: 768px) calc(50vw - 112px), calc(100vw - 112px)"
                   className="object-cover object-top"
-                  priority={idx === 0}
-                  unoptimized
                 />
               </div>
             );
@@ -154,9 +155,7 @@ function ProjectCarousel({ image, images, title }) {
                   alt={getImageData(list[current], current).alt}
                   fill
                   className="object-contain"
-                  sizes="100vw"
-                  priority
-                  unoptimized
+                  sizes="(min-width: 1088px) 976px, 100vw"
                 />
 
                 {list.length > 1 && (
@@ -200,97 +199,6 @@ function ProjectCarousel({ image, images, title }) {
   );
 }
 
-const projectsData = [
-  {
-    title: "Melbourne Pulse – Live CBD Pedestrian & Parking Forecasting",
-    description: "A live civic analytics platform showing how busy Melbourne's CBD is right now and forecasting the next 24 hours. It ingests City of Melbourne open data from 99 pedestrian counting stations and 6,300+ in-ground parking sensors via an hourly GitHub Actions pipeline with a Pytest validation gate, and stores the data in Neon serverless Postgres. A LightGBM model forecasts hourly foot traffic with no future leakage, beating the 8-week historical baseline by 10% on 132,696 unseen sensor-hours. Gemini Flash generates plain-English summaries. Runs entirely on free tiers ($0/month).",
-    stats: [
-      "10% more accurate than baseline",
-      "132,696 test sensor-hours",
-      "99 stations · 6,300+ sensors",
-      "$0/month",
-    ],
-    tech: [
-      "Python",
-      "LightGBM",
-      "Pandas",
-      "GitHub Actions",
-      "Pytest",
-      "Neon Postgres",
-      "Next.js",
-      "Gemini API",
-      "Vercel",
-    ],
-    images: [
-      {
-        src: "/pulse-home.png",
-        alt: "Melbourne Pulse live pedestrian and parking analytics homepage hero with live stats",
-      },
-      {
-        src: "/pulse-map.png",
-        alt: "Melbourne Pulse live pedestrian map of Melbourne CBD",
-      },
-      {
-        src: "/pulse-forecast.png",
-        alt: "Melbourne Pulse Next 24 Hours LightGBM foot traffic forecast chart",
-      },
-    ],
-    demo: "https://melbourne-pulse-au.vercel.app/",
-    github: "https://github.com/Ruki-Diaz/melbourne-pulse",
-    report: "https://github.com/Ruki-Diaz/melbourne-pulse/blob/main/model/REPORT.md",
-  },
-  {
-    title: "MOP Data Science Team Lead – Use Case Quality & Publication",
-    description: "Led the Data Science team for the Melbourne Open Data (MOP) project, coordinating the review, standardisation, and publication-readiness of data science use cases across a repository of 200+ use cases. Established consistent Jupyter Notebook standards, conducted technical and GitHub reviews, mentored Data Scientists, managed use case progress, and collaborated with Quality Management and Web teams to improve the end-to-end publication workflow.",
-    tech: ["Python", "Jupyter Notebook", "Pandas", "Git", "GitHub", "Data Analysis", "Data Visualisation", "Microsoft Planner"],
-    images: ["/mop-heatmap.png", "/mop-map.png", "/mop-conclusion.png"],
-    github: "https://github.com/Chameleon-company/MOP-Code/tree/master/usecases/FINALISED",
-  },
-  {
-    title: "Invoice Management System",
-    description: "Designed and developed a secure, data-driven web application during a software engineering internship to manage invoices, clients, and billing cycles. Translated business requirements into database schemas and technical specifications, successfully improving internal tracking and operational efficiency.",
-    tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
-    images: ["/invoice-dashboard.png", "/invoice-transactions.png", "/invoice-reports.png"],
-  },
-  {
-    title: "Momentum Todo",
-    description: "A production-ready personal productivity platform designed to make daily planning simple, focused, and intentional. Momentum combines task management, project organisation, calendar planning, progress tracking, authentication, cloud persistence, and a polished responsive interface in one workspace.",
-    tech: ["JavaScript", "HTML/CSS", "Clerk", "Neon PostgreSQL", "LocalStorage", "Vercel"],
-    images: [
-      "/momentum-dashboard.png",
-      "/momentum-hero.png",
-      "/momentum-today.png",
-      "/momentum-planning.png",
-    ],
-    demo: "https://momentumtodo.vercel.app/",
-    github: "https://github.com/Ruki-Diaz/momentum-todo",
-  },
-  {
-    title: "Weather Impact on Public Transport",
-    description: "Built an AI-assisted data science system that integrates Melbourne transport activity with BOM rainfall data. Developed data cleaning pipelines, performed EDA, and trained/fine-tuned ML models to predict congestion. Built a RAG-style LLM explanation layer to translate predictions into natural language insights.",
-    tech: ["Python", "Pandas", "Scikit-Learn", "Machine Learning", "LLM Prompting", "RAG"],
-    images: ["/weather-actual-vs-predicted.png", "/weather-average-usage.png"],
-    github: "https://github.com/Chameleon-company/MOP-Code/tree/master/usecases/READY%20TO%20PUBLISH/Transport_and_Mobility/2026/T1/UC00216_Weather_Impact_on_Public_Transport_Usage",
-  },
-  {
-    title: "Melbourne Housing Price Prediction",
-    description: "Developed an end-to-end machine learning project to analyse and predict residential property prices across Burwood, Doncaster, and Berwick in Melbourne. Built a dataset of 225 property records, performed data cleaning, exploratory data analysis and feature engineering, and compared Linear Regression, Ridge Regression, Random Forest, and Gradient Boosting models using 5-fold cross-validation. Evaluated model performance using MAE, RMSE and R², applied feature importance and SHAP analysis for model explainability, and deployed the trained prediction pipeline as an interactive Streamlit web application where users can enter property characteristics and receive an estimated sale price.",
-    tech: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "SHAP", "Streamlit", "Joblib", "Jupyter Notebook"],
-    images: ["/melbourne-housing-streamlit.png", "/melbourne-housing-shap.png", "/melbourne-housing-eda.png"],
-    pdf: "/melbourne-housing-price-prediction.pdf",
-  },
-  {
-    title: "Wheelchair Navigation System (AI)",
-    description: "Developed an AI-based navigation system to optimize wheelchair-accessible routes using graph modelling and the A* search algorithm. The system incorporates terrain and accessibility constraints to prioritize safer paths over shortest distance. Implemented enhanced heuristics and visualized routes using an interactive map, demonstrating real-world application of intelligent pathfinding.",
-    tech: ["Python", "A*", "Graph Modelling", "AI", "Pathfinding"],
-  },
-  {
-    title: "Wumpus World AI Planning (PDDL)",
-    description: "Built an automated planning system using PDDL to model and solve the Wumpus World problem. Identified and fixed logical issues in the domain, introduced constraint-based reasoning including sensing, and simulated intelligent agent behaviour. Evaluated multiple planning solvers to compare performance, efficiency, and stability in decision-making.",
-    tech: ["PDDL", "AI Planning", "Problem Solving", "Constraint Reasoning", "Intelligent Agents"],
-  },
-];
-
 export default function Projects() {
   return (
     <section id="projects" className="py-24 px-6 sm:px-12 max-w-6xl mx-auto border-t border-neutral-800">
@@ -320,7 +228,9 @@ export default function Projects() {
           }}
           className="grid md:grid-cols-2 gap-8"
         >
-          {projectsData.map((project, index) => (
+          {projects.map((project, index) => {
+            const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
+            return (
             <motion.div
               key={index}
               variants={{
@@ -339,7 +249,15 @@ export default function Projects() {
                   images={project.images}
                   title={project.title}
                 />
-                <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
+                <h3 className="text-2xl font-bold text-white mb-3">
+                  {caseStudy ? (
+                    <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
+                      {project.title}
+                    </Link>
+                  ) : (
+                    project.title
+                  )}
+                </h3>
                 <p className="text-neutral-400 mb-6 flex-grow">{project.description}</p>
 
                 {project.stats && (
@@ -364,8 +282,18 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {(project.github || project.demo || project.pdf || project.report) && (
+                {(caseStudy || project.github || project.demo || project.pdf || project.report) && (
                   <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
+                    {caseStudy && (
+                      <Link
+                        href={caseStudy}
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
+                        aria-label={`Read the ${project.title} case study`}
+                      >
+                        <span>Case Study</span>
+                        <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
+                      </Link>
+                    )}
                     {project.demo && (
                       <a
                         href={project.demo}
@@ -415,7 +343,8 @@ export default function Projects() {
 
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
 
         {/* Global GitHub CTA */}

@@ -22,6 +22,9 @@ export default function About() {
               I am a Computer Science undergraduate at Deakin University, majoring in Data Science, with a strong passion for building real-world applications.
             </p>
             <p>
+              I&apos;m based in Melbourne, Australia, where much of my work uses the city&apos;s own open data, from CBD foot traffic to public transport and housing.
+            </p>
+            <p>
               I specialize in developing data-driven systems, web applications, and scalable solutions that solve practical problems. My experience spans software development, data analysis, and backend engineering, where I enjoy translating business needs into efficient technical solutions.
             </p>
             <p>

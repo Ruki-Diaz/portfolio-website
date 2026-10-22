@@ -59,7 +59,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-2xl sm:text-4xl font-semibold text-neutral-300 mb-6"
           >
-            Aspiring Software Engineer <span className="text-neutral-600 font-light">|</span> Data Scientist
+            Data Scientist &amp; Software Engineer <span className="text-neutral-600 font-light">·</span> Melbourne, Australia
           </motion.h2>
 
           {/* Description */}
@@ -105,9 +105,11 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-14 h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-                aria-label="Download CV"
+                aria-label="Download Rukshan Dias's CV (PDF)"
+                title="Download Rukshan Dias's CV (PDF)"
               >
-                <Download size={20} className="group-hover:-translate-y-0.5 transition-transform" />
+                <Download size={20} aria-hidden="true" className="group-hover:-translate-y-0.5 transition-transform" />
+                <span className="sr-only">Download Rukshan Dias&apos;s CV (PDF)</span>
               </a>
             </MagneticEffect>
           </motion.div>
@@ -155,8 +157,9 @@ export default function Hero() {
                 src="/profilepic.jpg" 
                 alt="Rukshan Dias" 
                 fill 
+                sizes="(min-width: 768px) 384px, (min-width: 640px) 320px, 256px"
                 className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
-                priority
+                preload
               />
             </div>
           </motion.div>
