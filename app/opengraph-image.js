@@ -1,8 +1,8 @@
 import { ImageResponse } from "next/og";
-import { SITE } from "@/lib/site";
+import { SITE, DEFAULT_OG_IMAGE } from "@/lib/site";
 
-export const alt = "Rukshan Dias, Data Scientist & Software Engineer in Melbourne";
-export const size = { width: 1200, height: 630 };
+export const alt = DEFAULT_OG_IMAGE.alt;
+export const size = { width: DEFAULT_OG_IMAGE.width, height: DEFAULT_OG_IMAGE.height };
 export const contentType = "image/png";
 
 // Loads Inter (the site font) as TTF from Google Fonts. Satori can't read woff2,

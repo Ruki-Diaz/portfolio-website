@@ -6,8 +6,8 @@ import { FaGithub, FaExternalLinkAlt, FaFilePdf } from "react-icons/fa";
 import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import AnimatedGridBackground from "@/components/ui/AnimatedGridBackground";
-import { projectPages, getProjectBySlug, getRelatedProjects, PAGE_SECTIONS } from "@/data/projects";
-import { SITE, PERSON_ID, toJsonLd } from "@/lib/site";
+import { projectPages, getProjectBySlug, getRelatedProjects, getCaseStudyImages, PAGE_SECTIONS } from "@/data/projects";
+import { SITE, PERSON_ID, DEFAULT_OG_IMAGE, toJsonLd } from "@/lib/site";
 
 const SECTION_TITLES = { problem: "Problem", data: "Data", method: "Method", results: "Results" };
 
@@ -25,7 +25,12 @@ export async function generateMetadata({ params }) {
 
   const { seoTitle, seoDescription } = project.page;
   const path = `/projects/${project.slug}`;
-  const ogImage = project.images?.[0];
+  // Pages without their own screenshot use the site-wide generated image. It has to be
+  // set explicitly: a page-level openGraph block doesn't inherit the root image file.
+  const lead = getCaseStudyImages(project)[0];
+  const ogImage = lead
+    ? { url: lead.src, width: lead.width, height: lead.height, alt: lead.alt }
+    : DEFAULT_OG_IMAGE;
 
   return {
     title: seoTitle,
@@ -40,15 +45,13 @@ export async function generateMetadata({ params }) {
       url: path,
       title: `${seoTitle} | Rukshan Dias`,
       description: seoDescription,
-      images: ogImage
-        ? [{ url: ogImage.src, width: ogImage.width, height: ogImage.height, alt: ogImage.alt }]
-        : ["/opengraph-image"],
+      images: [ogImage],
     },
     twitter: {
       card: "summary_large_image",
       title: `${seoTitle} | Rukshan Dias`,
       description: seoDescription,
-      images: [ogImage ? ogImage.src : "/opengraph-image"],
+      images: [ogImage],
     },
   };
 }
@@ -62,11 +65,13 @@ function buildJsonLd(project) {
     headline: project.page.h1,
     description: project.page.seoDescription,
     url,
-    image: project.images?.map((img) => `${SITE}${img.src}`),
     keywords: project.tech.join(", "),
     inLanguage: "en-AU",
     author: { "@type": "Person", "@id": PERSON_ID, name: "Rukshan Dias", url: SITE },
   };
+
+  const images = getCaseStudyImages(project);
+  if (images.length) work.image = images.map((img) => `${SITE}${img.src}`);
 
   if (project.page.schemaType === "SoftwareSourceCode") {
     if (project.github) work.codeRepository = project.github;
@@ -233,7 +238,7 @@ export default async function ProjectPage({ params }) {
   if (!project) notFound();
 
   const { page } = project;
-  const [leadImage, ...galleryImages] = project.images ?? [];
+  const [leadImage, ...galleryImages] = getCaseStudyImages(project);
   const related = getRelatedProjects(project.slug);
   const sections = PAGE_SECTIONS.filter((key) => page[key]?.length);
   const hasTech = project.tech?.length > 0;

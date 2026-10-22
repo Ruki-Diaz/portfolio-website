@@ -237,6 +237,7 @@ export const projects = [
   },
   {
     slug: "weather-impact-public-transport",
+    hideCaseStudyImages: true,
     indexable: true,
     title: "Weather Impact on Public Transport",
     description: "Built an AI-assisted data science system that integrates Melbourne transport activity with BOM rainfall data. Developed data cleaning pipelines, performed EDA, and trained/fine-tuned ML models to predict congestion. Built a RAG-style LLM explanation layer to translate predictions into natural language insights.",
@@ -281,6 +282,7 @@ export const projects = [
   },
   {
     slug: "melbourne-housing-price-prediction",
+    hideCaseStudyImages: true,
     indexable: true,
     title: "Melbourne Housing Price Prediction",
     description: "Developed an end-to-end machine learning project to analyse and predict residential property prices across Burwood, Doncaster, and Berwick in Melbourne. Built a dataset of 225 property records, performed data cleaning, exploratory data analysis and feature engineering, and compared Linear Regression, Ridge Regression, Random Forest, and Gradient Boosting models using 5-fold cross-validation. Evaluated model performance using MAE, RMSE and R², applied feature importance and SHAP analysis for model explainability, and deployed the trained prediction pipeline as an interactive Streamlit web application where users can enter property characteristics and receive an estimated sale price.",
@@ -350,6 +352,12 @@ export const projectPages = projects.filter((p) => p.indexable && p.slug && p.pa
 
 export function getProjectBySlug(slug) {
   return projectPages.find((p) => p.slug === slug);
+}
+
+// Screenshots shown on a project's own page. `hideCaseStudyImages` hides them
+// there (and from its OG image / JSON-LD) while the homepage keeps `images`.
+export function getCaseStudyImages(project) {
+  return project.hideCaseStudyImages ? [] : project.images ?? [];
 }
 
 export function hasProjectPage(slug) {
