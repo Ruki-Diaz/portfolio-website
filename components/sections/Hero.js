@@ -155,9 +155,10 @@ export default function Hero() {
             <div className="relative w-64 h-80 sm:w-80 sm:h-[400px] md:w-96 md:h-[480px] rounded-3xl overflow-hidden border-4 border-neutral-950 bg-neutral-900 shadow-2xl z-10">
               <Image 
                 src="/profilepic.jpg" 
-                alt="Rukshan Dias" 
-                fill 
-                sizes="(min-width: 768px) 384px, (min-width: 640px) 320px, 256px"
+                alt="Rukshan Dias, Data Scientist and Software Engineer in Melbourne"
+                fill
+                sizes="(min-width: 768px) 376px, (min-width: 640px) 312px, 248px"
+                quality={90}
                 className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                 preload
               />
