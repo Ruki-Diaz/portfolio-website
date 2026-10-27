@@ -28,9 +28,8 @@ const skillsData = [
     category: "AI-Assisted Development",
     icon: Sparkles,
     skills: ["Claude", "Claude Code", "Antigravity", "Codex", "Framer"],
-    note: "I build with AI coding agents and review, test and ship the results myself.",
-    // Spans two columns (tablet and desktop) and gets an accent border.
-    featured: true,
+    // Spans the remaining two columns so the grid stays balanced.
+    wide: true,
   },
 ];
 
@@ -75,14 +74,12 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {skillsData.map(({ category, icon: Icon, skills, note, featured }) => (
+          {skillsData.map(({ category, icon: Icon, skills, wide }) => (
             <motion.div
               key={category}
               variants={itemVariants}
-              className={`group flex flex-col gap-5 rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 ${
-                featured
-                  ? "sm:col-span-2 bg-gradient-to-br from-blue-500/[0.07] via-neutral-900/60 to-purple-500/[0.07] border border-purple-500/30 shadow-[0_0_30px_rgba(147,51,234,0.08)] hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(147,51,234,0.16)]"
-                  : "bg-neutral-900/50 border border-neutral-800 hover:bg-neutral-800/50 hover:border-blue-500/30"
+              className={`group flex flex-col gap-5 bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:bg-neutral-800/50 hover:border-blue-500/30 transition-all duration-300 ${
+                wide ? "sm:col-span-2" : ""
               }`}
             >
               <div className="flex items-center gap-3">
@@ -101,7 +98,6 @@ export default function Skills() {
                   </li>
                 ))}
               </ul>
-              {note && <p className="text-sm text-neutral-400 leading-relaxed">{note}</p>}
             </motion.div>
           ))}
         </motion.div>
