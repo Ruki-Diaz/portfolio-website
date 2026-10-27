@@ -47,6 +47,22 @@ body {
   scroll-behavior: smooth;
 }
 
+/* Keep section headings clear of the fixed header when jumping to an anchor */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+section[id]:focus {
+  outline: none;
+}
+
+/* Below md, keep focused fields clear of the floating section bar */
+@media (max-width: 47.99rem) {
+  html {
+    scroll-padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+  }
+}
+
 /* Custom Scrollbar for premium feel */
 ::-webkit-scrollbar {
   width: 10px;

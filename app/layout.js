@@ -39,6 +39,13 @@ export const metadata = {
   },
 };
 
+// viewport-fit=cover exposes env(safe-area-inset-*) for the mobile section bar on notched iPhones
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en-AU" className="dark scroll-smooth">

@@ -102,6 +102,7 @@ export default function Hero() {
             <MagneticEffect className="col-span-2 justify-self-start">
               <a
                 href="/cv.pdf"
+                download="Rukshan-Dias-CV.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"

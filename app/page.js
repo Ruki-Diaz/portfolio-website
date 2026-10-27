@@ -5,6 +5,7 @@ import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/layout/Footer";
+import MobileSectionNav from "@/components/layout/MobileSectionNav";
 import CustomCursor from "@/components/ui/CustomCursor";
 import AnimatedGridBackground from "@/components/ui/AnimatedGridBackground";
 import SectionReveal from "@/components/ui/SectionReveal";
@@ -21,8 +22,9 @@ export default function Home() {
         <SectionReveal><Skills /></SectionReveal>
         <SectionReveal><About /></SectionReveal>
         <SectionReveal><Contact /></SectionReveal>
-        <Footer />
+        <Footer sectionNav />
       </main>
+      <MobileSectionNav />
     </>
   );
 }
