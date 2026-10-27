@@ -1,79 +1,96 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrainCircuit, Code2, Server, Wrench } from "lucide-react";
-import SectionHeading from "@/components/ui/SectionHeading";
 
 const skillsData = [
   {
-    category: "Languages",
-    icon: Code2,
-    skills: ["Python", "SQL", "TypeScript", "JavaScript"],
+    category: "Programming",
+    skills: ["Python", "SQL", "JavaScript", "TypeScript", "C#", "Java", "C++"],
   },
   {
-    category: "Data & ML",
-    icon: BrainCircuit,
-    skills: ["Pandas", "Scikit-learn", "LightGBM", "SHAP", "TensorFlow", "PyTorch"],
+    category: "Frontend",
+    skills: ["React", "Next.js", "HTML", "CSS"],
   },
   {
-    category: "Web & Backend",
-    icon: Server,
-    skills: ["Next.js", "React", "Flask", "FastAPI", "Postgres"],
+    category: "Backend",
+    skills: ["Flask", "FastAPI", "ASP.NET Core", "REST APIs", "GraphQL"],
+  },
+  {
+    category: "Data / AI",
+    skills: ["Data Analysis", "Data Cleaning", "EDA", "Feature Engineering", "Machine Learning", "Scikit-learn", "TensorFlow", "PyTorch", "Statistical Analysis"],
+  },
+  {
+    category: "Databases",
+    skills: ["MySQL", "PostgreSQL", "SQL Server", "SQLite"],
   },
   {
     category: "Tools",
-    icon: Wrench,
-    skills: ["Git", "GitHub Actions", "Power BI", "Tableau", "Excel"],
+    skills: ["Git", "Power BI", "Tableau", "Excel", "Jenkins", "GitHub Actions", "CI/CD", "Bash", "PowerShell"],
   },
 ];
 
 const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 20, filter: "blur(5px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 export default function Skills() {
   return (
-    <section id="skills" aria-labelledby="skills-heading" className="scroll-mt-20 py-24 px-6 sm:px-12 max-w-6xl mx-auto w-full border-t border-neutral-800">
-      <SectionHeading id="skills-heading" eyebrow="Toolkit">Skills</SectionHeading>
-
-      <motion.ul
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+    <section id="skills" className="py-24 px-6 sm:px-12 max-w-5xl mx-auto border-t border-neutral-800">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
       >
-        {skillsData.map(({ category, icon: Icon, skills }) => (
-          <motion.li
-            key={category}
-            variants={itemVariants}
-            className="group flex flex-col gap-5 bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 backdrop-blur-sm transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-neutral-900/80"
-          >
-            <div className="flex items-center gap-3">
-              <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-neutral-950 border border-neutral-800 group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.35)] transition-all duration-300">
-                <Icon aria-hidden="true" size={18} className="text-blue-400" />
-              </span>
-              <h3 className="text-lg font-semibold text-white">{category}</h3>
-            </div>
-            <ul className="flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <li
-                  key={skill}
-                  className="px-3 py-1.5 bg-neutral-950 border border-neutral-800 text-neutral-300 text-sm rounded-lg"
-                >
-                  {skill}
-                </li>
-              ))}
-            </ul>
-          </motion.li>
-        ))}
-      </motion.ul>
+        <div className="flex items-center gap-4 mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Skills & Technologies</h2>
+          <div className="h-px bg-neutral-800 flex-1 ml-4" />
+        </div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid sm:grid-cols-2 md:grid-cols-3 gap-6"
+        >
+          {skillsData.map((group, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:bg-neutral-800/50 hover:border-neutral-700 transition-colors"
+            >
+              <h3 className="text-white font-semibold mb-4 text-lg">{group.category}</h3>
+              <div className="flex flex-wrap gap-2">
+                {group.skills.map((skill, sIndex) => (
+                  <span
+                    key={sIndex}
+                    className="px-3 py-1.5 bg-neutral-950 border border-neutral-800 text-neutral-300 text-sm rounded-lg"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
