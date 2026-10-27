@@ -1,5 +1,5 @@
 import { SITE } from "@/lib/site";
-import { projectPages } from "@/data/projects";
+import { projects } from "@/lib/projects";
 
 export default function sitemap() {
   const lastModified = new Date();
@@ -11,7 +11,7 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 1,
     },
-    ...projectPages.map((project) => ({
+    ...projects.map((project) => ({
       url: `${SITE}/projects/${project.slug}`,
       lastModified,
       changeFrequency: "monthly",
