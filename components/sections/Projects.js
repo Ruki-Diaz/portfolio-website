@@ -8,6 +8,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { projects, hasProjectPage } from "@/data/projects";
 
+const featuredProjects = projects.filter((p) => p.featured);
+const otherProjects = projects.filter((p) => !p.featured);
+
 function ProjectCarousel({ image, images, title }) {
   const [current, setCurrent] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -230,7 +233,7 @@ export default function Projects() {
           }}
           className="grid md:grid-cols-2 gap-8"
         >
-          {projects.map((project, index) => {
+          {featuredProjects.map((project, index) => {
             const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
             return (
             <motion.div
@@ -348,6 +351,93 @@ export default function Projects() {
             );
           })}
         </motion.div>
+
+        {/* Remaining projects: compact cards without screenshots */}
+        {otherProjects.length > 0 && (
+          <div className="mt-20">
+            <div className="flex items-center gap-4 mb-8">
+              <h3 className="text-2xl font-bold text-white">More Projects</h3>
+              <div className="h-px bg-neutral-800 flex-1 ml-4" />
+            </div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+              className="grid sm:grid-cols-2 gap-6"
+            >
+              {otherProjects.map((project) => {
+                const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
+                return (
+                  <motion.div
+                    key={project.title}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+                    }}
+                    className="group flex flex-col bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-neutral-900/70 transition-all duration-300"
+                  >
+                    <h4 className="text-lg font-bold text-white mb-2">
+                      {caseStudy ? (
+                        <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
+                          {project.title}
+                        </Link>
+                      ) : (
+                        project.title
+                      )}
+                    </h4>
+                    <p className="text-sm text-neutral-400 leading-relaxed mb-4 line-clamp-3">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {project.tech.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    {(caseStudy || project.github || project.demo || project.pdf) && (
+                      <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
+                        {caseStudy && (
+                          <Link
+                            href={caseStudy}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
+                            aria-label={`Read the ${project.title} case study`}
+                          >
+                            <span>Case Study</span>
+                            <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
+                          </Link>
+                        )}
+                        {project.demo && (
+                          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
+                            <FaExternalLinkAlt className="text-xs" />
+                            <span>Live Demo</span>
+                          </a>
+                        )}
+                        {project.github && (
+                          <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
+                            <FaGithub className="text-base" />
+                            <span>View Code</span>
+                          </a>
+                        )}
+                        {project.pdf && (
+                          <a href={project.pdf} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
+                            <FaFilePdf className="text-base" />
+                            <span>View PDF Report</span>
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        )}
 
         {/* Global GitHub CTA */}
         <motion.div

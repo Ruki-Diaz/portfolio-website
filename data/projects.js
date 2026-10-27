@@ -1,6 +1,9 @@
 // Shared project data used by the homepage "Featured Projects" section,
 // the individual /projects/[slug] pages and the sitemap.
 //
+// Projects with `featured: true` are the main cards at the top of the homepage
+// (with screenshots); the rest are listed below them as compact cards.
+//
 // Projects with `indexable: true` and a `page` object get their own
 // /projects/[slug] page, a sitemap entry and a homepage case study link.
 // Copy in `page` reuses text already published on the site (project cards +
@@ -9,6 +12,7 @@
 export const projects = [
   {
     slug: "melbourne-pulse",
+    featured: true,
     indexable: true,
     title: "Melbourne Pulse – Live CBD Pedestrian & Parking Forecasting",
     description: "A live civic analytics platform showing how busy Melbourne's CBD is right now and forecasting the next 24 hours. It ingests City of Melbourne open data from 99 pedestrian counting stations and 6,300+ in-ground parking sensors via an hourly GitHub Actions pipeline with a Pytest validation gate, and stores the data in Neon serverless Postgres. A LightGBM model forecasts hourly foot traffic with no future leakage, beating the 8-week historical baseline by 10% on 132,696 unseen sensor-hours. Gemini Flash generates plain-English summaries. Runs entirely on free tiers ($0/month).",
@@ -77,6 +81,7 @@ export const projects = [
   },
   {
     slug: "mop-data-science-team-lead",
+    featured: true,
     indexable: true,
     title: "MOP Data Science Team Lead – Use Case Quality & Publication",
     description: "Led the Data Science team for the Melbourne Open Playground (MOP) project, coordinating the review, standardisation, and publication-readiness of data science use cases across a repository of 200+ use cases. Established consistent Jupyter Notebook standards, conducted technical and GitHub reviews, mentored Data Scientists, managed use case progress, and collaborated with Quality Management and Web teams to improve the end-to-end publication workflow.",
@@ -126,62 +131,8 @@ export const projects = [
     },
   },
   {
-    slug: "invoice-management-system",
-    indexable: true,
-    title: "Invoice Management System",
-    description: "Designed and developed a secure, data-driven web application during a software engineering internship to manage invoices, clients, and billing cycles. Translated business requirements into database schemas and technical specifications, successfully improving internal tracking and operational efficiency.",
-    tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
-    images: [
-      {
-        src: "/invoice-app-dashboard.png",
-        alt: "Irys invoice system finance dashboard with sidebar navigation, summary cards and quick actions",
-        width: 1431,
-        height: 449,
-      },
-      {
-        src: "/invoice-app-login.png",
-        alt: "Irys invoice system sign-in screen",
-        width: 1431,
-        height: 650,
-      },
-      {
-        src: "/invoice-app-transactions.png",
-        alt: "Irys invoice system View Transactions screen with customer, invoice, date and salesperson filters and an invoice history table",
-        width: 1450,
-        height: 727,
-      },
-      {
-        src: "/invoice-app-payment.png",
-        alt: "Irys invoice system Record Customer Payment form with customer, date, amount, payment method and bank account fields",
-        width: 1456,
-        height: 730,
-      },
-      {
-        src: "/invoice-app-reports.png",
-        alt: "Irys invoice system Reports & Exports screen for customer statements, outstanding payments, system summary and Excel export",
-        width: 1464,
-        height: 733,
-      },
-    ],
-    page: {
-      h1: "Invoice Management System: A Flask and Supabase Web App for Invoices, Clients and Billing",
-      seoTitle: "Invoice Management System (Flask, Supabase, Python)",
-      seoDescription: "A secure, data-driven Flask and Supabase web application for managing invoices, clients and billing cycles, built during a software engineering internship.",
-      eyebrow: "Web application · Software engineering internship",
-      schemaType: "CreativeWork",
-      problem: [
-        "A secure, data-driven web application to manage invoices, clients, and billing cycles, designed and developed during a software engineering internship.",
-      ],
-      method: [
-        "Translated business requirements into database schemas and technical specifications.",
-      ],
-      results: [
-        "Improved internal tracking and operational efficiency.",
-      ],
-    },
-  },
-  {
     slug: "momentum-todo",
+    featured: true,
     indexable: true,
     title: "Momentum Todo",
     description: "A production-ready personal productivity platform designed to make daily planning simple, focused, and intentional. Momentum combines task management, project organisation, calendar planning, progress tracking, authentication, cloud persistence, and a polished responsive interface in one workspace.",
@@ -232,6 +183,62 @@ export const projects = [
         "Authentication",
         "Cloud persistence",
         "A polished responsive interface, all in one workspace",
+      ],
+    },
+  },
+  {
+    slug: "invoice-management-system",
+    featured: true,
+    indexable: true,
+    title: "Invoice Management System",
+    description: "Designed and developed a secure, data-driven web application during a software engineering internship to manage invoices, clients, and billing cycles. Translated business requirements into database schemas and technical specifications, successfully improving internal tracking and operational efficiency.",
+    tech: ["Flask", "Supabase", "Python", "Tailwind CSS"],
+    images: [
+      {
+        src: "/invoice-app-dashboard.png",
+        alt: "Irys invoice system finance dashboard with sidebar navigation, summary cards and quick actions",
+        width: 1431,
+        height: 449,
+      },
+      {
+        src: "/invoice-app-login.png",
+        alt: "Irys invoice system sign-in screen",
+        width: 1431,
+        height: 650,
+      },
+      {
+        src: "/invoice-app-transactions.png",
+        alt: "Irys invoice system View Transactions screen with customer, invoice, date and salesperson filters and an invoice history table",
+        width: 1450,
+        height: 727,
+      },
+      {
+        src: "/invoice-app-payment.png",
+        alt: "Irys invoice system Record Customer Payment form with customer, date, amount, payment method and bank account fields",
+        width: 1456,
+        height: 730,
+      },
+      {
+        src: "/invoice-app-reports.png",
+        alt: "Irys invoice system Reports & Exports screen for customer statements, outstanding payments, system summary and Excel export",
+        width: 1464,
+        height: 733,
+      },
+    ],
+    page: {
+      h1: "Invoice Management System: A Flask and Supabase Web App for Invoices, Clients and Billing",
+      seoTitle: "Invoice Management System (Flask, Supabase, Python)",
+      seoDescription: "A secure, data-driven Flask and Supabase web application for managing invoices, clients and billing cycles, built during a software engineering internship.",
+      eyebrow: "Web application · Software engineering internship",
+      schemaType: "CreativeWork",
+      problem: [
+        "A secure, data-driven web application to manage invoices, clients, and billing cycles, designed and developed during a software engineering internship.",
+      ],
+      method: [
+        "Translated business requirements into database schemas and technical specifications.",
+      ],
+      results: [
+        "Improved internal tracking and operational efficiency.",
       ],
     },
   },

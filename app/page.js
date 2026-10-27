@@ -16,10 +16,10 @@ export default function Home() {
       <AnimatedGridBackground />
       <main className="flex flex-col min-h-screen bg-transparent relative z-10">
         <Hero />
+        <SectionReveal><Projects /></SectionReveal>
         <SectionReveal><About /></SectionReveal>
         <SectionReveal><Skills /></SectionReveal>
         <SectionReveal><Experience /></SectionReveal>
-        <SectionReveal><Projects /></SectionReveal>
         <SectionReveal><Contact /></SectionReveal>
         <Footer />
       </main>
