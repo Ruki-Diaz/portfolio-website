@@ -82,10 +82,11 @@ const educationData = [
     tech: ["Data Science", "Software Engineering", "Artificial Intelligence", "Machine Learning"],
   },
   {
-    title: "Higher National Diploma in Information Technology",
-    organization: "ANC School of Postgraduate Education",
+    title: "Diploma in Information Technology",
+    organization: "ANC Education, Colombo, Sri Lanka",
     date: "Sep 2022 – Sep 2023",
-    description: "Completed a Higher National Diploma in Information Technology, strengthening foundational knowledge in software development, databases, and core computing concepts.",
+    highlights: ["Program score 83 / 100"],
+    description: "Completed a diploma covering programming, databases, software development, web design and computer architecture, with High Distinction in 8 of 10 courses.",
     tech: ["Information Technology", "Databases", "Software Development", "Computer Networks"],
   },
 ];
