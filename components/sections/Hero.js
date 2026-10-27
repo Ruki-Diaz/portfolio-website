@@ -8,7 +8,7 @@ import MagneticEffect from "@/components/ui/MagneticEffect";
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-24 pb-12 px-6 sm:px-12 overflow-hidden">
+    <section id="hero" className="relative lg:min-h-screen flex items-center pt-24 pb-16 lg:pb-12 px-6 sm:px-12 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-neutral-950 -z-20" />
       
@@ -18,7 +18,7 @@ export default function Hero() {
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] -z-10 animate-pulse mix-blend-screen pointer-events-none" style={{ animationDuration: '4s' }} />
       <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[100px] -z-10 animate-pulse mix-blend-screen pointer-events-none" style={{ animationDuration: '6s' }} />
 
-      <div className="max-w-6xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center justify-between gap-16 z-10">
+      <div className="max-w-6xl mx-auto w-full flex flex-col-reverse lg:flex-row lg:items-center justify-between gap-6 lg:gap-16 z-10">
         
         {/* Left/Bottom: Text Content */}
         <motion.div 
@@ -40,7 +40,7 @@ export default function Hero() {
           {/* Top Label */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm mb-8 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] hover:border-neutral-700 transition-all duration-300 cursor-default"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm mb-4 lg:mb-8 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] hover:border-neutral-700 transition-all duration-300 cursor-default"
           >
             <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="text-neutral-300 text-sm font-medium">Open to opportunities & collaborations</span>
@@ -57,7 +57,7 @@ export default function Hero() {
           {/* Subtitle */}
           <motion.h2
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
-            className="text-2xl sm:text-4xl font-semibold text-neutral-300 mb-6"
+            className="text-xl sm:text-4xl font-semibold text-neutral-300 mb-4 lg:mb-6"
           >
             Data Scientist &amp; Software Engineer <span className="text-neutral-600 font-light">·</span> Melbourne, Australia
           </motion.h2>
@@ -65,7 +65,7 @@ export default function Hero() {
           {/* Description */}
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
-            className="text-lg sm:text-xl text-neutral-400 mb-10 max-w-2xl leading-relaxed"
+            className="text-base sm:text-xl text-neutral-400 mb-6 lg:mb-10 max-w-2xl leading-normal sm:leading-relaxed"
           >
             I build data-driven applications, scalable systems, and modern web solutions. Passionate about turning ideas into real-world products using software development, data science, and clean architecture.
           </motion.p>
@@ -120,11 +120,11 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-shrink-0 relative"
+          className="flex-shrink-0 relative self-start lg:self-auto"
         >
           {/* Animated floating effect container */}
           <motion.div
-            animate={{ y: [-15, 15, -15] }}
+            animate={{ y: [-6, 6, -6] }}
             transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
             className="relative"
           >
@@ -132,32 +132,32 @@ export default function Hero() {
             <motion.div 
               animate={{ y: [-20, 20, -20], x: [-10, 10, -10], rotate: [0, 90, 0] }}
               transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-              className="absolute -top-10 -left-10 w-8 h-8 rounded-full border border-blue-500/30 bg-blue-500/10 blur-[1px]"
+              className="hidden lg:block absolute -top-10 -left-10 w-8 h-8 rounded-full border border-blue-500/30 bg-blue-500/10 blur-[1px]"
             />
             <motion.div 
               animate={{ y: [20, -20, 20], x: [10, -10, 10], scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 12, ease: "linear", delay: 1 }}
-              className="absolute -bottom-8 -right-12 w-12 h-12 rounded-full border border-purple-500/30 bg-purple-500/10 blur-[2px]"
+              className="hidden lg:block absolute -bottom-8 -right-12 w-12 h-12 rounded-full border border-purple-500/30 bg-purple-500/10 blur-[2px]"
             />
             <motion.div 
               animate={{ y: [-15, 15, -15], scale: [1, 0.8, 1] }}
               transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 2 }}
-              className="absolute top-1/2 -right-8 w-4 h-4 rounded-full bg-blue-400/50 shadow-[0_0_15px_rgba(96,165,250,0.8)]"
+              className="hidden lg:block absolute top-1/2 -right-8 w-4 h-4 rounded-full bg-blue-400/50 shadow-[0_0_15px_rgba(96,165,250,0.8)]"
             />
 
             {/* Outer Glowing Ring */}
-            <div className="absolute inset-[-10px] sm:inset-[-20px] rounded-[2.5rem] bg-gradient-to-tr from-blue-500/40 to-purple-500/40 blur-xl animate-pulse" style={{ animationDuration: '4s' }} />
+            <div className="absolute inset-[-8px] lg:inset-[-20px] rounded-full lg:rounded-[2.5rem] bg-gradient-to-tr from-blue-500/40 to-purple-500/40 blur-xl animate-pulse" style={{ animationDuration: '4s' }} />
             
             {/* Decorative Gradient Border */}
-            <div className="absolute inset-[-2px] sm:inset-[-4px] rounded-[2rem] bg-gradient-to-tr from-blue-500 to-purple-500 opacity-80" />
+            <div className="absolute inset-[-2px] lg:inset-[-4px] rounded-full lg:rounded-[2rem] bg-gradient-to-tr from-blue-500 to-purple-500 opacity-80" />
             
-            {/* Image Container */}
-            <div className="relative w-64 h-80 sm:w-80 sm:h-[400px] md:w-96 md:h-[480px] rounded-3xl overflow-hidden border-4 border-neutral-950 bg-neutral-900 shadow-2xl z-10">
+            {/* Image Container: a small circle on mobile so the name and buttons stay above the fold */}
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-96 lg:h-[480px] rounded-full lg:rounded-3xl overflow-hidden border-4 border-neutral-950 bg-neutral-900 shadow-2xl z-10">
               <Image 
                 src="/profilepic.jpg" 
                 alt="Rukshan Dias, Data Scientist and Software Engineer in Melbourne"
                 fill
-                sizes="(min-width: 768px) 376px, (min-width: 640px) 312px, 248px"
+                sizes="(min-width: 1024px) 376px, 152px"
                 quality={90}
                 className="object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                 preload
