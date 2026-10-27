@@ -98,19 +98,18 @@ export default function Hero() {
               </Link>
             </MagneticEffect>
 
-            {/* Icon Button */}
-            <MagneticEffect className="col-span-2 justify-self-start">
+            {/* Resume Button: full width on its own row on mobile, inline with the others from sm */}
+            <MagneticEffect className="col-span-2 min-w-0">
               <a
                 href="/cv.pdf"
-                download="Rukshan-Dias-CV.pdf"
+                download="Rukshan-Dias-Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-                aria-label="Download Rukshan Dias's CV (PDF)"
-                title="Download Rukshan Dias's CV (PDF)"
+                aria-label="Download Rukshan Dias's resume (PDF)"
+                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-3 sm:px-8 py-3.5 sm:py-4 whitespace-nowrap bg-neutral-900/80 backdrop-blur-md text-white font-medium rounded-full border border-neutral-700 hover:bg-neutral-800 transition-all hover:border-neutral-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
               >
-                <Download size={20} aria-hidden="true" className="group-hover:-translate-y-0.5 transition-transform" />
-                <span className="sr-only">Download Rukshan Dias&apos;s CV (PDF)</span>
+                <Download size={18} aria-hidden="true" className="text-neutral-400 group-hover:text-white transition-colors" />
+                Resume
               </a>
             </MagneticEffect>
           </motion.div>
