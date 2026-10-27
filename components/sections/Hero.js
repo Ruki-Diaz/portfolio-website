@@ -59,27 +59,27 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-xl sm:text-4xl font-semibold text-neutral-300 mb-4 lg:mb-6"
           >
-            Data Scientist &amp; Software Engineer <span className="text-neutral-600 font-light">·</span> Melbourne, Australia
+            Data Scientist &amp; Software Engineer{" "}<span className="whitespace-nowrap sm:block"><span aria-hidden="true" className="text-neutral-500 font-light sm:hidden">· </span>Melbourne</span>
           </motion.h2>
 
           {/* Description */}
           <motion.p
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
-            className="text-base sm:text-xl text-neutral-400 mb-6 lg:mb-10 max-w-2xl leading-normal sm:leading-relaxed"
+            className="text-base sm:text-xl text-neutral-400 mb-6 lg:mb-10 max-w-xl leading-relaxed text-pretty"
           >
-            I build data-driven applications, scalable systems, and modern web solutions. Passionate about turning ideas into real-world products using software development, data science, and clean architecture.
+            I build data products and web apps on live open data, from forecasting models to full-stack platforms.
           </motion.p>
 
           {/* Buttons */}
           <motion.div
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
-            className="flex flex-wrap items-center gap-4"
+            className="grid grid-cols-2 gap-3 w-full sm:w-auto sm:flex sm:flex-wrap sm:items-center sm:gap-4"
           >
             {/* Primary Button */}
-            <MagneticEffect>
+            <MagneticEffect className="min-w-0">
               <Link
                 href="#projects"
-                className="group relative flex items-center gap-2 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
+                className="group relative flex items-center justify-center gap-2 w-full sm:w-auto px-3 sm:px-8 py-3.5 sm:py-4 whitespace-nowrap bg-white text-black font-semibold rounded-full overflow-hidden transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.4)]"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <span className="relative z-10">View Projects</span>
@@ -88,10 +88,10 @@ export default function Hero() {
             </MagneticEffect>
             
             {/* Secondary Button */}
-            <MagneticEffect>
+            <MagneticEffect className="min-w-0">
               <Link
                 href="#contact"
-                className="flex items-center gap-2 px-8 py-4 bg-neutral-900/80 backdrop-blur-md text-white font-medium rounded-full border border-neutral-700 hover:bg-neutral-800 transition-all hover:border-neutral-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                className="group flex items-center justify-center gap-2 w-full sm:w-auto px-3 sm:px-8 py-3.5 sm:py-4 whitespace-nowrap bg-neutral-900/80 backdrop-blur-md text-white font-medium rounded-full border border-neutral-700 hover:bg-neutral-800 transition-all hover:border-neutral-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
               >
                 <Mail size={18} className="text-neutral-400 group-hover:text-white transition-colors" />
                 Contact Me
@@ -99,12 +99,12 @@ export default function Hero() {
             </MagneticEffect>
 
             {/* Icon Button */}
-            <MagneticEffect>
+            <MagneticEffect className="col-span-2 justify-self-start">
               <a
                 href="/cv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center w-14 h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
+                className="flex items-center justify-center w-[52px] h-[52px] sm:w-14 sm:h-14 bg-neutral-900/80 backdrop-blur-md text-neutral-300 rounded-full border border-neutral-800 hover:bg-neutral-800 hover:text-white transition-all hover:border-neutral-500 group hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]"
                 aria-label="Download Rukshan Dias's CV (PDF)"
                 title="Download Rukshan Dias's CV (PDF)"
               >
@@ -113,6 +113,7 @@ export default function Hero() {
               </a>
             </MagneticEffect>
           </motion.div>
+
         </motion.div>
 
         {/* Right/Top: Profile Image */}
