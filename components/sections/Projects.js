@@ -7,9 +7,47 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { projects, hasProjectPage } from "@/data/projects";
+import { featuredProjects, CARD_BLOCKS } from "@/lib/featuredProjects";
 
-const featuredProjects = projects.filter((p) => p.featured);
 const otherProjects = projects.filter((p) => !p.featured);
+
+// Numbers get a large value with a small label underneath; label-less facts
+// ("Live", "Flask") render as slimmer pills. Both wrap onto new rows.
+function StatChips({ stats }) {
+  if (!stats?.length) return null;
+
+  if (stats.every((stat) => !stat.label)) {
+    return (
+      <ul className="flex flex-wrap gap-2.5" aria-label="Key facts">
+        {stats.map((stat) => (
+          <li
+            key={stat.value}
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-neutral-950/70 rounded-full border border-neutral-800/80 text-sm font-semibold text-neutral-100 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
+          >
+            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+            {stat.value}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  return (
+    <dl className="flex flex-wrap gap-2.5">
+      {stats.map((stat) => (
+        <div
+          key={stat.value}
+          className="flex flex-col-reverse justify-end flex-[1_1_auto] min-w-[6.5rem] px-4 py-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
+        >
+          {stat.label && <dt className="mt-1 text-xs leading-snug text-neutral-400">{stat.label}</dt>}
+          <dd className="whitespace-nowrap text-lg font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
+            {stat.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 function ProjectCarousel({ image, images, title }) {
   const [current, setCurrent] = useState(0);
@@ -233,11 +271,11 @@ export default function Projects() {
           }}
           className="grid md:grid-cols-2 gap-8"
         >
-          {featuredProjects.map((project, index) => {
+          {featuredProjects.map((project) => {
             const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
             return (
             <motion.div
-              key={index}
+              key={project.slug}
               variants={{
                 hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
                 visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
@@ -254,32 +292,21 @@ export default function Projects() {
                   images={project.images}
                   title={project.title}
                 />
-                <h3 className="text-2xl font-bold text-white mb-3">
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {caseStudy ? (
-                    <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
+                    <Link href={caseStudy} className="rounded-sm hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
                       {project.title}
                     </Link>
                   ) : (
                     project.title
                   )}
                 </h3>
-                <p className="text-neutral-400 mb-6 flex-grow">{project.description}</p>
-
-                {project.stats && (
-                  <div className="grid grid-cols-2 gap-2 mb-6 p-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80">
-                    {project.stats.map((stat, sIndex) => (
-                      <div key={sIndex} className="text-xs text-neutral-300 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                        <span className="font-mono text-[11px] text-neutral-300">{stat}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <p className="text-sm font-medium text-neutral-400 mb-5">{project.context}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech, tIndex) => (
+                  {project.tags.map((tech) => (
                     <span
-                      key={tIndex}
+                      key={tech}
                       className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
                     >
                       {tech}
@@ -287,7 +314,20 @@ export default function Projects() {
                   ))}
                 </div>
 
-                {(caseStudy || project.github || project.demo || project.pdf || project.report) && (
+                <dl className="flex flex-col gap-4 mb-6 flex-grow">
+                  {CARD_BLOCKS.map(({ key, label }) => (
+                    <div key={key}>
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-1">{label}</dt>
+                      <dd className="text-neutral-300 leading-relaxed">{project[key]}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                <div className="mb-6">
+                  <StatChips stats={project.stats} />
+                </div>
+
+                {(caseStudy || project.links.code || project.links.demo || project.links.report) && (
                   <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
                     {caseStudy && (
                       <Link
@@ -299,9 +339,9 @@ export default function Projects() {
                         <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
                       </Link>
                     )}
-                    {project.demo && (
+                    {project.links.demo && (
                       <a
-                        href={project.demo}
+                        href={project.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
@@ -310,9 +350,9 @@ export default function Projects() {
                         <span>Live Demo</span>
                       </a>
                     )}
-                    {project.github && (
+                    {project.links.code && (
                       <a
-                        href={project.github}
+                        href={project.links.code}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
@@ -321,26 +361,15 @@ export default function Projects() {
                         <span>View Code</span>
                       </a>
                     )}
-                    {project.report && (
+                    {project.links.report && (
                       <a
-                        href={project.report}
+                        href={project.links.report}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
                       >
                         <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
                         <span>Model Report</span>
-                      </a>
-                    )}
-                    {project.pdf && (
-                      <a
-                        href={project.pdf}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
-                      >
-                        <FaFilePdf className="text-base transition-transform group-hover/link:-translate-y-0.5" />
-                        <span>View PDF Report</span>
                       </a>
                     )}
                   </div>
