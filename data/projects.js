@@ -247,7 +247,7 @@ export const projects = [
     hideCaseStudyImages: true,
     indexable: true,
     title: "Weather Impact on Public Transport",
-    description: "Built an AI-assisted data science system that integrates Melbourne transport activity with BOM rainfall data. Developed data cleaning pipelines, performed EDA, and trained/fine-tuned ML models to predict congestion. Built a RAG-style LLM explanation layer to translate predictions into natural language insights.",
+    description: "Predicts Melbourne transport congestion from BOM rainfall data with ML, plus an LLM layer that explains results.",
     tech: ["Python", "Pandas", "Scikit-Learn", "Machine Learning", "LLM Prompting", "RAG"],
     images: [
       {
@@ -292,7 +292,7 @@ export const projects = [
     hideCaseStudyImages: true,
     indexable: true,
     title: "Melbourne Housing Price Prediction",
-    description: "Developed an end-to-end machine learning project to analyse and predict residential property prices across Burwood, Doncaster, and Berwick in Melbourne. Built a dataset of 225 property records, performed data cleaning, exploratory data analysis and feature engineering, and compared Linear Regression, Ridge Regression, Random Forest, and Gradient Boosting models using 5-fold cross-validation. Evaluated model performance using MAE, RMSE and R², applied feature importance and SHAP analysis for model explainability, and deployed the trained prediction pipeline as an interactive Streamlit web application where users can enter property characteristics and receive an estimated sale price.",
+    description: "A Streamlit house-price app built on 225 records, 4 models, 5-fold CV and SHAP, with a full PDF report.",
     tech: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "SHAP", "Streamlit", "Joblib", "Jupyter Notebook"],
     images: [
       {
@@ -340,13 +340,13 @@ export const projects = [
   {
     indexable: false,
     title: "Wheelchair Navigation System (AI)",
-    description: "Developed an AI-based navigation system to optimize wheelchair-accessible routes using graph modelling and the A* search algorithm. The system incorporates terrain and accessibility constraints to prioritize safer paths over shortest distance. Implemented enhanced heuristics and visualized routes using an interactive map, demonstrating real-world application of intelligent pathfinding.",
+    description: "Plans wheelchair-accessible routes with A* search, putting terrain and accessibility ahead of shortest distance.",
     tech: ["Python", "A*", "Graph Modelling", "AI", "Pathfinding"],
   },
   {
     indexable: false,
     title: "Wumpus World AI Planning (PDDL)",
-    description: "Built an automated planning system using PDDL to model and solve the Wumpus World problem. Identified and fixed logical issues in the domain, introduced constraint-based reasoning including sensing, and simulated intelligent agent behaviour. Evaluated multiple planning solvers to compare performance, efficiency, and stability in decision-making.",
+    description: "Solves the Wumpus World in PDDL with sensing and constraint reasoning, comparing several planning solvers.",
     tech: ["PDDL", "AI Planning", "Problem Solving", "Constraint Reasoning", "Intelligent Agents"],
   },
 ];

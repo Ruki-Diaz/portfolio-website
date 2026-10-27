@@ -1,31 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { BrainCircuit, Code2, Server, Wrench } from "lucide-react";
 
 const skillsData = [
   {
-    category: "Programming",
-    skills: ["Python", "SQL", "JavaScript", "TypeScript", "C#", "Java", "C++"],
+    category: "Languages",
+    icon: Code2,
+    skills: ["Python", "SQL", "TypeScript", "JavaScript"],
   },
   {
-    category: "Frontend",
-    skills: ["React", "Next.js", "HTML", "CSS"],
+    category: "Data & ML",
+    icon: BrainCircuit,
+    skills: ["Pandas", "Scikit-learn", "LightGBM", "SHAP", "TensorFlow", "PyTorch"],
   },
   {
-    category: "Backend",
-    skills: ["Flask", "FastAPI", "ASP.NET Core", "REST APIs", "GraphQL"],
-  },
-  {
-    category: "Data / AI",
-    skills: ["Data Analysis", "Data Cleaning", "EDA", "Feature Engineering", "Machine Learning", "Scikit-learn", "TensorFlow", "PyTorch", "Statistical Analysis"],
-  },
-  {
-    category: "Databases",
-    skills: ["MySQL", "PostgreSQL", "SQL Server", "SQLite"],
+    category: "Web & Backend",
+    icon: Server,
+    skills: ["Next.js", "React", "Flask", "FastAPI", "PostgreSQL"],
   },
   {
     category: "Tools",
-    skills: ["Git", "Power BI", "Tableau", "Excel", "Jenkins", "GitHub Actions", "CI/CD", "Bash", "PowerShell"],
+    icon: Wrench,
+    skills: ["Git", "GitHub Actions", "Power BI", "Tableau", "Excel"],
   },
 ];
 
@@ -59,7 +56,7 @@ export default function Skills() {
         transition={{ duration: 0.5 }}
       >
         <div className="flex items-center gap-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Skills & Technologies</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Skills</h2>
           <div className="h-px bg-neutral-800 flex-1 ml-4" />
         </div>
 
@@ -68,25 +65,30 @@ export default function Skills() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid sm:grid-cols-2 md:grid-cols-3 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {skillsData.map((group, index) => (
+          {skillsData.map(({ category, icon: Icon, skills }) => (
             <motion.div
-              key={index}
+              key={category}
               variants={itemVariants}
-              className="bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:bg-neutral-800/50 hover:border-neutral-700 transition-colors"
+              className="group flex flex-col gap-5 bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:bg-neutral-800/50 hover:border-blue-500/30 transition-all duration-300"
             >
-              <h3 className="text-white font-semibold mb-4 text-lg">{group.category}</h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill, sIndex) => (
-                  <span
-                    key={sIndex}
+              <div className="flex items-center gap-3 lg:flex-col lg:items-start">
+                <span className="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl bg-neutral-950 border border-neutral-800 group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)] transition-all duration-300">
+                  <Icon aria-hidden="true" size={18} className="text-blue-400" />
+                </span>
+                <h3 className="text-white font-semibold text-lg whitespace-nowrap">{category}</h3>
+              </div>
+              <ul className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <li
+                    key={skill}
                     className="px-3 py-1.5 bg-neutral-950 border border-neutral-800 text-neutral-300 text-sm rounded-lg"
                   >
                     {skill}
-                  </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
           ))}
         </motion.div>

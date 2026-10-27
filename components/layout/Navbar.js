@@ -23,8 +23,9 @@ export default function Navbar() {
           {[
             { name: 'Home', href: '/#hero' },
             { name: 'Projects', href: '/#projects' },
-            { name: 'About', href: '/#about' },
             { name: 'Experience', href: '/#experience' },
+            { name: 'Skills', href: '/#skills' },
+            { name: 'About', href: '/#about' },
             { name: 'Contact', href: '/#contact' }
           ].map((link) => (
             <Link key={link.name} href={link.href} className="relative group text-sm font-medium text-neutral-400 hover:text-white transition-colors">
