@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrainCircuit, Code2, Server, Wrench } from "lucide-react";
+import { BrainCircuit, Code2, Server, Sparkles, Wrench } from "lucide-react";
 
 const skillsData = [
   {
@@ -23,6 +23,14 @@ const skillsData = [
     category: "Tools",
     icon: Wrench,
     skills: ["Git", "GitHub Actions", "Power BI", "Tableau", "Excel"],
+  },
+  {
+    category: "AI-Assisted Development",
+    icon: Sparkles,
+    skills: ["Claude", "Claude Code", "Antigravity", "Codex", "Framer"],
+    note: "I build with AI coding agents and review, test and ship the results myself.",
+    // Spans two columns (tablet and desktop) and gets an accent border.
+    featured: true,
   },
 ];
 
@@ -65,15 +73,19 @@ export default function Skills() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {skillsData.map(({ category, icon: Icon, skills }) => (
+          {skillsData.map(({ category, icon: Icon, skills, note, featured }) => (
             <motion.div
               key={category}
               variants={itemVariants}
-              className="group flex flex-col gap-5 bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:bg-neutral-800/50 hover:border-blue-500/30 transition-all duration-300"
+              className={`group flex flex-col gap-5 rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300 ${
+                featured
+                  ? "sm:col-span-2 bg-gradient-to-br from-blue-500/[0.07] via-neutral-900/60 to-purple-500/[0.07] border border-purple-500/30 shadow-[0_0_30px_rgba(147,51,234,0.08)] hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(147,51,234,0.16)]"
+                  : "bg-neutral-900/50 border border-neutral-800 hover:bg-neutral-800/50 hover:border-blue-500/30"
+              }`}
             >
-              <div className="flex items-center gap-3 lg:flex-col lg:items-start">
+              <div className="flex items-center gap-3">
                 <span className="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl bg-neutral-950 border border-neutral-800 group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)] transition-all duration-300">
                   <Icon aria-hidden="true" size={18} className="text-blue-400" />
                 </span>
@@ -89,6 +101,7 @@ export default function Skills() {
                   </li>
                 ))}
               </ul>
+              {note && <p className="text-sm text-neutral-400 leading-relaxed">{note}</p>}
             </motion.div>
           ))}
         </motion.div>
