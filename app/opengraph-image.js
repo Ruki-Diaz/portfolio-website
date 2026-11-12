@@ -1,12 +1,27 @@
 import { ImageResponse } from "next/og";
 import { SITE, DEFAULT_OG_IMAGE } from "@/lib/site";
 
+// Site-wide link preview (Open Graph / Twitter), generated at build time so it
+// stays in sync with the site's theme. No headshot: LinkedIn and others show
+// this card instead of picking the largest <img> on the page.
+
 export const alt = DEFAULT_OG_IMAGE.alt;
 export const size = { width: DEFAULT_OG_IMAGE.width, height: DEFAULT_OG_IMAGE.height };
 export const contentType = "image/png";
 
-// Loads Inter (the site font) as TTF from Google Fonts. Satori can't read woff2,
-// and Google serves TTF when the request has no browser user agent.
+const NAME = "Rukshan Dias";
+const SUBTITLE = "Software Engineer & Data Scientist";
+const TAGLINE = "Live ML projects, open-data analytics and full-stack apps.";
+const CHIPS = ["Next.js", "React", "Python", "ML"];
+const LOCATION = "Melbourne, Australia";
+
+const BLUE = "#60a5fa"; // blue-400, the site's accent
+const PURPLE = "#a855f7"; // purple-500
+const ACCENT = `linear-gradient(90deg, ${BLUE}, ${PURPLE})`;
+
+// Loads Inter (the site font) as TTF from Google Fonts, subset to the text used.
+// Satori can't read woff2, and Google serves TTF when the request has no browser
+// user agent. Falls back to the default font if the fetch fails.
 async function loadInter(weight, text) {
   try {
     const css = await (
@@ -21,18 +36,18 @@ async function loadInter(weight, text) {
 }
 
 export default async function Image() {
-  const name = "Rukshan Dias.";
-  const subtitle = "Data Scientist & Software Engineer · Melbourne";
   const domain = new URL(SITE).host;
 
-  const [bold, medium] = await Promise.all([
-    loadInter(700, name),
-    loadInter(500, subtitle + domain),
+  const [bold, medium, regular] = await Promise.all([
+    loadInter(700, `RD.${NAME}`),
+    loadInter(500, SUBTITLE + CHIPS.join("") + LOCATION),
+    loadInter(400, TAGLINE + domain),
   ]);
 
   const fonts = [
     bold && { name: "Inter", data: bold, weight: 700, style: "normal" },
     medium && { name: "Inter", data: medium, weight: 500, style: "normal" },
+    regular && { name: "Inter", data: regular, weight: 400, style: "normal" },
   ].filter(Boolean);
 
   return new ImageResponse(
@@ -42,66 +57,126 @@ export default async function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          padding: "0 96px",
+          position: "relative",
           backgroundColor: "#0a0a0a",
-          backgroundImage:
-            "radial-gradient(circle at 18% 22%, rgba(37,99,235,0.28), transparent 45%), radial-gradient(circle at 85% 85%, rgba(147,51,234,0.25), transparent 45%)",
           fontFamily: "Inter",
           color: "#ffffff",
         }}
       >
-        {/* Accent bar */}
+        {/* Faint grid, echoing the site's animated grid background */}
         <div
           style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
             display: "flex",
-            width: 96,
-            height: 6,
-            borderRadius: 3,
-            marginBottom: 40,
-            backgroundImage: "linear-gradient(90deg, #60a5fa, #a855f7)",
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
           }}
         />
 
-        <div style={{ display: "flex", fontSize: 128, fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1 }}>
-          <span>Rukshan&nbsp;</span>
-          <span
-            style={{
-              backgroundImage: "linear-gradient(90deg, #60a5fa, #a855f7)",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            Dias.
-          </span>
-        </div>
+        {/* Blue and purple glows, as behind the site's hero */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            backgroundImage:
+              "radial-gradient(circle at 12% 18%, rgba(37,99,235,0.34), transparent 42%), radial-gradient(circle at 92% 96%, rgba(147,51,234,0.32), transparent 46%), linear-gradient(180deg, rgba(10,10,10,0) 55%, rgba(10,10,10,0.85) 100%)",
+          }}
+        />
 
-        <div style={{ display: "flex", marginTop: 32, fontSize: 44, fontWeight: 500, color: "#d4d4d4" }}>
-          {subtitle}
-        </div>
+        {/* Accent hairline along the top edge */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, display: "flex", backgroundImage: ACCENT }} />
 
         <div
           style={{
+            position: "relative",
             display: "flex",
-            alignItems: "center",
-            marginTop: 64,
-            fontSize: 26,
-            fontWeight: 500,
-            color: "#737373",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "100%",
+            padding: "64px 80px 60px",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              width: 10,
-              height: 10,
-              borderRadius: 5,
-              marginRight: 14,
-              backgroundColor: "#60a5fa",
-            }}
-          />
-          {domain}
+          {/* Top row: logo mark and location */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "baseline", fontSize: 34, fontWeight: 700, letterSpacing: "-0.03em" }}>
+              <span>RD</span>
+              <span style={{ color: BLUE }}>.</span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "10px 20px",
+                borderRadius: 999,
+                border: "1px solid rgba(255,255,255,0.12)",
+                backgroundColor: "rgba(23,23,23,0.7)",
+                fontSize: 22,
+                fontWeight: 500,
+                color: "#d4d4d4",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  marginRight: 12,
+                  backgroundColor: BLUE,
+                  boxShadow: `0 0 12px ${BLUE}`,
+                }}
+              />
+              {LOCATION}
+            </div>
+          </div>
+
+          {/* Name, subtitle, tagline */}
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div style={{ display: "flex", fontSize: 112, fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 1 }}>
+              <span>Rukshan&nbsp;</span>
+              <span style={{ backgroundImage: ACCENT, backgroundClip: "text", color: "transparent" }}>Dias</span>
+            </div>
+            <div style={{ display: "flex", marginTop: 26, fontSize: 44, fontWeight: 500, letterSpacing: "-0.02em", color: "#e5e5e5" }}>
+              {SUBTITLE}
+            </div>
+            <div style={{ display: "flex", marginTop: 16, fontSize: 28, fontWeight: 400, color: "#a3a3a3" }}>{TAGLINE}</div>
+          </div>
+
+          {/* Bottom row: tech chips and domain */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex" }}>
+              {CHIPS.map((chip) => (
+                <div
+                  key={chip}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginRight: 14,
+                    padding: "10px 22px",
+                    borderRadius: 12,
+                    border: "1px solid rgba(96,165,250,0.28)",
+                    backgroundColor: "rgba(10,10,10,0.75)",
+                    fontSize: 24,
+                    fontWeight: 500,
+                    color: BLUE,
+                  }}
+                >
+                  {chip}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", fontSize: 24, fontWeight: 400, color: "#737373" }}>{domain}</div>
+          </div>
         </div>
       </div>
     ),

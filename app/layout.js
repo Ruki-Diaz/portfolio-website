@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import SmoothScroller from "@/components/layout/SmoothScroller";
-import { SITE, personJsonLd, toJsonLd } from "@/lib/site";
+import { SITE, DEFAULT_OG_IMAGE, personJsonLd, toJsonLd } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,11 +31,15 @@ export const metadata = {
     url: "/",
     title: TITLE,
     description: DESCRIPTION,
+    // The generated card from app/opengraph-image.js (1200x630). Next also
+    // injects it from that file, with a content hash that busts social caches.
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    // No images here on purpose: Next reuses the hashed opengraph-image URL.
   },
 };
 
