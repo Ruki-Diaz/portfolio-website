@@ -527,8 +527,9 @@ export default function SnakeNNCaseStudy({ project, links }) {
 
       <Section id="product" index={n.product} title={title.product}>
         <p>
-          The demo is designed to show learning, not just a final score. It uses a dark, minimal interface inspired by
-          Linear, with a near-black background, hairline borders and an indigo accent.
+          The demo is designed to show learning, not just a final score. It uses a paper-and-ink look: a warm near-black
+          background, cream text, a coral accent, an editorial serif headline and monospace labels, with each panel
+          numbered like a figure in a paper.
         </p>
         {screenshot && <Screenshot image={screenshot} sizes="(min-width: 1200px) 752px, (min-width: 1024px) calc(100vw - 496px), calc(100vw - 48px)" />}
         <Bullets
@@ -537,15 +538,19 @@ export default function SnakeNNCaseStudy({ project, links }) {
               visitors can play the untrained network, the game 25 and game 80 versions, and the final one, and see the
               behaviour change.
             </Lead>,
-            <Lead key="net" label="Network view">
+            <Lead key="net" label="Network view (Fig. 2)">
               input neurons light up as the snake senses danger and food, and the three outputs show the live Q-value for
               each move.
             </Lead>,
-            <Lead key="chart" label="Training chart">
-              score per game with a moving average and hover tooltips.
+            <Lead key="chart" label="Training chart (Fig. 3)">
+              score per game with a 10-game moving average, next to the best training game, the greedy average over 30
+              games and the weight count.
             </Lead>,
             <Lead key="speed" label="Speed and pause controls">
-              with the space bar to pause.
+              1×, 2×, 5× and 12× speed, space bar to pause, R to restart.
+            </Lead>,
+            <Lead key="notes" label="How it works notes">
+              three short cards covering the forward pass, the Q-learning target and the hand-written backprop.
             </Lead>,
             <Lead key="resp" label="Responsive layout">
               works on a phone as well as a desktop.

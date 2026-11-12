@@ -10,10 +10,10 @@
 // Copy in `page` reuses text already published on the site (project cards +
 // Experience section). Leave a section out entirely rather than padding it.
 
-// TODO: paste the deployed Wumpus World demo URL here (e.g. "https://<name>.netlify.app/").
-// While it is empty, every "Live Demo" button for the project (homepage card,
-// case study header, links sidebar, $0 shipping strip, closing CTA) stays hidden.
-export const WUMPUS_DEMO_URL = "";
+// Deployed Wumpus World demo. Drives every "Live Demo" button for the project
+// (homepage card, case study header, links sidebar, $0 shipping strip, closing
+// CTA); setting it to "" hides them all again.
+export const WUMPUS_DEMO_URL = "https://wumpus-planner-live.netlify.app/";
 
 export const projects = [
   {
@@ -265,9 +265,9 @@ export const projects = [
     images: [
       {
         src: "/projects/snake-nn.png",
-        alt: "Snake-NN live demo mid-game: the trained agent's snake heading for the apple, with the \"What the network sees\" panel lighting up its active inputs and Q-values",
-        width: 2224,
-        height: 1442,
+        alt: "Snake-NN live demo in the new paper-and-ink design: the trained agent mid-game next to the 'What the network sees' network diagram with active inputs and Q-values.",
+        width: 2400,
+        height: 2120,
       },
     ],
     demo: "https://snake-nn.netlify.app/",
@@ -303,14 +303,12 @@ export const projects = [
       "A* Search",
       "JavaScript",
     ],
-    // TODO: placeholder illustration. Replace with a screenshot of the live demo
-    // mid-solve (indigo search glow visible), then update width, height and alt.
     images: [
       {
         src: "/projects/wumpus-world.png",
-        alt: "Illustration of a 4×4 Wumpus World: the agent at the start square, pits, the Wumpus beside the gold, an indigo glow over the squares the search expanded, and the planned route to the gold",
-        width: 2224,
-        height: 1442,
+        alt: "Wumpus Planner Live: three planners (BFS, A*, greedy) solving a 4×4 Wumpus World, with the search effort glowing on the grid and the PDDL action being executed highlighted.",
+        width: 2640,
+        height: 2104,
       },
     ],
     demo: WUMPUS_DEMO_URL || undefined,
@@ -318,7 +316,7 @@ export const projects = [
     page: {
       h1: "A planning agent that solves Wumpus World live",
       seoTitle: "Wumpus World PDDL Planner: A* vs BFS Search Comparison",
-      seoDescription: "A Wumpus World PDDL planner running live in the browser, with an A* vs BFS search comparison over 1,200 random worlds. AI planning portfolio of Rukshan Dias, Melbourne.",
+      seoDescription: "Wumpus World PDDL planner live demo: watch BFS, A* and greedy search solve Wumpus World live, plus an A* vs BFS search comparison. AI planning portfolio of Rukshan Dias, Melbourne.",
       eyebrow: "Nov 12, 2026 · Rukshan Dias",
       datePublished: "2026-11-12",
       schemaType: "SoftwareSourceCode",
