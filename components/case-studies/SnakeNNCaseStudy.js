@@ -5,106 +5,27 @@
 // Charts and diagrams are inline SVG; the code block is highlighted with a tiny
 // tokenizer below. No chart, maths or highlighting libraries.
 
-import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, TriangleAlert } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import Screenshot from "@/components/ui/Screenshot";
-
-const BLUE = "#60a5fa"; // blue-400
-const PURPLE = "#a855f7"; // purple-500
-
-/* ------------------------------------------------------------------ */
-/* Shared building blocks                                              */
-/* ------------------------------------------------------------------ */
-
-function Section({ id, index, title, children }) {
-  return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-28">
-      <div className="flex items-baseline gap-4 mb-6">
-        <span className="font-mono text-sm text-blue-400">{String(index).padStart(2, "0")}</span>
-        <h2 id={`${id}-title`} className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-          {title}
-        </h2>
-      </div>
-      <div className="space-y-6 text-neutral-300 text-lg leading-relaxed">{children}</div>
-    </section>
-  );
-}
-
-function Bullets({ items }) {
-  return (
-    <ul className="space-y-4">
-      {items.map((item, i) => (
-        <li key={i} className="flex items-start gap-3">
-          <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 shrink-0" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function Lead({ label, children }) {
-  return (
-    <>
-      <strong className="font-semibold text-white">{label}:</strong> {children}
-    </>
-  );
-}
-
-function Panel({ className = "", children }) {
-  return (
-    <div className={`rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm ${className}`}>{children}</div>
-  );
-}
-
-// Key/value or multi-column table. Key/value tables wrap; wide ones pass a
-// `minWidth` and scroll sideways on narrow screens. The wrapper is focusable
-// so keyboard users can scroll it too.
-function DataTable({ label, columns, rows, minWidth = "" }) {
-  return (
-    <div
-      role="region"
-      aria-label={label}
-      tabIndex={0}
-      className="overflow-x-auto rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-    >
-      <table className={`w-full text-left text-[15px] ${minWidth}`}>
-        <caption className="sr-only">{label}</caption>
-        <thead>
-          <tr className="border-b border-neutral-800 bg-neutral-950/40">
-            {columns.map((col) => (
-              <th
-                key={col}
-                scope="col"
-                className="px-4 sm:px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 whitespace-nowrap"
-              >
-                {col}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(([head, ...cells]) => (
-            <tr key={head} className="border-t border-neutral-800/70 first:border-t-0 hover:bg-neutral-800/30 transition-colors">
-              <th scope="row" className="px-4 sm:px-5 py-3.5 align-top font-medium text-neutral-100 sm:whitespace-nowrap">
-                {head}
-              </th>
-              {cells.map((cell, i) => (
-                <td key={i} className="px-4 sm:px-5 py-3.5 align-top text-neutral-300 leading-relaxed">
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function Mono({ children }) {
-  return <span className="font-mono text-cyan-300">{children}</span>;
-}
+import {
+  BLUE,
+  PURPLE,
+  Section,
+  Bullets,
+  Lead,
+  Panel,
+  Mono,
+  Code,
+  DataTable,
+  OnThisPage,
+  StackPanel,
+  CardGrid,
+  Callout,
+  ListPanels,
+  LiveDemoStrip,
+  ChartPanel,
+  ClosingCta,
+} from "@/components/case-studies/shared";
 
 /* ------------------------------------------------------------------ */
 /* Architecture diagram: 11 -> 64 -> 3                                 */
@@ -446,22 +367,7 @@ export default function SnakeNNCaseStudy({ project, links }) {
 
   return (
     <div className="space-y-20">
-      {/* On this page */}
-      <nav aria-label="On this page">
-        <ol className="flex flex-wrap gap-2">
-          {SECTIONS.map(([id, label], i) => (
-            <li key={id}>
-              <a
-                href={`#${id}`}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900/50 border border-neutral-800 text-sm text-neutral-400 hover:text-white hover:border-blue-500/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-              >
-                <span className="font-mono text-xs text-blue-400">{String(i + 1).padStart(2, "0")}</span>
-                {label}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <OnThisPage sections={SECTIONS} />
 
       <Section id="summary" index={n.summary} title={title.summary}>
         <p>
@@ -470,21 +376,13 @@ export default function SnakeNNCaseStudy({ project, links }) {
           averages 32.5 apples in greedy play, with a best training game of 65. It runs live in the browser, costs $0 to
           host, and lets visitors watch the agent go from random to competent.
         </p>
-        <Panel className="p-6">
-          <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Stack</h3>
-          <dl className="grid sm:grid-cols-3 gap-5 text-base">
-            {[
-              ["Training", "Python and NumPy"],
-              ["Demo", "Plain JavaScript and canvas"],
-              ["Deployment", "GitHub and a free static host (Netlify)"],
-            ].map(([k, v]) => (
-              <div key={k}>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-400 mb-1">{k}</dt>
-                <dd className="text-neutral-200 leading-snug">{v}</dd>
-              </div>
-            ))}
-          </dl>
-        </Panel>
+        <StackPanel
+          items={[
+            ["Training", "Python and NumPy"],
+            ["Demo", "Plain JavaScript and canvas"],
+            ["Deployment", "GitHub and a free static host (Netlify)"],
+          ]}
+        />
       </Section>
 
       <Section id="problem" index={n.problem} title={title.problem}>
@@ -497,25 +395,14 @@ export default function SnakeNNCaseStudy({ project, links }) {
           The goal was a learning agent built with{" "}
           <span className="text-white font-medium">no ML framework, published as a live link, for $0.</span>
         </p>
-        <ul className="grid sm:grid-cols-2 gap-3 text-base">
-          {[
+        <CardGrid
+          items={[
             ["No framework", "No PyTorch, TensorFlow or autograd."],
             ["No compute spend", "Trained on a laptop CPU, no GPU."],
             ["No hosting spend", "Static files only, no backend or database."],
             ["No dependencies at runtime", "Inference is two matrix multiplies in the browser."],
-          ].map(([k, v]) => (
-            <li
-              key={k}
-              className="p-5 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-blue-500/30 hover:bg-neutral-900/80 transition-colors duration-300"
-            >
-              <span className="flex items-center gap-2.5 font-semibold text-white mb-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 shrink-0" />
-                {k}
-              </span>
-              <span className="text-neutral-400 leading-relaxed">{v}</span>
-            </li>
-          ))}
-        </ul>
+          ]}
+        />
       </Section>
 
       <Section id="approach" index={n.approach} title={title.approach}>
@@ -605,23 +492,18 @@ export default function SnakeNNCaseStudy({ project, links }) {
           The agent stays near zero while it explores, then jumps once exploration ends: the average goes from 0.6 apples
           at game 75 to 25.9 by game 125, and settles around 30.
         </p>
-        <Panel className="p-4 sm:p-6">
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-4 px-1">
-            <h3 className="text-base font-semibold text-white">Average score, last 25 games</h3>
+        <ChartPanel
+          title="Average score, last 25 games"
+          label="Training curve chart"
+          legend={
             <span className="inline-flex items-center gap-2 text-xs text-neutral-400">
               <span aria-hidden="true" className="w-6 h-0.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" />
               Training run, 400 games
             </span>
-          </div>
-          <div
-            role="region"
-            aria-label="Training curve chart"
-            tabIndex={0}
-            className="overflow-x-auto rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-          >
-            <ResultsChart />
-          </div>
-        </Panel>
+          }
+        >
+          <ResultsChart />
+        </ChartPanel>
         <DataTable
           label="Average score over the last 25 games, by game"
           columns={["Game", ...CURVE.map((p) => String(p.game))]}
@@ -633,27 +515,14 @@ export default function SnakeNNCaseStudy({ project, links }) {
           with the final weights (no random moves), the mean was <span className="text-white font-medium">32.5</span> and
           the maximum was <span className="text-white font-medium">55</span>.
         </p>
-        <aside
-          aria-labelledby="snn-limits"
-          className="p-6 rounded-2xl bg-amber-400/[0.04] border border-amber-400/20 text-base"
-        >
-          <h3 id="snn-limits" className="flex items-center gap-2.5 font-semibold text-amber-200 mb-4">
-            <TriangleAlert size={18} aria-hidden="true" className="text-amber-300" />
-            Limitations
-          </h3>
-          <ul className="space-y-3 text-neutral-300 leading-relaxed">
-            {[
-              "Results come from one training run with one seed, so the exact numbers will vary between runs.",
-              "Performance plateaus near 30. The agent only sees the cells next to its head, so at longer lengths it likely traps itself in its own body.",
-              "Early games are almost random by design, which is why the first 75 games score close to zero.",
-            ].map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-amber-300/80 shrink-0" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </aside>
+        <Callout
+          id="snn-limits"
+          items={[
+            "Results come from one training run with one seed, so the exact numbers will vary between runs.",
+            "Performance plateaus near 30. The agent only sees the cells next to its head, so at longer lengths it likely traps itself in its own body.",
+            "Early games are almost random by design, which is why the first 75 games score close to zero.",
+          ]}
+        />
       </Section>
 
       <Section id="product" index={n.product} title={title.product}>
@@ -684,7 +553,7 @@ export default function SnakeNNCaseStudy({ project, links }) {
           ]}
         />
         <p>
-          The trained weights are embedded in a single <code className="font-mono text-base text-cyan-300">index.html</code>{" "}
+          The trained weights are embedded in a single <Code>index.html</Code>{" "}
           of about 100 KB, so there is no server, no API and nothing to break.
         </p>
       </Section>
@@ -705,28 +574,12 @@ export default function SnakeNNCaseStudy({ project, links }) {
             ["Backend and database", "None needed"],
           ]}
         />
-        <div className="relative rounded-2xl p-px bg-gradient-to-br from-blue-500/50 via-neutral-800 to-purple-500/40">
-          <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-5 p-6 rounded-[calc(1rem-1px)] bg-neutral-950/90 overflow-hidden">
-            <span className="absolute -top-16 -left-10 w-48 h-48 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-1">Live demo</p>
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-lg text-white hover:text-blue-300 transition-colors break-all"
-              >
-                snake-nn.netlify.app
-              </a>
-            </div>
-            <div className="relative">{links}</div>
-          </div>
-        </div>
+        <LiveDemoStrip href={project.demo} links={links} />
       </Section>
 
       <Section id="learned" index={n.learned} title={title.learned}>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 text-base">
-          {[
+        <ListPanels
+          panels={[
             {
               heading: "What I learned",
               icon: Check,
@@ -746,46 +599,15 @@ export default function SnakeNNCaseStudy({ project, links }) {
                 "Add a simple rule-based baseline to show how much the network adds.",
               ],
             },
-          ].map(({ heading, icon: Icon, items }) => (
-            <Panel key={heading} className="p-6 hover:border-blue-500/30 transition-colors duration-300">
-              <h3 className="flex items-center gap-2.5 font-semibold text-white text-lg mb-4">
-                <span className="grid place-items-center w-7 h-7 rounded-lg bg-neutral-950 border border-neutral-800 text-blue-400">
-                  <Icon size={15} aria-hidden="true" />
-                </span>
-                {heading}
-              </h3>
-              <ul className="space-y-3 text-neutral-300 leading-relaxed">
-                {items.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          ))}
-        </div>
+          ]}
+        />
       </Section>
 
-      {/* Closing CTA */}
-      <div className="relative p-8 sm:p-10 rounded-3xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm overflow-hidden text-center">
-        <span className="absolute -top-24 left-1/4 w-72 h-72 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
-        <span className="absolute -bottom-24 right-1/4 w-72 h-72 bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
-        <div className="relative">
-          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-3">Watch it go from random to competent</h2>
-          <p className="text-neutral-400 mb-8">Switch checkpoints in the live demo, or read the code on GitHub.</p>
-          <div className="flex flex-col items-center gap-5">
-            <div className="flex justify-center">{links}</div>
-            <Link
-              href="/#projects"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
-              Back to projects
-            </Link>
-          </div>
-        </div>
-      </div>
+      <ClosingCta
+        title="Watch it go from random to competent"
+        text="Switch checkpoints in the live demo, or read the code on GitHub."
+        links={links}
+      />
     </div>
   );
 }

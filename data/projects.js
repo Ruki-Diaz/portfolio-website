@@ -10,6 +10,11 @@
 // Copy in `page` reuses text already published on the site (project cards +
 // Experience section). Leave a section out entirely rather than padding it.
 
+// TODO: paste the deployed Wumpus World demo URL here (e.g. "https://<name>.netlify.app/").
+// While it is empty, every "Live Demo" button for the project (homepage card,
+// case study header, links sidebar, $0 shipping strip, closing CTA) stays hidden.
+export const WUMPUS_DEMO_URL = "";
+
 export const projects = [
   {
     slug: "melbourne-pulse",
@@ -278,6 +283,49 @@ export const projects = [
     },
   },
   {
+    slug: "wumpus-world",
+    indexable: true,
+    showCardImage: true,
+    title: "Wumpus World AI Planning (PDDL)",
+    description: "A planner that solves a fresh Wumpus World live in the browser. A* expands a median 3.9 to 5.8 times fewer nodes than BFS while finding the same optimal plan. Built from my SIT215 PDDL assignment.",
+    stats: [
+      "3.9 to 5.8× fewer nodes, A* vs BFS (median)",
+      "1,200 random worlds benchmarked",
+      "900 test worlds, every plan valid",
+      "$0 hosting",
+    ],
+    tech: [
+      "PDDL",
+      "AI Planning",
+      "Problem Solving",
+      "Constraint Reasoning",
+      "Intelligent Agents",
+      "A* Search",
+      "JavaScript",
+    ],
+    // TODO: placeholder illustration. Replace with a screenshot of the live demo
+    // mid-solve (indigo search glow visible), then update width, height and alt.
+    images: [
+      {
+        src: "/projects/wumpus-world.png",
+        alt: "Illustration of a 4×4 Wumpus World: the agent at the start square, pits, the Wumpus beside the gold, an indigo glow over the squares the search expanded, and the planned route to the gold",
+        width: 2224,
+        height: 1442,
+      },
+    ],
+    demo: WUMPUS_DEMO_URL || undefined,
+    github: "https://github.com/Ruki-Diaz/wumpus-world-ai-planner-pddl",
+    page: {
+      h1: "A planning agent that solves Wumpus World live",
+      seoTitle: "Wumpus World PDDL Planner: A* vs BFS Search Comparison",
+      seoDescription: "A Wumpus World PDDL planner running live in the browser, with an A* vs BFS search comparison over 1,200 random worlds. AI planning portfolio of Rukshan Dias, Melbourne.",
+      eyebrow: "Nov 12, 2026 · Rukshan Dias",
+      datePublished: "2026-11-12",
+      schemaType: "SoftwareSourceCode",
+      body: "wumpus-world",
+    },
+  },
+  {
     slug: "weather-impact-public-transport",
     hideCaseStudyImages: true,
     indexable: true,
@@ -377,12 +425,6 @@ export const projects = [
     title: "Wheelchair Navigation System (AI)",
     description: "Plans wheelchair-accessible routes with A* search, putting terrain and accessibility ahead of shortest distance.",
     tech: ["Python", "A*", "Graph Modelling", "AI", "Pathfinding"],
-  },
-  {
-    indexable: false,
-    title: "Wumpus World AI Planning (PDDL)",
-    description: "Solves the Wumpus World in PDDL with sensing and constraint reasoning, comparing several planning solvers.",
-    tech: ["PDDL", "AI Planning", "Problem Solving", "Constraint Reasoning", "Intelligent Agents"],
   },
 ];
 
