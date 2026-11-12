@@ -6,10 +6,16 @@ import { FaGithub, FaExternalLinkAlt, FaFilePdf } from "react-icons/fa";
 import Footer from "@/components/layout/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import AnimatedGridBackground from "@/components/ui/AnimatedGridBackground";
+import Screenshot from "@/components/ui/Screenshot";
+import SnakeNNCaseStudy from "@/components/case-studies/SnakeNNCaseStudy";
 import { projectPages, getProjectBySlug, getRelatedProjects, getCaseStudyImages, PAGE_SECTIONS } from "@/data/projects";
 import { SITE, PERSON_ID, DEFAULT_OG_IMAGE, toJsonLd } from "@/lib/site";
 
 const SECTION_TITLES = { problem: "Problem", data: "Data", method: "Method", results: "Results" };
+
+// Long-form case studies with their own body component, keyed by `page.body`.
+// They replace the generic Problem/Data/Method/Results sections.
+const CASE_STUDY_BODIES = { "snake-nn": SnakeNNCaseStudy };
 
 // Only the slugs returned by generateStaticParams exist; anything else 404s.
 export const dynamicParams = false;
@@ -69,6 +75,8 @@ function buildJsonLd(project) {
     inLanguage: "en-AU",
     author: { "@type": "Person", "@id": PERSON_ID, name: "Rukshan Dias", url: SITE },
   };
+
+  if (project.page.datePublished) work.datePublished = project.page.datePublished;
 
   const images = getCaseStudyImages(project);
   if (images.length) work.image = images.map((img) => `${SITE}${img.src}`);
@@ -204,34 +212,6 @@ function Section({ index, title, items }) {
   );
 }
 
-function Screenshot({ image, sizes, className = "", eager = false, frameRatio }) {
-  // Small source images get padding so they are not stretched past their native size;
-  // everything else displays at its real aspect ratio, uncropped.
-  const isSmall = image.width < 1200;
-  return (
-    <figure className={`group ${className}`}>
-      <div className="relative rounded-2xl p-px bg-gradient-to-br from-neutral-700/60 via-neutral-800 to-neutral-800 group-hover:from-blue-500/50 group-hover:to-purple-500/40 transition-colors duration-500">
-        <div
-          className={`relative rounded-[calc(1rem-1px)] overflow-hidden bg-neutral-950 ${isSmall ? "aspect-[16/10] p-4 sm:p-6" : ""}`}
-          style={isSmall ? undefined : { aspectRatio: frameRatio ?? `${image.width} / ${image.height}` }}
-        >
-          <div className="relative w-full h-full">
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              sizes={sizes}
-              loading={eager ? "eager" : "lazy"}
-              className={`${isSmall || frameRatio ? "object-contain" : "object-cover"} transition-transform duration-700 ease-out group-hover:scale-[1.02]`}
-            />
-          </div>
-        </div>
-      </div>
-      <figcaption className="mt-3 text-sm text-neutral-500 leading-relaxed">{image.alt}</figcaption>
-    </figure>
-  );
-}
-
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -240,7 +220,9 @@ export default async function ProjectPage({ params }) {
   const { page } = project;
   const [leadImage, ...galleryImages] = getCaseStudyImages(project);
   const related = getRelatedProjects(project.slug);
-  const sections = PAGE_SECTIONS.filter((key) => page[key]?.length);
+  const CustomBody = CASE_STUDY_BODIES[page.body];
+  const sections = CustomBody ? [] : PAGE_SECTIONS.filter((key) => page[key]?.length);
+  const hasBody = Boolean(CustomBody) || sections.length > 0;
   const hasTech = project.tech?.length > 0;
   const hasLinks = getProjectLinks(project).length > 0;
   const hasSidebar = hasTech || hasLinks;
@@ -315,11 +297,18 @@ export default async function ProjectPage({ params }) {
         {/* Stats */}
         {project.stats && (
           <div className="px-6 sm:px-12 pb-12">
-            <dl className="max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              {project.stats.map((stat) => (
+            <dl
+              className={`max-w-6xl mx-auto grid grid-cols-2 gap-3 sm:gap-4 ${
+                project.stats.length === 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"
+              }`}
+            >
+              {project.stats.map((stat, i) => (
                 <div
                   key={stat}
-                  className="p-5 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm hover:border-cyan-400/30 transition-colors duration-300"
+                  // An odd last card spans the full row on mobile instead of sitting alone in a half.
+                  className={`p-5 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm hover:border-cyan-400/30 transition-colors duration-300 ${
+                    project.stats.length % 2 === 1 && i === project.stats.length - 1 ? "col-span-2 lg:col-span-1" : ""
+                  }`}
                 >
                   <dt className="sr-only">Key result</dt>
                   <dd className="flex items-start gap-2 font-mono text-sm sm:text-base text-neutral-200">
@@ -345,13 +334,19 @@ export default async function ProjectPage({ params }) {
         )}
 
         {/* Body */}
-        {(sections.length > 0 || hasSidebar) && (
+        {(hasBody || hasSidebar) && (
           <div className="px-6 sm:px-12 pb-24 border-t border-neutral-800/80">
             <div
               className={`max-w-6xl mx-auto pt-16 sm:pt-20 grid gap-16 lg:gap-20 ${
-                sections.length > 0 && hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_320px]" : ""
+                hasBody && hasSidebar ? "lg:grid-cols-[minmax(0,1fr)_320px]" : ""
               }`}
             >
+              {CustomBody && (
+                <article className="min-w-0">
+                  <CustomBody project={project} links={<ProjectLinks project={project} />} />
+                </article>
+              )}
+
               {sections.length > 0 && (
                 <article className={`space-y-16 ${hasSidebar ? "" : "max-w-3xl"}`}>
                   {sections.map((key, i) => (
@@ -363,7 +358,7 @@ export default async function ProjectPage({ params }) {
               {hasSidebar && (
                 <aside
                   className={
-                    sections.length > 0
+                    hasBody
                       ? "space-y-6 lg:sticky lg:top-28 self-start"
                       : "grid gap-6 md:grid-cols-2 items-start"
                   }

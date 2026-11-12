@@ -3,6 +3,7 @@
 //
 // Projects with `featured: true` are the main cards at the top of the homepage
 // (with screenshots); the rest are listed below them as compact cards.
+// A compact card shows its first screenshot only when `showCardImage` is set.
 //
 // Projects with `indexable: true` and a `page` object get their own
 // /projects/[slug] page, a sitemap entry and a homepage case study link.
@@ -240,6 +241,40 @@ export const projects = [
       results: [
         "Improved internal tracking and operational efficiency.",
       ],
+    },
+  },
+  {
+    slug: "snake-nn",
+    indexable: true,
+    showCardImage: true,
+    title: "Snake-NN: Neural Network Plays Snake",
+    description: "A neural network that teaches itself Snake with NumPy only. Hand-written backprop and Adam, 32.5 apples average in greedy play, running live in the browser at $0.",
+    stats: [
+      "32.5 avg apples (greedy, 30 games)",
+      "65 best training game",
+      "963 weights",
+      "25 s CPU training",
+      "$0 hosting",
+    ],
+    tech: ["Python", "NumPy", "Reinforcement Learning", "Q-learning", "Neural Networks", "JavaScript"],
+    images: [
+      {
+        src: "/projects/snake-nn.png",
+        alt: "Snake-NN live demo mid-game: the trained agent's snake heading for the apple, with the \"What the network sees\" panel lighting up its active inputs and Q-values",
+        width: 2224,
+        height: 1442,
+      },
+    ],
+    demo: "https://snake-nn.netlify.app/",
+    github: "https://github.com/Ruki-Diaz/snake-nn",
+    page: {
+      h1: "A neural network that learns Snake",
+      seoTitle: "Snake-NN: Neural Network Snake in NumPy with Q-learning",
+      seoDescription: "A neural network that learns Snake with NumPy only: Q-learning in Python with hand-written backprop and Adam, by Rukshan Dias, data scientist in Melbourne.",
+      eyebrow: "Nov 12, 2026 · Rukshan Dias",
+      datePublished: "2026-11-12",
+      schemaType: "SoftwareSourceCode",
+      body: "snake-nn",
     },
   },
   {

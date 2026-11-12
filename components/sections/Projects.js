@@ -398,6 +398,7 @@ export default function Projects() {
             >
               {otherProjects.map((project) => {
                 const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
+                const thumb = project.showCardImage ? project.images?.[0] : null;
                 return (
                   <motion.div
                     key={project.title}
@@ -407,6 +408,17 @@ export default function Projects() {
                     }}
                     className="group flex flex-col bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-neutral-900/70 transition-all duration-300"
                   >
+                    {thumb && (
+                      <div className="relative aspect-[16/9] mb-5 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950">
+                        <Image
+                          src={thumb.src}
+                          alt={thumb.alt}
+                          fill
+                          sizes="(min-width: 1152px) 528px, (min-width: 640px) calc(50vw - 84px), calc(100vw - 98px)"
+                          className="object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                        />
+                      </div>
+                    )}
                     <h4 className="text-lg font-bold text-white mb-2">
                       {caseStudy ? (
                         <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
