@@ -368,7 +368,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
       <Section id="product" index={n.product} title={title.product}>
         <p>
           The demo is designed to show the planner thinking, not just a final answer. It uses a dark, minimal interface
-          with a near-black background, hairline borders and an indigo accent, matching my Snake project.
+          with a near-black background, hairline borders and an indigo accent.
         </p>
         {screenshot && (
           <Screenshot

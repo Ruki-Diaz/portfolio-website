@@ -9,6 +9,7 @@ import AnimatedGridBackground from "@/components/ui/AnimatedGridBackground";
 import Screenshot from "@/components/ui/Screenshot";
 import SnakeNNCaseStudy from "@/components/case-studies/SnakeNNCaseStudy";
 import WumpusWorldCaseStudy from "@/components/case-studies/WumpusWorldCaseStudy";
+import NeuroDriveCaseStudy from "@/components/case-studies/NeuroDriveCaseStudy";
 import { projectPages, getProjectBySlug, getRelatedProjects, getCaseStudyImages, PAGE_SECTIONS } from "@/data/projects";
 import { SITE, PERSON_ID, DEFAULT_OG_IMAGE, toJsonLd } from "@/lib/site";
 
@@ -16,7 +17,11 @@ const SECTION_TITLES = { problem: "Problem", data: "Data", method: "Method", res
 
 // Long-form case studies with their own body component, keyed by `page.body`.
 // They replace the generic Problem/Data/Method/Results sections.
-const CASE_STUDY_BODIES = { "snake-nn": SnakeNNCaseStudy, "wumpus-world": WumpusWorldCaseStudy };
+const CASE_STUDY_BODIES = {
+  neurodrive: NeuroDriveCaseStudy,
+  "snake-nn": SnakeNNCaseStudy,
+  "wumpus-world": WumpusWorldCaseStudy,
+};
 
 // Only the slugs returned by generateStaticParams exist; anything else 404s.
 export const dynamicParams = false;
