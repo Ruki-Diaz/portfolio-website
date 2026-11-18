@@ -249,6 +249,30 @@ export const projects = [
     },
   },
   {
+    slug: "neurodrive",
+    indexable: false,
+    showCardImage: true,
+    title: "NeuroDrive: Self-Driving Cars That Learn on the Real Melbourne CBD",
+    description: "100 neural-network drivers learn Melbourne's real Hoddle Grid from scratch through neuroevolution, up to A* routes from Flinders St Station to Queen Victoria Market. In the browser, at $0.",
+    stats: [
+      "100 drivers per generation",
+      "7-ray sensors",
+      "OpenStreetMap road graph",
+      "$0, no backend",
+    ],
+    tech: ["JavaScript", "Neural Networks", "Neuroevolution", "A* Pathfinding", "OpenStreetMap", "Canvas", "Three.js"],
+    images: [
+      {
+        src: "/projects/neurodrive.png",
+        alt: "NeuroDrive live demo: a neural-network car following its A* route up Swanston Street on the OpenStreetMap Melbourne CBD map, next to live generation stats and the network's activations.",
+        width: 1600,
+        height: 900,
+      },
+    ],
+    demo: "https://neurodrive-melb.netlify.app/",
+    github: "https://github.com/Ruki-Diaz/neurodrive",
+  },
+  {
     slug: "snake-nn",
     indexable: true,
     showCardImage: true,
