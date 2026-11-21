@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BrainCircuit, Code2, Server, Sparkles, Wrench } from "lucide-react";
+import { BrainCircuit, Code2, Server, ShieldCheck, Sparkles, Wrench } from "lucide-react";
 
 const skillsData = [
   {
@@ -12,7 +12,7 @@ const skillsData = [
   {
     category: "Data & ML",
     icon: BrainCircuit,
-    skills: ["Pandas", "Scikit-learn", "LightGBM", "SHAP", "TensorFlow", "PyTorch"],
+    skills: ["Artificial Intelligence", "Pandas", "Scikit-learn", "LightGBM", "SHAP", "TensorFlow", "PyTorch"],
   },
   {
     category: "Web & Backend",
@@ -29,7 +29,14 @@ const skillsData = [
     icon: Sparkles,
     skills: ["Claude", "Claude Code", "Antigravity", "Codex", "Framer"],
     // Spans the remaining two columns so the grid stays balanced.
-    wide: true,
+    span: "sm:col-span-2",
+  },
+  {
+    category: "Engineering Practice",
+    icon: ShieldCheck,
+    skills: ["Code Review", "Software Architecture", "Application Security"],
+    // Closes the grid with a full-width row at every breakpoint.
+    span: "sm:col-span-2 lg:col-span-3",
   },
 ];
 
@@ -74,12 +81,12 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {skillsData.map(({ category, icon: Icon, skills, wide }) => (
+          {skillsData.map(({ category, icon: Icon, skills, span }) => (
             <motion.div
               key={category}
               variants={itemVariants}
               className={`group flex flex-col gap-5 bg-neutral-900/50 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:bg-neutral-800/50 hover:border-blue-500/30 transition-all duration-300 ${
-                wide ? "sm:col-span-2" : ""
+                span ?? ""
               }`}
             >
               <div className="flex items-center gap-3">

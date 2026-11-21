@@ -55,19 +55,20 @@ export default function About() {
 
         <div className="max-w-[65ch] space-y-6 text-base sm:text-lg text-neutral-400 leading-relaxed sm:leading-8">
           <p>
-            I&apos;m a final-year Computer Science student at Deakin, majoring in Data Science, and I like work that
-            ends in something people can actually use. That&apos;s why I build <Em>end to end</Em>: from cleaning messy
+            I&apos;m a Computer Science (Data Science) graduate from Deakin and an <Em>AI solutions consultant</Em>,
+            and I like work that ends in something people can actually use. That&apos;s why I build <Em>end to end</Em>: from cleaning messy
             open data and training forecasting models to shipping the web app on top of it.
           </p>
           <p>
             Most of my projects start with a real Melbourne question, like how busy the CBD will be tomorrow or how rain
             changes transport demand, and finish as a <Em>live product running on free tiers</Em>. At Chameleon I also
             led a data science team, setting review standards and mentoring teammates while staying the #1 contributor
-            in the repository.
+            in the repository. Now I consult on AI solutions and software development, reviewing code, architecture
+            and security, and advising on practical AI adoption in the development workflow.
           </p>
           <p>
-            I&apos;m looking for graduate and early-career roles in data science and software engineering, where I can
-            own problems from data to deployment. Outside of that, I&apos;m drawn to{" "}
+            Alongside consulting, I&apos;m open to graduate and early-career roles in data science and software
+            engineering, where I can own problems from data to deployment. Outside of that, I&apos;m drawn to{" "}
             <Em>startups and entrepreneurship</Em>: I enjoy spotting a gap, testing it quickly and building the first
             version myself. Long term, I want to build products and businesses of my own.
           </p>

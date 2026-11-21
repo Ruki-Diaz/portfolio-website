@@ -1,9 +1,22 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, GraduationCap } from "lucide-react";
 
 const workData = [
+  {
+    title: "Consultant – AI Solutions & Software Development",
+    organization: "BC Outrageous",
+    engagement: ["Contract (subcontract)", "Remote"],
+    date: "Nov 2026 – Present",
+    description: [
+      "Provide AI solutions and software development consulting alongside the engineering team.",
+      "Review code quality, architecture, security and performance, and report findings with recommendations.",
+      "Advise on practical AI adoption across the development workflow.",
+    ],
+    tech: ["Code Review", "Software Architecture", "Artificial Intelligence", "Git", "Application Security"],
+  },
   {
     title: "Data Science Team Lead",
     organization: "Chameleon - Smarter World Melbourne",
@@ -131,7 +144,15 @@ function TimelineItem({ item, index, type }) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-6">
           <div>
             <h4 className="text-lg sm:text-xl font-bold text-white leading-snug">{item.title}</h4>
-            <p className={`mt-1 font-medium ${theme.text}`}>{item.organization}</p>
+            <p className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <span className={`font-medium ${theme.text}`}>{item.organization}</span>
+              {item.engagement?.map((detail) => (
+                <Fragment key={detail}>
+                  <span aria-hidden="true" className="text-neutral-600">·</span>
+                  <span className="text-sm text-neutral-400">{detail}</span>
+                </Fragment>
+              ))}
+            </p>
           </div>
           <p className="shrink-0 self-start text-sm font-medium px-3 py-1 rounded-full bg-neutral-950 border border-neutral-800 text-neutral-300 whitespace-nowrap">
             {item.date}

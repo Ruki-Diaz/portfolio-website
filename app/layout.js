@@ -6,8 +6,8 @@ import { SITE, DEFAULT_OG_IMAGE, personJsonLd, toJsonLd } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const TITLE = "Rukshan Dias | Data Scientist & Software Engineer, Melbourne";
-const DESCRIPTION = "Rukshan Dias is a Melbourne-based data scientist and software engineer (Deakin University). Live ML projects, open-data analytics and full-stack apps.";
+const TITLE = "Rukshan Dias | AI Solutions & Software Development Consultant, Melbourne";
+const DESCRIPTION = "Rukshan Dias is a Melbourne-based data scientist and Deakin Computer Science graduate, consulting in AI solutions and software development. Live ML projects and full-stack apps.";
 
 export const metadata = {
   metadataBase: new URL(SITE),

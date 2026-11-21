@@ -46,7 +46,7 @@ export default function Contact() {
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Let&apos;s Work Together</h2>
           <p className="text-neutral-400 text-lg max-w-2xl">
-            Let&apos;s work together. I&apos;m open to internships, graduate roles, freelance opportunities, and collaborations.
+            Let&apos;s work together. I&apos;m open to graduate and early-career roles, consulting and freelance work, and collaborations.
           </p>
         </div>
 
