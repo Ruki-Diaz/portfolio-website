@@ -13,7 +13,7 @@ export function Section({ id, index, title, children }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-28">
       <div className="flex items-baseline gap-4 mb-6">
-        <span className="font-mono text-sm text-blue-400">{String(index).padStart(2, "0")}</span>
+        <span className="font-mono text-sm text-accent">{String(index).padStart(2, "0")}</span>
         <h2 id={`${id}-title`} className="text-2xl md:text-3xl font-bold text-white tracking-tight">
           {title}
         </h2>
@@ -55,11 +55,11 @@ export function Panel({ className = "", children }) {
 }
 
 export function Mono({ children }) {
-  return <span className="font-mono text-cyan-300">{children}</span>;
+  return <span className="font-mono text-accent">{children}</span>;
 }
 
 export function Code({ children }) {
-  return <code className="font-mono text-base text-cyan-300">{children}</code>;
+  return <code className="font-mono text-base text-accent">{children}</code>;
 }
 
 // Key/value or multi-column table. Key/value tables wrap; wide ones pass a
@@ -118,7 +118,7 @@ export function OnThisPage({ sections }) {
               href={`#${id}`}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-900/50 border border-neutral-800 text-sm text-neutral-400 hover:text-white hover:border-blue-500/40 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
-              <span className="font-mono text-xs text-blue-400">{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, "0")}</span>
               {label}
             </a>
           </li>
@@ -132,11 +132,11 @@ export function OnThisPage({ sections }) {
 export function StackPanel({ items }) {
   return (
     <Panel className="p-6">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Stack</h3>
+      <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Stack</h3>
       <dl className="grid sm:grid-cols-3 gap-5 text-base">
         {items.map(([k, v]) => (
           <div key={k}>
-            <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-blue-400 mb-1">{k}</dt>
+            <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-accent mb-1">{k}</dt>
             <dd className="text-neutral-200 leading-snug">{v}</dd>
           </div>
         ))}
@@ -169,8 +169,8 @@ export function CardGrid({ items }) {
 export function Callout({ id, title = "Limitations", intro, items }) {
   return (
     <aside aria-labelledby={id} className="p-6 rounded-2xl bg-amber-400/[0.04] border border-amber-400/20 text-base">
-      <h3 id={id} className="flex items-center gap-2.5 font-semibold text-amber-200 mb-4">
-        <TriangleAlert size={18} aria-hidden="true" className="text-amber-300" />
+      <h3 id={id} className="flex items-center gap-2.5 font-semibold text-white mb-4">
+        <TriangleAlert size={18} aria-hidden="true" className="text-accent" />
         {title}
       </h3>
       {intro && <p className="text-neutral-300 leading-relaxed mb-4">{intro}</p>}
@@ -194,7 +194,7 @@ export function ListPanels({ panels }) {
       {panels.map(({ heading, icon: Icon, items }) => (
         <Panel key={heading} className="p-6 hover:border-blue-500/30 transition-colors duration-300">
           <h3 className="flex items-center gap-2.5 font-semibold text-white text-lg mb-4">
-            <span className="grid place-items-center w-7 h-7 rounded-lg bg-neutral-950 border border-neutral-800 text-blue-400">
+            <span className="grid place-items-center w-7 h-7 rounded-lg bg-neutral-950 border border-neutral-800 text-accent">
               <Icon size={15} aria-hidden="true" />
             </span>
             {heading}
@@ -220,7 +220,7 @@ export function LiveDemoStrip({ href, links }) {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-lg text-white hover:text-blue-300 transition-colors break-all"
+            className="font-mono text-lg text-white hover:text-accent transition-colors break-all"
           >
             {host}
           </a>

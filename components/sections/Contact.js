@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Send, CheckCircle2, CircleAlert } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 export default function Contact() {
@@ -63,7 +63,7 @@ export default function Contact() {
                 <Mail className="text-neutral-300 group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">Email</p>
+                <p className="text-sm text-neutral-400 font-medium">Email</p>
                 <p className="text-white font-medium">dias.rukshan@gmail.com</p>
               </div>
             </a>
@@ -75,10 +75,10 @@ export default function Contact() {
               className="flex items-center gap-4 p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:bg-neutral-800/50 hover:border-neutral-700 transition-colors group"
             >
               <div className="w-12 h-12 bg-neutral-950 rounded-lg flex items-center justify-center border border-neutral-800 group-hover:border-neutral-700 transition-colors">
-                <FaLinkedin className="text-neutral-300 group-hover:text-blue-500 transition-colors text-xl" />
+                <FaLinkedin className="text-neutral-300 group-hover:text-white transition-colors text-xl" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">LinkedIn</p>
+                <p className="text-sm text-neutral-400 font-medium">LinkedIn</p>
                 <p className="text-white font-medium">Rukshan Dias</p>
               </div>
             </a>
@@ -93,7 +93,7 @@ export default function Contact() {
                 <FaGithub className="text-neutral-300 group-hover:text-white transition-colors text-xl" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">GitHub</p>
+                <p className="text-sm text-neutral-400 font-medium">GitHub</p>
                 <p className="text-white font-medium">@Ruki-Diaz</p>
               </div>
             </a>
@@ -104,13 +104,13 @@ export default function Contact() {
             {status.submitted ? (
               <div className="bg-neutral-900/50 border border-emerald-500/30 rounded-2xl p-8 flex flex-col items-center justify-center h-full text-center gap-4">
                 <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mb-2">
-                  <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                  <CheckCircle2 className="w-8 h-8 text-accent" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">Message Sent!</h3>
                 <p className="text-neutral-400">Thanks for reaching out. I&apos;ll get back to you as soon as possible.</p>
                 <button 
                   onClick={() => setStatus({ submitted: false, submitting: false, error: null })}
-                  className="mt-4 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                  className="mt-4 text-sm font-medium text-accent hover:text-white transition-colors"
                 >
                   Send another message
                 </button>
@@ -126,7 +126,7 @@ export default function Contact() {
                       name="name"
                       required
                       placeholder="John Doe"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -137,7 +137,7 @@ export default function Contact() {
                       name="email"
                       required
                       placeholder="john@example.com"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                     />
                   </div>
                 </div>
@@ -150,12 +150,15 @@ export default function Contact() {
                     required
                     rows={5}
                     placeholder="Tell me about your project..."
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
                   />
                 </div>
 
                 {status.error && (
-                  <p className="text-sm font-medium text-red-400">{status.error}</p>
+                  <p role="alert" className="flex items-start gap-2 text-sm font-medium text-neutral-100">
+                    <CircleAlert size={16} aria-hidden="true" className="mt-0.5 shrink-0" />
+                    {status.error}
+                  </p>
                 )}
 
                 <button

@@ -13,19 +13,19 @@ const interests = [
     title: "Data Science",
     description: "Turning messy real-world data into forecasts and insights people can act on.",
     icon: ChartLine,
-    accent: "text-blue-400 group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)]",
+    accent: "text-accent group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)]",
   },
   {
     title: "Software Engineering",
     description: "Building reliable, maintainable full-stack products, from pipelines to polished UIs.",
     icon: Code2,
-    accent: "text-emerald-400 group-hover:border-emerald-500/40 group-hover:shadow-[0_0_18px_rgba(52,211,153,0.3)]",
+    accent: "text-accent group-hover:border-emerald-500/40 group-hover:shadow-[0_0_18px_rgba(52,211,153,0.3)]",
   },
   {
     title: "Tech Entrepreneurship",
     description: "Spotting gaps, testing ideas fast and building first versions of products and businesses.",
     icon: Rocket,
-    accent: "text-purple-400 group-hover:border-purple-500/40 group-hover:shadow-[0_0_18px_rgba(192,132,252,0.3)]",
+    accent: "text-accent group-hover:border-purple-500/40 group-hover:shadow-[0_0_18px_rgba(192,132,252,0.3)]",
   },
 ];
 

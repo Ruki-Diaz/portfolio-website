@@ -9,6 +9,10 @@
 // /projects/[slug] page, a sitemap entry and a homepage case study link.
 // Copy in `page` reuses text already published on the site (project cards +
 // Experience section). Leave a section out entirely rather than padding it.
+//
+// `shortTitle` (optional) is the name on a homepage folder sheet. Without it
+// the sheet uses the title up to its first ": " or " – " ("NeuroDrive: Self-
+// Driving…" → "NeuroDrive"). The full title is still used everywhere else.
 
 // Deployed Wumpus World demo. Drives every "Live Demo" button for the project
 // (homepage card, case study header, links sidebar, $0 shipping strip, closing
@@ -321,6 +325,7 @@ export const projects = [
     indexable: true,
     showCardImage: true,
     title: "Wumpus World AI Planning (PDDL)",
+    shortTitle: "Wumpus World",
     description: "A planner that solves a fresh Wumpus World live in the browser. A* expands a median 3.9 to 5.8 times fewer nodes than BFS while finding the same optimal plan. Built from my SIT215 PDDL assignment.",
     stats: [
       "3.9 to 5.8× fewer nodes, A* vs BFS (median)",
@@ -362,6 +367,7 @@ export const projects = [
     hideCaseStudyImages: true,
     indexable: true,
     title: "Weather Impact on Public Transport",
+    shortTitle: "Weather Impact",
     description: "Predicts Melbourne transport congestion from BOM rainfall data with ML, plus an LLM layer that explains results.",
     tech: ["Python", "Pandas", "Scikit-Learn", "Machine Learning", "LLM Prompting", "RAG"],
     images: [
@@ -407,6 +413,7 @@ export const projects = [
     hideCaseStudyImages: true,
     indexable: true,
     title: "Melbourne Housing Price Prediction",
+    shortTitle: "Housing Prices",
     description: "A Streamlit house-price app built on 225 records, 4 models, 5-fold CV and SHAP, with a full PDF report.",
     tech: ["Python", "Pandas", "NumPy", "Scikit-learn", "Matplotlib", "Seaborn", "SHAP", "Streamlit", "Joblib", "Jupyter Notebook"],
     images: [
@@ -455,6 +462,7 @@ export const projects = [
   {
     indexable: false,
     title: "Wheelchair Navigation System (AI)",
+    shortTitle: "Wheelchair Nav",
     description: "Plans wheelchair-accessible routes with A* search, putting terrain and accessibility ahead of shortest distance.",
     tech: ["Python", "A*", "Graph Modelling", "AI", "Pathfinding"],
   },

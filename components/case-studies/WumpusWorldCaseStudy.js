@@ -31,7 +31,7 @@ import {
 
 const SOLVERS = [
   { key: "bfs", name: "BFS", fill: "#737373", label: "fill-neutral-400" },
-  { key: "astar", name: "A*", fill: INDIGO, label: "fill-indigo-200" },
+  { key: "astar", name: "A*", fill: INDIGO, label: "fill-accent" },
   { key: "greedy", name: "Greedy", fill: "#3f3f46", stroke: "#a1a1aa", label: "fill-neutral-400" },
 ];
 
@@ -58,7 +58,7 @@ function Legend() {
   return (
     <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-neutral-400" aria-label="Legend">
       {SOLVERS.map((s) => (
-        <li key={s.key} className={`inline-flex items-center gap-2 ${s.key === "astar" ? "text-indigo-200 font-medium" : ""}`}>
+        <li key={s.key} className={`inline-flex items-center gap-2 ${s.key === "astar" ? "text-accent font-medium" : ""}`}>
           <Swatch solver={s} />
           {s.name}
         </li>
@@ -90,7 +90,7 @@ function NodesChart() {
         ).join(". ")}.`}
       </desc>
 
-      <text x="0" y="16" className="fill-neutral-500" fontSize="12">
+      <text x="0" y="16" className="fill-neutral-400" fontSize="12">
         Nodes expanded (mean)
       </text>
 
@@ -98,7 +98,7 @@ function NodesChart() {
       {[0, 25, 50, 75, 100].map((v) => (
         <g key={v}>
           <line x1={m.l} x2={W - m.r} y1={y(v)} y2={y(v)} className="stroke-neutral-800" strokeDasharray={v ? "3 5" : undefined} />
-          <text x={m.l - 10} y={y(v) + 4} textAnchor="end" className="fill-neutral-500 font-mono" fontSize="12">
+          <text x={m.l - 10} y={y(v) + 4} textAnchor="end" className="fill-neutral-400 font-mono" fontSize="12">
             {v}
           </text>
         </g>
@@ -144,7 +144,7 @@ function NodesChart() {
             <text x={cx} y={base + 24} textAnchor="middle" className="fill-neutral-200" fontSize="14" fontWeight="600">
               {d.grid}
             </text>
-            <text x={cx} y={base + 46} textAnchor="middle" className="fill-indigo-300 font-mono" fontSize="12">
+            <text x={cx} y={base + 46} textAnchor="middle" className="fill-accent font-mono" fontSize="12">
               {`BFS ÷ A* = ${d.ratio}`}
             </text>
           </g>
@@ -159,7 +159,7 @@ function NodesChart() {
 /* ------------------------------------------------------------------ */
 
 const V = ({ children }) => <i className="text-white">{children}</i>;
-const F = ({ children }) => <span className="text-indigo-300">{children}</span>;
+const F = ({ children }) => <span className="text-accent">{children}</span>;
 
 function HeuristicFormula() {
   const rows = [
@@ -184,7 +184,7 @@ function HeuristicFormula() {
   return (
     <figure className="p-5 sm:p-6 rounded-2xl bg-neutral-950/70 border border-neutral-800 hover:border-blue-500/30 transition-colors duration-300">
       <figcaption className="text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">
-        A* heuristic · <span className="normal-case tracking-normal font-normal text-neutral-500">d = Manhattan distance, p = agent&apos;s square</span>
+        A* heuristic · <span className="normal-case tracking-normal font-normal text-neutral-400">d = Manhattan distance, p = agent&apos;s square</span>
       </figcaption>
       <p className="sr-only">
         Before taking the gold, h of s equals the Manhattan distance from p to the gold, plus 1, plus the distance from the
@@ -195,7 +195,7 @@ function HeuristicFormula() {
           {rows.map((r) => (
             <div key={r.when} className="contents">
               <span className="font-serif text-xl sm:text-2xl text-neutral-100 whitespace-nowrap">{r.expr}</span>
-              <span className="text-sm text-neutral-500 mb-3 last:mb-0 sm:mb-0">{r.when}</span>
+              <span className="text-sm text-neutral-400 mb-3 last:mb-0 sm:mb-0">{r.when}</span>
             </div>
           ))}
         </div>
@@ -299,7 +299,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
               <Mono key="g">89</Mono>,
               <Mono key="e">58</Mono>,
               <Mono key="l">10</Mono>,
-              <span key="m" className="text-neutral-500">not recorded</span>,
+              <span key="m" className="text-neutral-400">not recorded</span>,
             ],
             [
               "LAMA-First (Fast Downward)",
@@ -331,7 +331,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
               key={name}
               className="p-5 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-blue-500/30 hover:bg-neutral-900/80 transition-colors duration-300"
             >
-              <span className="block font-mono text-cyan-300 mb-1.5">{name}</span>
+              <span className="block font-mono text-accent mb-1.5">{name}</span>
               <span className="text-neutral-400 leading-relaxed">{text}</span>
             </li>
           ))}
@@ -350,7 +350,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           rows={[
             ["BFS", "Steps taken", "Yes"],
             ["A*", "Steps taken plus a heuristic", "Yes, because the heuristic never overestimates"],
-            ["Greedy best-first", "Heuristic only", <span key="n" className="text-amber-200">No</span>],
+            ["Greedy best-first", "Heuristic only", <span key="n" className="text-neutral-100">No</span>],
           ]}
         />
         <p>
@@ -417,12 +417,12 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           legend={<Legend />}
           footer={
             <div className="mt-4 px-1 space-y-3 text-sm leading-relaxed">
-              <p className="text-neutral-500">
+              <p className="text-neutral-400">
                 Mean of 400 random worlds per grid size (seeds 1 to 400), Wumpus blocks its square, run with the
                 demo&apos;s <code className="font-mono text-neutral-400">planner.js</code>.
               </p>
               <p className="flex items-start gap-2.5 p-3 rounded-xl bg-neutral-950/60 border border-neutral-800 text-neutral-400">
-                <Info size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-indigo-300" />
+                <Info size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-accent" />
                 <span>
                   The chart shows the ratio of mean nodes (3.4, 4.1, 5.1×) while the text below uses the median per-world
                   ratio (3.9, 4.6, 5.8×). Both are correct; they are different statistics.
@@ -456,8 +456,8 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           expand 8, all finding a 7-step plan.
         </p>
         <aside aria-labelledby="ww-testing" className="p-6 rounded-2xl bg-emerald-400/[0.04] border border-emerald-400/20 text-base">
-          <h3 id="ww-testing" className="flex items-center gap-2.5 font-semibold text-emerald-200 mb-3">
-            <ShieldCheck size={18} aria-hidden="true" className="text-emerald-300" />
+          <h3 id="ww-testing" className="flex items-center gap-2.5 font-semibold text-white mb-3">
+            <ShieldCheck size={18} aria-hidden="true" className="text-accent" />
             Testing
           </h3>
           <p className="text-neutral-300 leading-relaxed">
@@ -504,9 +504,9 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(the visitor&apos;s browser)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-500">(default netlify.app subdomain)</span></span>],
+            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(the visitor&apos;s browser)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-400">(default netlify.app subdomain)</span></span>],
             ["Backend and database", "None needed"],
           ]}
         />

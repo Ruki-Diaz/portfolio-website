@@ -42,7 +42,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm mb-4 lg:mb-8 shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:shadow-[0_0_25px_rgba(59,130,246,0.2)] hover:border-neutral-700 transition-all duration-300 cursor-default"
           >
-            <Sparkles className="w-4 h-4 text-blue-400" />
+            <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-neutral-300 text-sm font-medium">
               AI solutions consultant<span className="hidden sm:inline"><span aria-hidden="true" className="text-neutral-500"> · </span>open to opportunities</span>
             </span>
@@ -53,7 +53,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-white mb-4"
           >
-            Rukshan <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Dias.</span>
+            Rukshan Dias.
           </motion.h1>
 
           {/* Subtitle */}

@@ -91,7 +91,7 @@ export default function Skills() {
             >
               <div className="flex items-center gap-3">
                 <span className="flex items-center justify-center w-10 h-10 shrink-0 rounded-xl bg-neutral-950 border border-neutral-800 group-hover:border-blue-500/40 group-hover:shadow-[0_0_18px_rgba(96,165,250,0.3)] transition-all duration-300">
-                  <Icon aria-hidden="true" size={18} className="text-blue-400" />
+                  <Icon aria-hidden="true" size={18} className="text-accent" />
                 </span>
                 <h3 className="text-white font-semibold text-lg whitespace-nowrap">{category}</h3>
               </div>

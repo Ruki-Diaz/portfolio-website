@@ -116,10 +116,10 @@ function PipelineDiagram() {
       </defs>
 
       {/* Row labels */}
-      <text x="0" y="24" className="fill-neutral-500" fontSize="12">
+      <text x="0" y="24" className="fill-neutral-400" fontSize="12">
         Once per scenario
       </text>
-      <text x={W} y="24" textAnchor="end" className="fill-neutral-500" fontSize="12">
+      <text x={W} y="24" textAnchor="end" className="fill-neutral-400" fontSize="12">
         Every frame, 100 cars
       </text>
 
@@ -193,7 +193,7 @@ function ProblemCard({ index, title, children, fixes }) {
   return (
     <Panel className="p-6 sm:p-7 hover:border-blue-500/30 transition-colors duration-300">
       <h3 className="flex items-baseline gap-3 font-semibold text-white text-xl mb-4">
-        <span className="font-mono text-sm text-blue-400">{String(index).padStart(2, "0")}</span>
+        <span className="font-mono text-sm text-accent">{String(index).padStart(2, "0")}</span>
         {title}
       </h3>
       <div className="space-y-4 text-base text-neutral-300 leading-relaxed">
@@ -275,12 +275,12 @@ export default function NeuroDriveCaseStudy({ project, links }) {
           label="Map data in data/melbourne-cbd.json"
           columns={["Map data", "Count"]}
           rows={[
-            ["Roads", <span key="r"><Mono>2,322</Mono> <span className="text-neutral-500">(1,584 one-way)</span></span>],
+            ["Roads", <span key="r"><Mono>2,322</Mono> <span className="text-neutral-400">(1,584 one-way)</span></span>],
             ["Buildings", <Mono key="b">2,706</Mono>],
             ["Traffic signals", <Mono key="s">517</Mono>],
             ["Tram lines", <Mono key="t">244</Mono>],
             ["Landmarks", <Mono key="l">6</Mono>],
-            ["File size", <span key="f"><Mono>0.64 MB</Mono> <span className="text-neutral-500">of JSON</span></span>],
+            ["File size", <span key="f"><Mono>0.64 MB</Mono> <span className="text-neutral-400">of JSON</span></span>],
           ]}
         />
         <p>The engine on top of it has five parts.</p>
@@ -359,7 +359,7 @@ export default function NeuroDriveCaseStudy({ project, links }) {
             [
               "Leaving the route",
               <span key="l">
-                <Mono>−20</Mono> <span className="text-neutral-500">(more than 15 m from it)</span>
+                <Mono>−20</Mono> <span className="text-neutral-400">(more than 15 m from it)</span>
               </span>,
             ],
           ]}
@@ -475,7 +475,7 @@ export default function NeuroDriveCaseStudy({ project, links }) {
           ]}
         />
         <p className="flex items-start gap-2.5 p-4 rounded-xl bg-neutral-900/50 border border-neutral-800 text-base text-neutral-400">
-          <Info size={16} aria-hidden="true" className="mt-1 shrink-0 text-indigo-300" />
+          <Info size={16} aria-hidden="true" className="mt-1 shrink-0 text-accent" />
           <span>
             These are six test runs, not a benchmark. Neuroevolution is random, so results vary from run to run and in the
             browser.
@@ -508,9 +508,9 @@ export default function NeuroDriveCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(the visitor&apos;s browser)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Map data", <span key="m"><Mono>$0</Mono> <span className="text-neutral-500">(OpenStreetMap, ODbL)</span></span>],
+            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(the visitor&apos;s browser)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Map data", <span key="m"><Mono>$0</Mono> <span className="text-neutral-400">(OpenStreetMap, ODbL)</span></span>],
             ["Backend and API keys", "None needed"],
           ]}
         />

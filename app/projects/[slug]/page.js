@@ -138,10 +138,10 @@ function ProjectLinks({ project, layout = "row" }) {
               className="group flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-neutral-950/70 border border-neutral-800 text-sm font-medium text-neutral-300 hover:text-white hover:border-blue-500/40 hover:bg-neutral-900 transition-all duration-300"
             >
               <span className="flex items-center gap-3">
-                <Icon className="text-neutral-500 group-hover:text-blue-400 transition-colors" />
+                <Icon className="text-neutral-400 group-hover:text-accent transition-colors" />
                 {label}
               </span>
-              <ArrowUpRight size={16} className="text-neutral-600 group-hover:text-blue-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+              <ArrowUpRight size={16} className="text-neutral-400 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
             </a>
           </li>
         ))}
@@ -187,7 +187,7 @@ function Section({ index, title, items }) {
   return (
     <section className="scroll-mt-28">
       <div className="flex items-baseline gap-4 mb-5">
-        <span className="font-mono text-sm text-blue-400">{String(index).padStart(2, "0")}</span>
+        <span className="font-mono text-sm text-accent">{String(index).padStart(2, "0")}</span>
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{title}</h2>
       </div>
       {isList && items.every((item) => item.length <= 60) ? (
@@ -264,19 +264,19 @@ export default async function ProjectPage({ params }) {
 
           <div className="max-w-6xl mx-auto">
             <nav aria-label="Breadcrumb" className="motion-safe:animate-fade-up mb-10">
-              <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+              <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-400">
                 <li>
                   <Link href="/" className="group inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors">
                     <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
                     Home
                   </Link>
                 </li>
-                <li aria-hidden="true" className="text-neutral-700">/</li>
+                <li aria-hidden="true" className="text-neutral-500">/</li>
                 <li>
                   <Link href="/#projects" className="text-neutral-400 hover:text-white transition-colors">Projects</Link>
                 </li>
-                <li aria-hidden="true" className="text-neutral-700">/</li>
-                <li className="text-neutral-500 truncate max-w-[16rem] sm:max-w-none" aria-current="page">{project.title}</li>
+                <li aria-hidden="true" className="text-neutral-500">/</li>
+                <li className="text-neutral-400 truncate max-w-[16rem] sm:max-w-none" aria-current="page">{project.title}</li>
               </ol>
             </nav>
 
@@ -290,7 +290,7 @@ export default async function ProjectPage({ params }) {
                 {page.h1}
               </h1>
 
-              <p className="motion-safe:animate-fade-up [animation-delay:240ms] text-lg sm:text-xl font-semibold leading-relaxed mb-10 max-w-3xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+              <p className="motion-safe:animate-fade-up [animation-delay:240ms] text-lg sm:text-xl font-semibold leading-relaxed mb-10 max-w-3xl text-neutral-100">
                 {project.title}
               </p>
 
@@ -319,7 +319,7 @@ export default async function ProjectPage({ params }) {
                 >
                   <dt className="sr-only">Key result</dt>
                   <dd className="flex items-start gap-2 font-mono text-sm sm:text-base text-neutral-200">
-                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                     {stat}
                   </dd>
                 </div>
@@ -372,12 +372,12 @@ export default async function ProjectPage({ params }) {
                 >
                   {hasTech && (
                     <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm">
-                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Tech stack</h2>
+                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Tech stack</h2>
                       <ul className="flex flex-wrap gap-2">
                         {project.tech.map((tech) => (
                           <li
                             key={tech}
-                            className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
+                            className="px-2.5 py-1 bg-neutral-950 text-neutral-300 text-xs font-medium rounded-md border border-neutral-800"
                           >
                             {tech}
                           </li>
@@ -388,7 +388,7 @@ export default async function ProjectPage({ params }) {
 
                   {hasLinks && (
                     <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm">
-                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Links</h2>
+                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Links</h2>
                       <ProjectLinks project={project} layout="list" />
                     </div>
                   )}
@@ -445,7 +445,7 @@ export default async function ProjectPage({ params }) {
                           </span>
                         )}
                         <span className="relative text-lg font-bold text-white leading-snug mb-4">{item.title}</span>
-                        <span className="relative mt-auto inline-flex items-center gap-2 text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
+                        <span className="relative mt-auto inline-flex items-center gap-2 text-sm font-semibold text-accent group-hover:text-white transition-colors">
                           Read case study
                           <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                         </span>

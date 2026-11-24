@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaFilePdf, FaExpand, FaTimes } from "react-icons/fa";
+import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaExpand, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { projects, hasProjectPage } from "@/data/projects";
 import { featuredProjects, CARD_BLOCKS } from "@/lib/featuredProjects";
+import MoreProjectFolders from "@/components/sections/MoreProjectFolders";
 
 const otherProjects = projects.filter((p) => !p.featured);
 
@@ -24,7 +25,7 @@ function StatChips({ stats }) {
             key={stat.value}
             className="inline-flex items-center gap-2 px-3.5 py-2 bg-neutral-950/70 rounded-full border border-neutral-800/80 text-sm font-semibold text-neutral-100 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
           >
-            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
             {stat.value}
           </li>
         ))}
@@ -40,7 +41,7 @@ function StatChips({ stats }) {
           className="flex flex-col-reverse justify-end flex-[1_1_auto] min-w-[6.5rem] px-4 py-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
         >
           {stat.label && <dt className="mt-1 text-xs leading-snug text-neutral-400">{stat.label}</dt>}
-          <dd className="whitespace-nowrap text-lg font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
+          <dd className="whitespace-nowrap text-lg font-bold leading-tight tracking-tight text-white">
             {stat.value}
           </dd>
         </div>
@@ -294,7 +295,7 @@ export default function Projects() {
                 />
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {caseStudy ? (
-                    <Link href={caseStudy} className="rounded-sm hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
+                    <Link href={caseStudy} className="rounded-sm hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
                       {project.title}
                     </Link>
                   ) : (
@@ -307,7 +308,7 @@ export default function Projects() {
                   {project.tags.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
+                      className="px-2.5 py-1 bg-neutral-950 text-neutral-300 text-xs font-medium rounded-md border border-neutral-800"
                     >
                       {tech}
                     </span>
@@ -332,7 +333,7 @@ export default function Projects() {
                     {caseStudy && (
                       <Link
                         href={caseStudy}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-white transition-colors group/link"
                         aria-label={`Read the ${project.title} case study`}
                       >
                         <span>Case Study</span>
@@ -344,7 +345,7 @@ export default function Projects() {
                         href={project.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-accent transition-colors group/link"
                       >
                         <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
                         <span>Live Demo</span>
@@ -355,7 +356,7 @@ export default function Projects() {
                         href={project.links.code}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-accent transition-colors group/link"
                       >
                         <FaGithub className="text-base transition-transform group-hover/link:-translate-y-0.5" />
                         <span>View Code</span>
@@ -366,7 +367,7 @@ export default function Projects() {
                         href={project.links.report}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-accent transition-colors group/link"
                       >
                         <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
                         <span>Model Report</span>
@@ -381,102 +382,15 @@ export default function Projects() {
           })}
         </motion.div>
 
-        {/* Remaining projects: compact cards without screenshots */}
+        {/* Remaining projects: glass folders that open into project details */}
         {otherProjects.length > 0 && (
           <div className="mt-20">
-            <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center gap-4 mb-4">
               <h3 className="text-2xl font-bold text-white">More Projects</h3>
               <div className="h-px bg-neutral-800 flex-1 ml-4" />
             </div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-              className="grid sm:grid-cols-2 gap-6"
-            >
-              {otherProjects.map((project) => {
-                const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
-                const thumb = project.showCardImage ? project.images?.[0] : null;
-                return (
-                  <motion.div
-                    key={project.title}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-                    }}
-                    className="group flex flex-col bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-neutral-900/70 transition-all duration-300"
-                  >
-                    {thumb && (
-                      <div className="relative aspect-[16/9] mb-5 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950">
-                        <Image
-                          src={thumb.src}
-                          alt={thumb.alt}
-                          fill
-                          sizes="(min-width: 1152px) 528px, (min-width: 640px) calc(50vw - 84px), calc(100vw - 98px)"
-                          className="object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    )}
-                    <h4 className="text-lg font-bold text-white mb-2">
-                      {caseStudy ? (
-                        <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
-                          {project.title}
-                        </Link>
-                      ) : (
-                        project.title
-                      )}
-                    </h4>
-                    <p className="text-sm text-neutral-400 leading-relaxed mb-4 line-clamp-3">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {(caseStudy || project.github || project.demo || project.pdf) && (
-                      <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
-                        {caseStudy && (
-                          <Link
-                            href={caseStudy}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
-                            aria-label={`Read the ${project.title} case study`}
-                          >
-                            <span>Case Study</span>
-                            <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
-                          </Link>
-                        )}
-                        {project.demo && (
-                          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaExternalLinkAlt className="text-xs" />
-                            <span>Live Demo</span>
-                          </a>
-                        )}
-                        {project.github && (
-                          <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaGithub className="text-base" />
-                            <span>View Code</span>
-                          </a>
-                        )}
-                        {project.pdf && (
-                          <a href={project.pdf} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaFilePdf className="text-base" />
-                            <span>View PDF Report</span>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </motion.div>
+            <MoreProjectFolders projects={otherProjects} />
           </div>
         )}
 

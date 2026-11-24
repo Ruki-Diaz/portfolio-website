@@ -53,7 +53,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en-AU" className="dark scroll-smooth">
-      <body className={`${inter.className} bg-neutral-950 text-neutral-100 antialiased min-h-screen flex flex-col selection:bg-blue-500/30 selection:text-blue-200`}>
+      <body className={`${inter.className} bg-neutral-950 text-neutral-100 antialiased min-h-screen flex flex-col selection:bg-blue-500/30 selection:text-white`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: toJsonLd(personJsonLd) }}

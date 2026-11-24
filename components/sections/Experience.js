@@ -107,18 +107,18 @@ const educationData = [
 const THEMES = {
   work: {
     icon: Briefcase,
-    text: "text-emerald-400",
+    text: "text-neutral-200",
     node: "group-hover:border-emerald-400 group-hover:shadow-[0_0_14px_rgba(52,211,153,0.6)]",
     card: "group-hover:border-emerald-500/30",
-    tag: "text-emerald-400 group-hover:border-emerald-500/30",
+    tag: "text-neutral-300 group-hover:border-emerald-500/30",
     bullet: "from-emerald-400 to-teal-500",
   },
   education: {
     icon: GraduationCap,
-    text: "text-blue-400",
+    text: "text-neutral-200",
     node: "group-hover:border-blue-400 group-hover:shadow-[0_0_14px_rgba(96,165,250,0.6)]",
     card: "group-hover:border-blue-500/30",
-    tag: "text-blue-400 group-hover:border-blue-500/30",
+    tag: "text-neutral-300 group-hover:border-blue-500/30",
     bullet: "from-blue-400 to-purple-500",
   },
 };
@@ -148,7 +148,7 @@ function TimelineItem({ item, index, type }) {
               <span className={`font-medium ${theme.text}`}>{item.organization}</span>
               {item.engagement?.map((detail) => (
                 <Fragment key={detail}>
-                  <span aria-hidden="true" className="text-neutral-600">·</span>
+                  <span aria-hidden="true" className="text-neutral-500">·</span>
                   <span className="text-sm text-neutral-400">{detail}</span>
                 </Fragment>
               ))}
@@ -164,7 +164,7 @@ function TimelineItem({ item, index, type }) {
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="px-3 py-1 rounded-full text-sm font-medium text-blue-200 bg-blue-500/10 border border-blue-500/25"
+                className="px-3 py-1 rounded-full text-sm font-medium text-neutral-200 bg-blue-500/10 border border-blue-500/25"
               >
                 {highlight}
               </li>
@@ -246,9 +246,9 @@ export default function Experience() {
                 {otherExperience.map((item) => (
                   <li key={item.title} className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm text-neutral-400">
                     <span className="font-medium text-neutral-200">{item.title}</span>
-                    <span aria-hidden="true" className="text-neutral-600">·</span>
+                    <span aria-hidden="true" className="text-neutral-500">·</span>
                     <span>{item.organization}</span>
-                    <span aria-hidden="true" className="text-neutral-600">·</span>
+                    <span aria-hidden="true" className="text-neutral-500">·</span>
                     <span>{item.date}</span>
                   </li>
                 ))}

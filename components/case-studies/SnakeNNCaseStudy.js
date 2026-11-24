@@ -87,7 +87,7 @@ function ArchitectureDiagram() {
       ].map(([name, size, x]) => (
         <text key={name} x={x} y="22" textAnchor="middle" fontSize="12">
           <tspan className="fill-neutral-300">{name}</tspan>
-          <tspan x={x} dy="16" className="fill-neutral-500 font-mono" fontSize="11">
+          <tspan x={x} dy="16" className="fill-neutral-400 font-mono" fontSize="11">
             {size}
           </tspan>
         </text>
@@ -114,7 +114,7 @@ function ArchitectureDiagram() {
             <text x="128" y={mid - 2} textAnchor="end" className="fill-neutral-200" fontSize="14">
               {g.label}
             </text>
-            <text x="128" y={mid + 15} textAnchor="end" className="fill-neutral-500 font-mono" fontSize="11">
+            <text x="128" y={mid + 15} textAnchor="end" className="fill-neutral-400 font-mono" fontSize="11">
               {g.n} signals
             </text>
             {g.ys.map((iy) => (
@@ -140,7 +140,7 @@ function ArchitectureDiagram() {
           <text x={X.output + 18} y={oy - 1} className="fill-neutral-100" fontSize="13">
             {OUTPUTS[i]}
           </text>
-          <text x={X.output + 18} y={oy + 14} className="fill-neutral-500 font-mono" fontSize="11">
+          <text x={X.output + 18} y={oy + 14} className="fill-neutral-400 font-mono" fontSize="11">
             Q-value
           </text>
         </g>
@@ -211,7 +211,7 @@ function ResultsChart() {
       {[0, 10, 20, 30].map((v) => (
         <g key={v}>
           <line x1={m.l} x2={W - m.r} y1={y(v)} y2={y(v)} className="stroke-neutral-800" strokeDasharray={v ? "3 5" : undefined} />
-          <text x={m.l - 10} y={y(v) + 4} textAnchor="end" className="fill-neutral-500 font-mono" fontSize="12">
+          <text x={m.l - 10} y={y(v) + 4} textAnchor="end" className="fill-neutral-400 font-mono" fontSize="12">
             {v}
           </text>
         </g>
@@ -219,11 +219,11 @@ function ResultsChart() {
 
       {/* x ticks */}
       {[0, 100, 200, 300, 400].map((g) => (
-        <text key={g} x={x(g)} y={base + 22} textAnchor="middle" className="fill-neutral-500 font-mono" fontSize="12">
+        <text key={g} x={x(g)} y={base + 22} textAnchor="middle" className="fill-neutral-400 font-mono" fontSize="12">
           {g}
         </text>
       ))}
-      <text x={W - m.r} y={H - 4} textAnchor="end" className="fill-neutral-500" fontSize="12">
+      <text x={W - m.r} y={H - 4} textAnchor="end" className="fill-neutral-400" fontSize="12">
         Game
       </text>
 
@@ -282,10 +282,10 @@ const V = ({ children }) => <i className="text-white">{children}</i>;
 const TOKEN = /(#.*$)|(\b\d+(?:\.\d+)?\b)|(\.T\b)|([A-Za-z_]\w*)|([@*/=+\-<>]+)|([()[\],.])/g;
 const TOKEN_CLASSES = [
   "text-neutral-400 italic",
-  "text-cyan-300",
-  "text-blue-300",
+  "text-accent",
+  "text-accent",
   "text-neutral-100",
-  "text-purple-400",
+  "text-neutral-300",
   "text-neutral-400",
 ];
 
@@ -317,7 +317,7 @@ function CodeBlock({ code, filename, language }) {
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-700" />
         </span>
         <span className="font-mono text-xs text-neutral-400">{filename}</span>
-        <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-500">{language}</span>
+        <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400">{language}</span>
       </figcaption>
       <pre
         tabIndex={0}
@@ -326,7 +326,7 @@ function CodeBlock({ code, filename, language }) {
         <code>
           {lines.map((line, i) => (
             <span key={i} className="block min-w-max">
-              <span aria-hidden="true" className="inline-block w-12 pr-5 text-right text-neutral-600 select-none">
+              <span aria-hidden="true" className="inline-block w-12 pr-5 text-right text-neutral-500 select-none">
                 {i + 1}
               </span>
               {highlight(line)}
@@ -447,7 +447,7 @@ export default function SnakeNNCaseStudy({ project, links }) {
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           <Formula label="Q-learning target" spoken="y equals r plus gamma times the max over a prime of Q of s prime, a prime.">
-            <V>y</V> = <V>r</V> + <span className="text-purple-300">γ</span> · max
+            <V>y</V> = <V>r</V> + <span className="text-accent">γ</span> · max
             <sub className="text-sm">
               <V>a′</V>
             </sub>{" "}
@@ -573,9 +573,9 @@ export default function SnakeNNCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Training compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(laptop CPU)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-500">(default subdomain)</span></span>],
+            ["Training compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(laptop CPU)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-400">(default subdomain)</span></span>],
             ["Backend and database", "None needed"],
           ]}
         />

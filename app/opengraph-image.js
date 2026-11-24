@@ -15,7 +15,7 @@ const TAGLINE = "Live ML projects, open-data analytics and full-stack apps.";
 const CHIPS = ["Next.js", "React", "Python", "ML"];
 const LOCATION = "Melbourne, Australia";
 
-const BLUE = "#60a5fa"; // blue-400, the site's accent
+const BLUE = "#8ea4ff"; // the site's single text accent
 const PURPLE = "#a855f7"; // purple-500
 const ACCENT = `linear-gradient(90deg, ${BLUE}, ${PURPLE})`;
 
@@ -144,7 +144,7 @@ export default async function Image() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", fontSize: 112, fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 1 }}>
               <span>Rukshan&nbsp;</span>
-              <span style={{ backgroundImage: ACCENT, backgroundClip: "text", color: "transparent" }}>Dias</span>
+              <span>Dias</span>
             </div>
             <div style={{ display: "flex", marginTop: 26, fontSize: 44, fontWeight: 500, letterSpacing: "-0.02em", color: "#e5e5e5" }}>
               {SUBTITLE}

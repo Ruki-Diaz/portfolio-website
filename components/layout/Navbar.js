@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-          RD<span className="text-blue-500">.</span>
+          RD<span className="text-accent">.</span>
         </Link>
 
         {/* Center Links (Desktop) */}
