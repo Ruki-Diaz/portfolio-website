@@ -15,11 +15,11 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold tracking-tighter text-white">
-          RD<span className="text-blue-500">.</span>
+          RD<span className="text-accent">.</span>
         </Link>
 
         {/* Center Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {[
             { name: 'Home', href: '/#hero' },
             { name: 'Projects', href: '/#projects' },
@@ -45,7 +45,7 @@ export default function Navbar() {
             className="flex items-center gap-2 px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-sm font-medium text-white hover:bg-neutral-800 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300"
           >
             <FaGithub aria-hidden="true" className="text-lg" />
-            <span className="hidden sm:inline">GitHub</span>
+            <span className="hidden lg:inline">GitHub</span>
           </a>
           <a
             href="https://www.linkedin.com/in/rukshan-dias-a088921a6/"
@@ -55,7 +55,7 @@ export default function Navbar() {
             className="flex items-center gap-2 px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-full text-sm font-medium text-white hover:bg-neutral-800 hover:border-blue-500/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all duration-300"
           >
             <FaLinkedin aria-hidden="true" className="text-lg" />
-            <span className="hidden sm:inline">LinkedIn</span>
+            <span className="hidden lg:inline">LinkedIn</span>
           </a>
         </div>
       </div>

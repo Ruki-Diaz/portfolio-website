@@ -3,6 +3,8 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  /* The one accent for links, focus and active states (docs/design-system.md) */
+  --color-accent: #8EA4FF;
   --animate-fade-up: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 
   @keyframes fade-up {
@@ -61,6 +63,41 @@ section[id]:focus {
   html {
     scroll-padding-bottom: calc(6rem + env(safe-area-inset-bottom));
   }
+}
+
+/*
+  Glass headline hero (components/ui/glass-headline-hero.tsx) — host overrides.
+  The component's own CSS is left untouched; these only fit it to this site.
+  - Content clears the fixed 5rem navbar, and the floating section bar below md.
+  - The headline is four words, so it runs a size smaller than the
+    component's default (tuned so it fits in 100svh at 390, 768 and 1440).
+*/
+.hero-glass .ghr-content {
+  padding-top: calc(5rem + 24px);
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+  gap: 24px;
+}
+@media (min-width: 48rem) {
+  .hero-glass .ghr-content {
+    padding-bottom: 72px;
+  }
+}
+.hero-glass .ghr-title {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, calc(8.5cqw + 0.75rem), 8.25rem);
+  line-height: 0.98;
+}
+.hero-glass .ghr-btn:focus-visible {
+  outline-color: var(--color-accent);
+}
+
+/* Glass folder cards (components/ui/glass-folder-cards.tsx) — host overrides */
+.folder-grid .gf-root {
+  font-family: inherit;
+}
+.folder-grid .gf-sheet:focus-visible,
+.folder-grid .gf-key:focus-visible {
+  outline-color: var(--color-accent);
 }
 
 /* Custom Scrollbar for premium feel */

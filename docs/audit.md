@@ -16,7 +16,43 @@ Audited on 2026-11-24, against `docs/design-system.md`, on branch `feat/glass-re
 
 There were no broken internal links or missing anchors.
 
-**Status key:** ✅ fixed · ⏳ planned in a later step of this branch · ⬜ open
+**Status key:** ✅ fixed · ⬜ open
+
+Line numbers in the findings below refer to the code as audited. `Hero.js` was deleted in step 3, and `Projects.js` was rewritten in step 4.
+
+---
+
+## Re-test after steps 3–4 (glass hero and folder projects)
+
+Same production build and headless Chrome setup as the baseline. One change: WebGL was run on the real GPU (ANGLE Metal, Apple M5) rather than SwiftShader. On SwiftShader the hero's frame-time watchdog correctly switches to its lite path, which isn't representative of real devices.
+
+| | 390 | 768 | 1440 |
+|---|---|---|---|
+| LCP | 68ms (the `<h1>` text) | 52ms | 68ms |
+| CLS | 0 | 0 | 0 |
+| Horizontal overflow | none | none | none |
+| Console errors | 0 | 0 | 0 |
+| Gradient text nodes | 0 (was 8) | 0 | 0 |
+| Text hues on homepage | neutrals + `#8EA4FF` only (was 13 colours across blue, purple, cyan, emerald) | same | same |
+| Page height | — | — | 9,765px (was 11,363). Projects 2,464px (was about 4,500) |
+| WCAG AA contrast failures | 0 | — | 0 |
+| Controls without a name | 0 | — | 0 |
+
+**Hero (`GlassHeadlineHero`):**
+
+- **Glass renders:** `data-glass="true"` at 390, 768 and 1440.
+- **Performance:** median frame 16.7ms and p95 16.7ms at 390@3x, so it holds 60fps. The canvas is drawn at a 2× cap, and the shader pauses off screen and in hidden tabs (the component's own IntersectionObserver and visibilitychange handling).
+- **Fallback:** with WebGL disabled (`--disable-webgl --disable-3d-apis`), `data-glass="false"` and the `<h1>` shows as solid `#FFFFFF` over the CSS gradient. Same layout, no errors.
+- **Reduced motion:** a single still frame. 0 running animations across the page.
+- **Nav overlap:** none. The eyebrow starts at 166px (1440) / 315px (768) / 208px (390); the nav ends at 81px. At 390 the buttons end at 652px, and the floating section bar starts at 774px.
+
+**Folders (`GlassFolder`):**
+
+- **Widths:** 300px at 390 (1 column), 316px at 768 (2 columns), 325px at 1440 (3 columns). They are measured per grid cell and capped at 300px below 640px.
+- **Keyboard:** Tab reaches each folder's button ("Open Data Science & ML, 4 items"). **Enter** opens it (`aria-expanded="true"`, files no longer `inert`). Tab then moves into the files, which are real links. **Esc** closes it and returns focus to the folder. **Space** toggles. While closed, the files are out of the tab order.
+- **Wheelchair:** the one project with no URL is a sheet that jumps to and focuses its row in the list.
+- **Reduced motion:** the folders render in their final state, with 0 running animations.
+- **Alternative access:** every project is also in the visible "All projects" list under the hint, grouped like the folders, with case study, demo, code and report links. Nothing is reachable only by hovering.
 
 ---
 
@@ -51,7 +87,7 @@ There were no broken internal links or missing anchors.
 
 ## P1: hurts a recruiter's first impression
 
-### P1-1. Multicoloured text breaks the design system's hard rule ⏳ (hero and projects in steps 3–4) / ⬜ (rest)
+### P1-1. Multicoloured text breaks the design system's hard rule ✅ homepage / ⬜ case-study pages
 
 Instances:
 
@@ -78,7 +114,7 @@ Instances:
 - Links stay `--accent`
 - Callouts → a neutral heading on a tinted surface
 
-### P1-2. Hero says three different things and offers three equal CTAs ⏳ (step 3)
+### P1-2. Hero says three different things and offers three equal CTAs ✅
 
 - **Where:**
   - `Hero.js:47`: the badge says "AI solutions consultant"
@@ -88,13 +124,13 @@ Instances:
 - **Problem:** In a 10-second scan a recruiter can't tell which role to file you under, or which button matters.
 - **Fix:** One positioning line ("Data Scientist & Software Engineer" is what the site's content proves), one eyebrow (role · Melbourne), one primary CTA (View projects) and one secondary (Download CV). Contact stays one tap away in the nav and section bar.
 
-### P1-3. Page is 11,363px tall; projects alone take about 4,500px at 1440 ⏳ (step 4)
+### P1-3. Page is 11,363px tall; projects alone take about 4,500px at 1440 ✅
 
 - **Where:** `Projects.js:274-381` and `Projects.js:385-481`. Each featured card stacks a carousel, a title, context, tags, three prose blocks, stats and links. Five more cards follow.
 - **Problem:** Projects are the proof, but a recruiter has to scroll about five screens to see that NeuroDrive, Snake-NN and Wumpus exist.
 - **Fix:** A compact grouped overview (the folder cards) that shows every project at a glance. The detail stays on the existing `/projects/[slug]` case-study pages.
 
-### P1-4. Content is invisible until JavaScript runs ⬜
+### P1-4. Content is invisible until JavaScript runs ⬜ (hero fixed, sections open)
 
 - **Where:**
   - `components/ui/SectionReveal.js:10`: `initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}` is server-rendered onto every section below the hero
@@ -102,7 +138,7 @@ Instances:
 - **Problem:** With JS slow or blocked, everything is blank. LCP at 768px is the H1, held to 1268ms by its entrance animation. Blur reveals are also expensive to paint.
 - **Fix:** Render content visible on the server, and reveal only after hydration (a CSS `@starting-style` or a class added on mount). Drop the `filter: blur()` reveals, per design system §7.
 
-### P1-5. `prefers-reduced-motion` mostly ignored ⬜
+### P1-5. `prefers-reduced-motion` mostly ignored ⬜ (hero and folders fixed, rest open)
 
 - **Where:**
   - `Hero.js:18-19` and `Hero.js:152`: infinite `animate-pulse` orbs and ring
@@ -114,7 +150,7 @@ Instances:
 - **Problem:** Under reduce emulation, 3 CSS animations are still running, and the Framer Motion loops keep going (there is no `MotionConfig reducedMotion="user"` at the root). Only `MobileSectionNav` and `AnimatedGridBackground` respect the setting.
 - **Fix:** Wrap the app in `<MotionConfig reducedMotion="user">`, prefix the CSS pulses with `motion-safe:`, and skip Lenis, the magnetic effect and the cursor when reduce is set. The hero shader (step 3) must render a still frame.
 
-### P1-6. Screenshot lightbox is mouse-only and has no dialog semantics ⏳ (step 4) / ⬜
+### P1-6. Screenshot lightbox is mouse-only and has no dialog semantics ✅
 
 - **Where:** `Projects.js:92-95` (a `div onClick` opens it) and `Projects.js:162-239` (the modal)
 - **Problem:**
@@ -130,7 +166,7 @@ Instances:
 - **Problem:** A keyboard user tabs through 9 nav stops before reaching the content.
 - **Fix:** Add a visually hidden "Skip to content" link as the first focusable element, targeting `<main id="main">`.
 
-### P1-8. Positioning drift across SEO surfaces ⬜
+### P1-8. Positioning drift across SEO surfaces ✅
 
 - **Where:**
   - `app/layout.js:9-10`: "AI Solutions & Software Development Consultant"
@@ -152,19 +188,32 @@ Instances:
 | # | Where | Problem | Fix | Status |
 |---|---|---|---|---|
 | P2-1 | `app/page.js:20-24` + `SectionReveal.js:7` | Each `<section id>` is wrapped in another unlabelled `<section>` | Make `SectionReveal` render a `div` | ⬜ |
-| P2-2 | `Hero.js:60` | The subtitle is an `<h2>`, so the outline reads h1 "Rukshan Dias." → h2 "Data Scientist…" → h2 "Featured Projects" | Use a `<p>` | ⏳ step 3 |
-| P2-3 | `Projects.js:284,287`; `Navbar.js:44,53`; `Skills.js:93`; `About.js:16-28` | Coloured glow shadows and hover gradients (blue/purple/emerald) | Use the neutral border step from design system §6 | ⬜ |
+| P2-2 | `Hero.js:60` | The subtitle is an `<h2>`, so the outline reads h1 "Rukshan Dias." → h2 "Data Scientist…" → h2 "Featured Projects" | Use a `<p>` | ✅ |
+| P2-3 | `Projects.js:284,287`; `Navbar.js:44,53`; `Skills.js:93`; `About.js:16-28` | Coloured glow shadows and hover gradients (blue/purple/emerald) | Use the neutral border step from design system §6 | ⬜ (projects and Experience fixed; Navbar, Skills and About open) |
 | P2-4 | `AnimatedGridBackground.js:11-53` | A fixed full-viewport layer (300% size) translating forever, plus two 50–60vw blurred orbs scaling forever. Constant compositing on every page | A static background, or one still radial gradient | ⬜ |
-| P2-5 | `Projects.js:97-114` | Every carousel slide is rendered stacked, so all 3–5 screenshots per card download when the card enters view (about 15 large images) | Render only the current slide, with the next one preloaded on hover | ⏳ step 4 |
+| P2-5 | `Projects.js:97-114` | Every carousel slide is rendered stacked, so all 3–5 screenshots per card download when the card enters view (about 15 large images) | Render only the current slide, with the next one preloaded on hover | ✅ (carousel removed) |
 | P2-6 | `app/sitemap.js:5` | `lastModified: new Date()` stamps every URL with the build time, so crawlers see constant churn | Use `page.datePublished` or a fixed content date | ⬜ |
-| P2-7 | `app/opengraph-image.js:18-20,147,171` | The social card uses gradient "Dias", purple, and blue chips | Match design system §1–2 | ⬜ |
+| P2-7 | `app/opengraph-image.js:18-20,147,171` | The social card uses gradient "Dias", purple, and blue chips | Match design system §1–2 | ✅ |
 | P2-8 | `app/globals.css:46` | Dead `font-family: Arial` (Inter's class wins) | Remove it | ⬜ |
 | P2-9 | `Contact.js:47-49` | The heading "Let's Work Together" is followed by "Let's work together." | Drop the repeat from the lead | ⬜ |
-| P2-10 | `Projects.js:491-500` | "View All Projects on GitHub" is a second white primary CTA, competing with the hero's | Make it a secondary button or a text link | ⬜ |
+| P2-10 | `Projects.js:491-500` | "View All Projects on GitHub" is a second white primary CTA, competing with the hero's | Make it a secondary button or a text link | ✅ |
 | P2-11 | `CustomCursor.js` | A blue cursor ring on desktop. It adds motion and a second accent, and it lags the real pointer | Remove it, or keep it only under `motion-safe` | ⬜ |
-| P2-12 | `Hero.js:164` | The profile photo is served at `quality={90}` with a 1s blur-in | `quality={75}`, no filter animation. Moot once the hero is replaced | ⏳ step 3 |
+| P2-12 | `Hero.js:164` | The profile photo is served at `quality={90}` with a 1s blur-in | `quality={75}`, no filter animation. Moot once the hero is replaced | ✅ (photo hero removed) |
 
 ---
+
+## Found or decided during steps 3–5
+
+| # | Where | Note | Status |
+|---|---|---|---|
+| N-1 | `components/layout/Navbar.js` | At 768 the logo touched "Home", and "Contact" ran into the GitHub button | ✅ The social buttons are icon-only below `lg` (they keep their `aria-label`s), and the link gap is 24px at `md` |
+| N-2 | `app/page.js` hero | The `GlassHeadlineHero` root is a `<section>` with no `id` | ✅ Wrapped in `<div id="hero">`, so nav anchors and the mobile scroll-spy still work |
+| N-3 | `app/page.js` hero | `HeroAction` has no `download` or `target` field, so the CV button opens `/cv.pdf` in the same tab. It's labelled "View CV", not "Download CV", to say what actually happens | ⬜ Accepted |
+| N-4 | Folder sheets | Sheet links open in the same tab (the component renders a plain `<a href>`). Long names truncate on the sheet ("Melbourne Housi…") | ⬜ Accepted. The list below has the full titles and new-tab links |
+| N-5 | `components/ui/*.tsx` | The vendored components trip React Compiler lint rules (`react-hooks/refs`, `set-state-in-effect`, `purity`) and `no-img-element` | ✅ File-level `eslint-disable` for those rules only, with a note. The component code is byte-identical to the source |
+| N-6 | Homepage | The profile photo is no longer on the homepage. It's still used in the Person JSON-LD (`lib/site.js:26`) | ⬜ Your call: About is the natural place if you want it back |
+| N-7 | `lib/featuredProjects.js` | No longer imported (its problem/built/showed copy belonged to the old cards) | ⬜ Left in place: it's your copy. Delete it or reuse it |
+| N-8 | `components/case-studies/*`, `app/projects/[slug]/page.js:293` | Case-study pages still have gradient and coloured text (the lead paragraph, cyan numbers, amber callouts) | ⬜ Open, part of P1-1 |
 
 ## Coverage summary
 

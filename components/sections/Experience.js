@@ -104,23 +104,19 @@ const educationData = [
   },
 ];
 
+// Neutral type only (docs/design-system.md §1): work and education differ by
+// icon, not colour.
+const NEUTRAL = {
+  text: "text-zinc-300",
+  node: "group-hover:border-zinc-300",
+  card: "group-hover:border-white/15",
+  tag: "text-zinc-400 group-hover:border-white/15",
+  bullet: "from-zinc-500 to-zinc-500",
+};
+
 const THEMES = {
-  work: {
-    icon: Briefcase,
-    text: "text-emerald-400",
-    node: "group-hover:border-emerald-400 group-hover:shadow-[0_0_14px_rgba(52,211,153,0.6)]",
-    card: "group-hover:border-emerald-500/30",
-    tag: "text-emerald-400 group-hover:border-emerald-500/30",
-    bullet: "from-emerald-400 to-teal-500",
-  },
-  education: {
-    icon: GraduationCap,
-    text: "text-blue-400",
-    node: "group-hover:border-blue-400 group-hover:shadow-[0_0_14px_rgba(96,165,250,0.6)]",
-    card: "group-hover:border-blue-500/30",
-    tag: "text-blue-400 group-hover:border-blue-500/30",
-    bullet: "from-blue-400 to-purple-500",
-  },
+  work: { icon: Briefcase, ...NEUTRAL },
+  education: { icon: GraduationCap, ...NEUTRAL },
 };
 
 function TimelineItem({ item, index, type }) {
@@ -164,7 +160,7 @@ function TimelineItem({ item, index, type }) {
             {item.highlights.map((highlight) => (
               <li
                 key={highlight}
-                className="px-3 py-1 rounded-full text-sm font-medium text-blue-200 bg-blue-500/10 border border-blue-500/25"
+                className="px-3 py-1 rounded-full text-sm font-medium text-zinc-200 bg-white/[0.04] border border-white/[0.14]"
               >
                 {highlight}
               </li>

@@ -10,14 +10,13 @@ export const size = { width: DEFAULT_OG_IMAGE.width, height: DEFAULT_OG_IMAGE.he
 export const contentType = "image/png";
 
 const NAME = "Rukshan Dias";
-const SUBTITLE = "Software Engineer & Data Scientist";
+const SUBTITLE = "Data Scientist & Software Engineer";
 const TAGLINE = "Live ML projects, open-data analytics and full-stack apps.";
 const CHIPS = ["Next.js", "React", "Python", "ML"];
 const LOCATION = "Melbourne, Australia";
 
-const BLUE = "#60a5fa"; // blue-400, the site's accent
-const PURPLE = "#a855f7"; // purple-500
-const ACCENT = `linear-gradient(90deg, ${BLUE}, ${PURPLE})`;
+const BLUE = "#8EA4FF"; // the site's one accent (docs/design-system.md)
+const ACCENT = BLUE;
 
 // Loads Inter (the site font) as TTF from Google Fonts, subset to the text used.
 // Satori can't read woff2, and Google serves TTF when the request has no browser
@@ -88,12 +87,12 @@ export default async function Image() {
             height: "100%",
             display: "flex",
             backgroundImage:
-              "radial-gradient(circle at 12% 18%, rgba(37,99,235,0.34), transparent 42%), radial-gradient(circle at 92% 96%, rgba(147,51,234,0.32), transparent 46%), linear-gradient(180deg, rgba(10,10,10,0) 55%, rgba(10,10,10,0.85) 100%)",
+              "radial-gradient(circle at 12% 18%, rgba(37,99,235,0.34), transparent 42%), radial-gradient(circle at 92% 96%, rgba(27,42,107,0.45), transparent 46%), linear-gradient(180deg, rgba(10,10,10,0) 55%, rgba(10,10,10,0.85) 100%)",
           }}
         />
 
         {/* Accent hairline along the top edge */}
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, display: "flex", backgroundImage: ACCENT }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, display: "flex", backgroundColor: ACCENT }} />
 
         <div
           style={{
@@ -144,7 +143,7 @@ export default async function Image() {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", fontSize: 112, fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 1 }}>
               <span>Rukshan&nbsp;</span>
-              <span style={{ backgroundImage: ACCENT, backgroundClip: "text", color: "transparent" }}>Dias</span>
+              <span>Dias</span>
             </div>
             <div style={{ display: "flex", marginTop: 26, fontSize: 44, fontWeight: 500, letterSpacing: "-0.02em", color: "#e5e5e5" }}>
               {SUBTITLE}
@@ -164,11 +163,11 @@ export default async function Image() {
                     marginRight: 14,
                     padding: "10px 22px",
                     borderRadius: 12,
-                    border: "1px solid rgba(96,165,250,0.28)",
+                    border: "1px solid rgba(255,255,255,0.14)",
                     backgroundColor: "rgba(10,10,10,0.75)",
                     fontSize: 24,
                     fontWeight: 500,
-                    color: BLUE,
+                    color: "#d4d4d8",
                   }}
                 >
                   {chip}

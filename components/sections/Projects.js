@@ -1,505 +1,202 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaFilePdf, FaExpand, FaTimes } from "react-icons/fa";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { projects, hasProjectPage } from "@/data/projects";
-import { featuredProjects, CARD_BLOCKS } from "@/lib/featuredProjects";
+import { FaGithub } from "react-icons/fa";
+import GlassFolder from "@/components/ui/glass-folder-cards";
+import { projectFolders } from "@/lib/projectFolders";
 
-const otherProjects = projects.filter((p) => !p.featured);
+// Folder and file art in the site's one hue (docs/design-system.md §2): the
+// hero palette's blues on the page ground. Dark enough that the white file
+// names on the art stay readable.
+const FOLDER_ART = {
+  style: "streak",
+  colors: ["#07090F", "#1B2A6B", "#2F4CFF", "#6F8CFF", "#E8EDFF", "#6F8CFF", "#1B2A6B"],
+  scale: 0.7,
+  warp: 1.5,
+  angle: -0.45,
+  gloss: 0.22,
+  veins: 0,
+};
 
-// Numbers get a large value with a small label underneath; label-less facts
-// ("Live", "Flask") render as slimmer pills. Both wrap onto new rows.
-function StatChips({ stats }) {
-  if (!stats?.length) return null;
+const FILE_ART = {
+  style: "marble",
+  colors: ["#05070D", "#0B1226", "#1B2A6B", "#2F4CFF", "#6F8CFF", "#1B2A6B", "#07090F"],
+  scale: 0.7,
+  warp: 3.2,
+  angle: -0.5,
+  gloss: 0.4,
+  veins: 0.35,
+};
 
-  if (stats.every((stat) => !stat.label)) {
-    return (
-      <ul className="flex flex-wrap gap-2.5" aria-label="Key facts">
-        {stats.map((stat) => (
-          <li
-            key={stat.value}
-            className="inline-flex items-center gap-2 px-3.5 py-2 bg-neutral-950/70 rounded-full border border-neutral-800/80 text-sm font-semibold text-neutral-100 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
-          >
-            <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-            {stat.value}
-          </li>
-        ))}
-      </ul>
-    );
-  }
+const FOLDER_SEEDS = [3, 7, 11];
+const MAX_WIDTH = 340;
+// Below the sm breakpoint (phones) folders stay at 300px, so an open fan of
+// files never reaches the screen edge.
+const MOBILE_WIDTH = 300;
+const MIN_WIDTH = 240;
+
+// GlassFolder takes a fixed pixel width, so each grid cell measures itself
+// and hands the folder its own width (capped at the component's design size).
+// 300 is the server-rendered width: it fits a 390px phone with 24px gutters.
+function FolderCell({ children }) {
+  const ref = useRef(null);
+  const [width, setWidth] = useState(300);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      const cell = el.clientWidth;
+      const cap = window.matchMedia("(min-width: 40rem)").matches ? MAX_WIDTH : MOBILE_WIDTH;
+      const next = Math.round(Math.max(MIN_WIDTH, Math.min(cap, cell)));
+      setWidth((w) => (w === next ? w : next));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <dl className="flex flex-wrap gap-2.5">
-      {stats.map((stat) => (
-        <div
-          key={stat.value}
-          className="flex flex-col-reverse justify-end flex-[1_1_auto] min-w-[6.5rem] px-4 py-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80 transition-colors duration-300 group-hover:border-neutral-700 hover:!border-cyan-400/40"
-        >
-          {stat.label && <dt className="mt-1 text-xs leading-snug text-neutral-400">{stat.label}</dt>}
-          <dd className="whitespace-nowrap text-lg font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
-            {stat.value}
-          </dd>
-        </div>
-      ))}
-    </dl>
+    <li ref={ref} className="flex w-full max-w-[340px] justify-center">
+      {children(width)}
+    </li>
   );
 }
 
-function ProjectCarousel({ image, images, title }) {
-  const [current, setCurrent] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+// A sheet with no link (a project with no demo, code or page) takes the
+// reader to that project's row in the list instead of doing nothing.
+function goToRow(anchor) {
+  const row = document.getElementById(anchor);
+  if (!row) return;
+  row.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  row.focus({ preventScroll: true });
+}
 
-  const list = images || (image ? [image] : []);
-  if (list.length === 0) return null;
-
-  const getImageData = (item, idx) => {
-    if (typeof item === "string") {
-      return { src: item, alt: `${title} screenshot ${idx + 1}` };
-    }
-    // Very wide screenshots are fitted rather than cropped to the card's frame.
-    const isWide = item.width && item.height && item.width / item.height > 2.4;
-    return { src: item.src, alt: item.alt || `${title} screenshot ${idx + 1}`, isWide };
-  };
-
-  const nextSlide = (e) => {
-    e?.stopPropagation();
-    e?.preventDefault();
-    setCurrent((prev) => (prev + 1) % list.length);
-  };
-
-  const prevSlide = (e) => {
-    e?.stopPropagation();
-    e?.preventDefault();
-    setCurrent((prev) => (prev - 1 + list.length) % list.length);
-  };
-
-  const openModal = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
-
-  const closeModal = (e) => {
-    e?.stopPropagation();
-    setIsModalOpen(false);
-  };
-
+function ExternalLink({ href, children, label }) {
   return (
-    <>
-      <div
-        onClick={openModal}
-        className="relative w-full h-52 sm:h-60 mb-6 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 group/carousel cursor-zoom-in"
-      >
-        <div className="relative w-full h-full">
-          {list.map((item, idx) => {
-            const { src, alt, isWide } = getImageData(item, idx);
-            return (
-              <div
-                key={idx}
-                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
-                  }`}
-              >
-                <Image
-                  src={src}
-                  alt={alt}
-                  fill
-                  sizes="(min-width: 1152px) 448px, (min-width: 768px) calc(50vw - 112px), calc(100vw - 112px)"
-                  className={isWide ? "object-contain" : "object-cover object-top"}
-                />
-              </div>
-            );
-          })}
-        </div>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label ? `${label} (opens in a new tab)` : undefined}
+      className="text-accent underline-offset-4 hover:underline rounded-sm"
+    >
+      {children}
+      <span aria-hidden="true"> ↗</span>
+    </a>
+  );
+}
 
-        {/* Subtle expand indicator badge on hover */}
-        <div className="absolute top-3 right-3 z-20 p-1.5 rounded-lg bg-neutral-950/70 text-white/80 border border-neutral-700/50 backdrop-blur-sm opacity-0 group-hover/carousel:opacity-100 transition-opacity pointer-events-none text-xs flex items-center gap-1">
-          <FaExpand className="text-[10px]" />
-        </div>
-
-        {list.length > 1 && (
-          <>
-            <button
-              onClick={prevSlide}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 group-focus-within/carousel:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-              aria-label="Previous image"
-            >
-              <FaChevronLeft className="text-xs" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 group-focus-within/carousel:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
-              aria-label="Next image"
-            >
-              <FaChevronRight className="text-xs" />
-            </button>
-          </>
+function ProjectRow({ item }) {
+  const { project, name, meta, links, anchor } = item;
+  return (
+    <li id={anchor} tabIndex={-1} className="scroll-mt-28 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 sm:p-6 outline-none focus-visible:border-white/[0.14]">
+      <h5 className="text-base sm:text-lg font-semibold tracking-tight text-zinc-50 text-balance">
+        {links.caseStudy ? (
+          <Link href={links.caseStudy} className="rounded-sm underline-offset-4 hover:underline">
+            {project.title}
+          </Link>
+        ) : (
+          project.title
         )}
-
-        {list.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
-            {list.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setCurrent(idx);
-                }}
-                className={`w-1.5 h-1.5 rounded-full transition-all ${idx === current ? "bg-blue-500 w-3" : "bg-neutral-500 hover:bg-neutral-400"
-                  }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Lightbox Modal for high-res screenshot view */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeModal}
-            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full max-h-[90vh] bg-neutral-900 border border-neutral-800 rounded-2xl p-4 sm:p-6 flex flex-col shadow-2xl overflow-hidden"
-            >
-              <div className="flex items-center justify-between pb-3 border-b border-neutral-800 mb-4 px-1">
-                <div className="flex items-center gap-3">
-                  <h4 className="text-white font-semibold text-base sm:text-lg">{title}</h4>
-                  {list.length > 1 && (
-                    <span className="text-xs text-neutral-400 bg-neutral-950 px-2 py-0.5 rounded border border-neutral-800">
-                      {current + 1} / {list.length}
-                    </span>
-                  )}
-                </div>
-                <button
-                  onClick={closeModal}
-                  className="p-2 text-neutral-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-colors"
-                  aria-label="Close image preview"
-                >
-                  <FaTimes className="text-base" />
-                </button>
-              </div>
-
-              <div className="relative w-full h-[50vh] sm:h-[65vh] rounded-xl overflow-hidden bg-neutral-950 flex items-center justify-center">
-                <Image
-                  src={getImageData(list[current], current).src}
-                  alt={getImageData(list[current], current).alt}
-                  fill
-                  className="object-contain"
-                  sizes="(min-width: 1088px) 976px, 100vw"
-                />
-
-                {list.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevSlide}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700 hover:bg-neutral-800 transition-all hover:scale-105"
-                      aria-label="Previous image"
-                    >
-                      <FaChevronLeft className="text-sm" />
-                    </button>
-                    <button
-                      onClick={nextSlide}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700 hover:bg-neutral-800 transition-all hover:scale-105"
-                      aria-label="Next image"
-                    >
-                      <FaChevronRight className="text-sm" />
-                    </button>
-                  </>
-                )}
-              </div>
-
-              {list.length > 1 && (
-                <div className="flex justify-center gap-2 mt-4">
-                  {list.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrent(idx)}
-                      className={`h-2 rounded-full transition-all ${idx === current ? "bg-blue-500 w-6" : "bg-neutral-700 hover:bg-neutral-600 w-2"
-                        }`}
-                      aria-label={`Go to image ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      </h5>
+      <p className="mt-1 text-sm text-zinc-400">{meta}</p>
+      <p className="mt-3 text-sm sm:text-[15px] leading-relaxed text-zinc-300 line-clamp-3">{project.description}</p>
+      {(links.caseStudy || links.demo || links.code || links.pdf || links.report) && (
+        <p className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium">
+          {links.caseStudy && (
+            <Link href={links.caseStudy} className="text-accent underline-offset-4 hover:underline rounded-sm" aria-label={`Case study: ${name}`}>
+              Case study
+            </Link>
+          )}
+          {links.demo && <ExternalLink href={links.demo} label={`Live demo: ${name}`}>Live demo</ExternalLink>}
+          {links.code && <ExternalLink href={links.code} label={`Code: ${name}`}>Code</ExternalLink>}
+          {links.report && <ExternalLink href={links.report} label={`Model report: ${name}`}>Model report</ExternalLink>}
+          {links.pdf && <ExternalLink href={links.pdf} label={`PDF report: ${name}`}>PDF report</ExternalLink>}
+        </p>
+      )}
+    </li>
   );
 }
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-6 sm:px-12 max-w-6xl mx-auto border-t border-neutral-800">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex items-center gap-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Featured Projects</h2>
-          <div className="h-px bg-neutral-800 flex-1 ml-4" />
+    <section id="projects" aria-labelledby="projects-heading" className="py-24 px-6 sm:px-12 max-w-6xl mx-auto border-t border-white/[0.08]">
+      <div className="flex items-center gap-4 mb-4">
+        <h2 id="projects-heading" className="text-3xl md:text-4xl font-semibold tracking-tight text-zinc-50">
+          Projects
+        </h2>
+        <div className="h-px bg-white/[0.08] flex-1 ml-4" />
+      </div>
+      <p className="max-w-2xl text-base sm:text-lg text-zinc-400 text-pretty">
+        Grouped by theme. Open a folder to see what&apos;s inside, or browse the full list below.
+      </p>
+
+      <ul className="folder-grid mt-24 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 items-end justify-items-center gap-x-10 gap-y-20">
+        {projectFolders.map((group, i) => (
+          <FolderCell key={group.id}>
+            {(width) => (
+              <GlassFolder
+                label={group.label}
+                meta={`${group.items.length} ${group.items.length === 1 ? "project" : "projects"}`}
+                tone="dark"
+                art={FOLDER_ART}
+                seed={FOLDER_SEEDS[i % FOLDER_SEEDS.length]}
+                action="none"
+                width={width}
+                appearDelay={i * 140}
+                files={group.items.map((item) => ({
+                  name: item.name,
+                  meta: item.meta,
+                  href: item.href,
+                  art: item.art ? FILE_ART : undefined,
+                }))}
+                onFileSelect={(file, index) => {
+                  if (!file.href) goToRow(group.items[index].anchor);
+                }}
+              />
+            )}
+          </FolderCell>
+        ))}
+      </ul>
+
+      <p className="mt-10 text-center text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">
+        Hover to lean · Click to open
+      </p>
+
+      <div className="mt-24">
+        <div className="flex items-center gap-4 mb-8">
+          <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-zinc-50">All projects</h3>
+          <div className="h-px bg-white/[0.08] flex-1 ml-4" />
         </div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.15
-              }
-            }
-          }}
-          className="grid md:grid-cols-2 gap-8"
-        >
-          {featuredProjects.map((project) => {
-            const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
-            return (
-            <motion.div
-              key={project.slug}
-              variants={{
-                hidden: { opacity: 0, y: 30, filter: "blur(5px)" },
-                visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-              }}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.4, ease: "easeOut" } }}
-              className="group relative bg-neutral-900/50 border border-neutral-800 rounded-2xl p-8 overflow-hidden hover:bg-neutral-800/80 hover:border-blue-500/30 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] transition-all duration-500"
-            >
-              {/* Subtle background glow on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-transparent to-purple-500/0 group-hover:from-blue-500/15 group-hover:to-purple-500/15 transition-all duration-500" />
-
-              <div className="relative z-10 flex flex-col h-full">
-                <ProjectCarousel
-                  image={project.image}
-                  images={project.images}
-                  title={project.title}
-                />
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  {caseStudy ? (
-                    <Link href={caseStudy} className="rounded-sm hover:text-blue-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900">
-                      {project.title}
-                    </Link>
-                  ) : (
-                    project.title
-                  )}
-                </h3>
-                <p className="text-sm font-medium text-neutral-400 mb-5">{project.context}</p>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <dl className="flex flex-col gap-4 mb-6 flex-grow">
-                  {CARD_BLOCKS.map(({ key, label }) => (
-                    <div key={key}>
-                      <dt className="text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-1">{label}</dt>
-                      <dd className="text-neutral-300 leading-relaxed">{project[key]}</dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <div className="mb-6">
-                  <StatChips stats={project.stats} />
-                </div>
-
-                {(caseStudy || project.links.code || project.links.demo || project.links.report) && (
-                  <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
-                    {caseStudy && (
-                      <Link
-                        href={caseStudy}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
-                        aria-label={`Read the ${project.title} case study`}
-                      >
-                        <span>Case Study</span>
-                        <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
-                      </Link>
-                    )}
-                    {project.links.demo && (
-                      <a
-                        href={project.links.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
-                      >
-                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
-                        <span>Live Demo</span>
-                      </a>
-                    )}
-                    {project.links.code && (
-                      <a
-                        href={project.links.code}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
-                      >
-                        <FaGithub className="text-base transition-transform group-hover/link:-translate-y-0.5" />
-                        <span>View Code</span>
-                      </a>
-                    )}
-                    {project.links.report && (
-                      <a
-                        href={project.links.report}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors group/link"
-                      >
-                        <FaExternalLinkAlt className="text-xs transition-transform group-hover/link:-translate-y-0.5" />
-                        <span>Model Report</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-
-              </div>
-            </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Remaining projects: compact cards without screenshots */}
-        {otherProjects.length > 0 && (
-          <div className="mt-20">
-            <div className="flex items-center gap-4 mb-8">
-              <h3 className="text-2xl font-bold text-white">More Projects</h3>
-              <div className="h-px bg-neutral-800 flex-1 ml-4" />
+        <div className="flex flex-col gap-12">
+          {projectFolders.map((group) => (
+            <div key={group.id}>
+              <h4 className="mb-4 text-xs font-medium uppercase tracking-[0.14em] text-zinc-400">{group.label}</h4>
+              <ul className="grid md:grid-cols-2 gap-4">
+                {group.items.map((item) => (
+                  <ProjectRow key={item.anchor} item={item} />
+                ))}
+              </ul>
             </div>
+          ))}
+        </div>
+      </div>
 
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-              className="grid sm:grid-cols-2 gap-6"
-            >
-              {otherProjects.map((project) => {
-                const caseStudy = hasProjectPage(project.slug) ? `/projects/${project.slug}` : null;
-                const thumb = project.showCardImage ? project.images?.[0] : null;
-                return (
-                  <motion.div
-                    key={project.title}
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
-                    }}
-                    className="group flex flex-col bg-neutral-900/40 border border-neutral-800 rounded-2xl p-6 hover:-translate-y-1 hover:border-blue-500/30 hover:bg-neutral-900/70 transition-all duration-300"
-                  >
-                    {thumb && (
-                      <div className="relative aspect-[16/9] mb-5 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950">
-                        <Image
-                          src={thumb.src}
-                          alt={thumb.alt}
-                          fill
-                          sizes="(min-width: 1152px) 528px, (min-width: 640px) calc(50vw - 84px), calc(100vw - 98px)"
-                          className="object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                        />
-                      </div>
-                    )}
-                    <h4 className="text-lg font-bold text-white mb-2">
-                      {caseStudy ? (
-                        <Link href={caseStudy} className="hover:text-blue-300 transition-colors">
-                          {project.title}
-                        </Link>
-                      ) : (
-                        project.title
-                      )}
-                    </h4>
-                    <p className="text-sm text-neutral-400 leading-relaxed mb-4 line-clamp-3">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-2.5 py-1 bg-neutral-950 text-blue-400 text-xs font-medium rounded-md border border-neutral-800"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-
-                    {(caseStudy || project.github || project.demo || project.pdf) && (
-                      <div className="flex flex-wrap gap-4 pt-4 border-t border-neutral-800/50 mt-auto">
-                        {caseStudy && (
-                          <Link
-                            href={caseStudy}
-                            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors group/link"
-                            aria-label={`Read the ${project.title} case study`}
-                          >
-                            <span>Case Study</span>
-                            <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-0.5" />
-                          </Link>
-                        )}
-                        {project.demo && (
-                          <a href={project.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaExternalLinkAlt className="text-xs" />
-                            <span>Live Demo</span>
-                          </a>
-                        )}
-                        {project.github && (
-                          <a href={project.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaGithub className="text-base" />
-                            <span>View Code</span>
-                          </a>
-                        )}
-                        {project.pdf && (
-                          <a href={project.pdf} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium text-neutral-300 hover:text-blue-400 transition-colors">
-                            <FaFilePdf className="text-base" />
-                            <span>View PDF Report</span>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          </div>
-        )}
-
-        {/* Global GitHub CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-16 flex justify-center"
+      <div className="mt-16 flex justify-center">
+        <a
+          href="https://github.com/Ruki-Diaz"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="All projects on GitHub (opens in a new tab)"
+          className="inline-flex h-12 items-center gap-3 rounded-full border border-white/[0.14] bg-white/[0.04] px-6 font-semibold text-zinc-50 transition-colors duration-150 hover:bg-white/[0.07] hover:border-white/25"
         >
-          <a
-            href="https://github.com/Ruki-Diaz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative flex items-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <FaGithub className="relative z-10 text-xl" />
-            <span className="relative z-10">View All Projects on GitHub</span>
-          </a>
-        </motion.div>
-      </motion.div>
+          <FaGithub aria-hidden="true" className="text-lg" />
+          All projects on GitHub
+        </a>
+      </div>
     </section>
   );
 }

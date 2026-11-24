@@ -75,7 +75,7 @@ One family: **Inter** (already loaded through `next/font`, so no extra request).
 
 | Role | Size (mobile → desktop) | Weight | Tracking | Line height | Colour |
 |---|---|---|---|---|---|
-| Display (hero glass headline) | `clamp(2.75rem, 8vw, 6rem)` | 700 | -0.04em | 1.0 | Glass effect |
+| Display (hero glass headline) | `clamp(3.5rem, 8.5cqw + 0.75rem, 8.25rem)`, max 11ch (`app/globals.css`) | 800 | -0.025em | 0.98 | Glass effect (solid `--fg` without WebGL2) |
 | H1 (case study) | 2.25 → 3.5rem | 700 | -0.03em | 1.08 | `--fg` |
 | H2 (section) | 1.875 → 2.5rem | 600 | -0.02em | 1.15 | `--fg` |
 | H3 (card title) | 1.125 → 1.25rem | 600 | -0.01em | 1.3 | `--fg` |
@@ -197,7 +197,7 @@ Fixed, `--glass-strong` plus `backdrop-blur-xl`, a bottom `--line` border, `h-16
 ## 9. Imagery and art
 
 - Project screenshots stay true colour. They are artwork.
-- Folder and card art uses the single blue hue family from section 2, or the "glacier" preset. No red/orange/green mixes.
+- Folder and card art uses the single blue hue family from section 2, or the "glacier" preset. No red/orange/green mixes. The folders use two custom `ArtRecipe`s in `components/sections/Projects.js` (a `streak` for the folder backs and a dark `marble` for project sheets). The pale "glacier" preset was rejected because white sheet names on it measure about 3.5:1.
 - Every image needs `width` and `height` (or `fill` inside a sized box) to keep CLS under 0.1. Only the LCP image gets `preload`/`priority`.
 - Decorative art is `aria-hidden`.
 
