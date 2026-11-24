@@ -123,14 +123,14 @@ function ProjectCarousel({ image, images, title }) {
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100"
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 group-focus-within/carousel:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
               aria-label="Previous image"
             >
               <FaChevronLeft className="text-xs" />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100"
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-neutral-900/80 text-white border border-neutral-700/50 hover:bg-neutral-800 hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 group-focus-within/carousel:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
               aria-label="Next image"
             >
               <FaChevronRight className="text-xs" />

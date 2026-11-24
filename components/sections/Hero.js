@@ -44,7 +44,7 @@ export default function Hero() {
           >
             <Sparkles className="w-4 h-4 text-blue-400" />
             <span className="text-neutral-300 text-sm font-medium">
-              AI solutions consultant<span className="hidden sm:inline"><span aria-hidden="true" className="text-neutral-500"> · </span>open to opportunities</span>
+              AI solutions consultant<span className="hidden sm:inline"><span aria-hidden="true" className="text-neutral-400"> · </span>open to opportunities</span>
             </span>
           </motion.div>
 
@@ -61,7 +61,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } } }}
             className="text-xl sm:text-4xl font-semibold text-neutral-300 mb-4 lg:mb-6"
           >
-            Data Scientist &amp; Software Engineer{" "}<span className="whitespace-nowrap sm:block"><span aria-hidden="true" className="text-neutral-500 font-light sm:hidden">· </span>Melbourne</span>
+            Data Scientist &amp; Software Engineer{" "}<span className="whitespace-nowrap sm:block"><span aria-hidden="true" className="text-neutral-400 font-light sm:hidden">· </span>Melbourne</span>
           </motion.h2>
 
           {/* Description */}

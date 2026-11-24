@@ -317,7 +317,7 @@ function CodeBlock({ code, filename, language }) {
           <span className="w-2.5 h-2.5 rounded-full bg-neutral-700" />
         </span>
         <span className="font-mono text-xs text-neutral-400">{filename}</span>
-        <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-500">{language}</span>
+        <span className="ml-auto text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400">{language}</span>
       </figcaption>
       <pre
         tabIndex={0}
@@ -573,9 +573,9 @@ export default function SnakeNNCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Training compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(laptop CPU)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-500">(default subdomain)</span></span>],
+            ["Training compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(laptop CPU)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-400">(default subdomain)</span></span>],
             ["Backend and database", "None needed"],
           ]}
         />

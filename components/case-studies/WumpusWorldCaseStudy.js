@@ -184,7 +184,7 @@ function HeuristicFormula() {
   return (
     <figure className="p-5 sm:p-6 rounded-2xl bg-neutral-950/70 border border-neutral-800 hover:border-blue-500/30 transition-colors duration-300">
       <figcaption className="text-[11px] font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">
-        A* heuristic · <span className="normal-case tracking-normal font-normal text-neutral-500">d = Manhattan distance, p = agent&apos;s square</span>
+        A* heuristic · <span className="normal-case tracking-normal font-normal text-neutral-400">d = Manhattan distance, p = agent&apos;s square</span>
       </figcaption>
       <p className="sr-only">
         Before taking the gold, h of s equals the Manhattan distance from p to the gold, plus 1, plus the distance from the
@@ -195,7 +195,7 @@ function HeuristicFormula() {
           {rows.map((r) => (
             <div key={r.when} className="contents">
               <span className="font-serif text-xl sm:text-2xl text-neutral-100 whitespace-nowrap">{r.expr}</span>
-              <span className="text-sm text-neutral-500 mb-3 last:mb-0 sm:mb-0">{r.when}</span>
+              <span className="text-sm text-neutral-400 mb-3 last:mb-0 sm:mb-0">{r.when}</span>
             </div>
           ))}
         </div>
@@ -299,7 +299,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
               <Mono key="g">89</Mono>,
               <Mono key="e">58</Mono>,
               <Mono key="l">10</Mono>,
-              <span key="m" className="text-neutral-500">not recorded</span>,
+              <span key="m" className="text-neutral-400">not recorded</span>,
             ],
             [
               "LAMA-First (Fast Downward)",
@@ -417,7 +417,7 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           legend={<Legend />}
           footer={
             <div className="mt-4 px-1 space-y-3 text-sm leading-relaxed">
-              <p className="text-neutral-500">
+              <p className="text-neutral-400">
                 Mean of 400 random worlds per grid size (seeds 1 to 400), Wumpus blocks its square, run with the
                 demo&apos;s <code className="font-mono text-neutral-400">planner.js</code>.
               </p>
@@ -504,9 +504,9 @@ export default function WumpusWorldCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(the visitor&apos;s browser)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-500">(default netlify.app subdomain)</span></span>],
+            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(the visitor&apos;s browser)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Domain", <span key="d"><Mono>$0</Mono> <span className="text-neutral-400">(default netlify.app subdomain)</span></span>],
             ["Backend and database", "None needed"],
           ]}
         />

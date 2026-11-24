@@ -275,12 +275,12 @@ export default function NeuroDriveCaseStudy({ project, links }) {
           label="Map data in data/melbourne-cbd.json"
           columns={["Map data", "Count"]}
           rows={[
-            ["Roads", <span key="r"><Mono>2,322</Mono> <span className="text-neutral-500">(1,584 one-way)</span></span>],
+            ["Roads", <span key="r"><Mono>2,322</Mono> <span className="text-neutral-400">(1,584 one-way)</span></span>],
             ["Buildings", <Mono key="b">2,706</Mono>],
             ["Traffic signals", <Mono key="s">517</Mono>],
             ["Tram lines", <Mono key="t">244</Mono>],
             ["Landmarks", <Mono key="l">6</Mono>],
-            ["File size", <span key="f"><Mono>0.64 MB</Mono> <span className="text-neutral-500">of JSON</span></span>],
+            ["File size", <span key="f"><Mono>0.64 MB</Mono> <span className="text-neutral-400">of JSON</span></span>],
           ]}
         />
         <p>The engine on top of it has five parts.</p>
@@ -359,7 +359,7 @@ export default function NeuroDriveCaseStudy({ project, links }) {
             [
               "Leaving the route",
               <span key="l">
-                <Mono>−20</Mono> <span className="text-neutral-500">(more than 15 m from it)</span>
+                <Mono>−20</Mono> <span className="text-neutral-400">(more than 15 m from it)</span>
               </span>,
             ],
           ]}
@@ -508,9 +508,9 @@ export default function NeuroDriveCaseStudy({ project, links }) {
           label="Running costs"
           columns={["Item", "Cost"]}
           rows={[
-            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-500">(the visitor&apos;s browser)</span></span>],
-            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-500">(free static hosting)</span></span>],
-            ["Map data", <span key="m"><Mono>$0</Mono> <span className="text-neutral-500">(OpenStreetMap, ODbL)</span></span>],
+            ["Compute", <span key="c"><Mono>$0</Mono> <span className="text-neutral-400">(the visitor&apos;s browser)</span></span>],
+            ["Hosting", <span key="h"><Mono>$0</Mono> <span className="text-neutral-400">(free static hosting)</span></span>],
+            ["Map data", <span key="m"><Mono>$0</Mono> <span className="text-neutral-400">(OpenStreetMap, ODbL)</span></span>],
             ["Backend and API keys", "None needed"],
           ]}
         />

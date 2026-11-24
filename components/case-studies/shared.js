@@ -132,7 +132,7 @@ export function OnThisPage({ sections }) {
 export function StackPanel({ items }) {
   return (
     <Panel className="p-6">
-      <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Stack</h3>
+      <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Stack</h3>
       <dl className="grid sm:grid-cols-3 gap-5 text-base">
         {items.map(([k, v]) => (
           <div key={k}>

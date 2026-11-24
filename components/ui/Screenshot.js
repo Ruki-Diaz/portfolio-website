@@ -23,7 +23,7 @@ export default function Screenshot({ image, sizes, className = "", eager = false
           </div>
         </div>
       </div>
-      <figcaption className="mt-3 text-sm text-neutral-500 leading-relaxed">{image.alt}</figcaption>
+      <figcaption className="mt-3 text-sm text-neutral-400 leading-relaxed">{image.alt}</figcaption>
     </figure>
   );
 }

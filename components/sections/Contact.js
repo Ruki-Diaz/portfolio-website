@@ -63,7 +63,7 @@ export default function Contact() {
                 <Mail className="text-neutral-300 group-hover:text-white transition-colors" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">Email</p>
+                <p className="text-sm text-neutral-400 font-medium">Email</p>
                 <p className="text-white font-medium">dias.rukshan@gmail.com</p>
               </div>
             </a>
@@ -78,7 +78,7 @@ export default function Contact() {
                 <FaLinkedin className="text-neutral-300 group-hover:text-blue-500 transition-colors text-xl" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">LinkedIn</p>
+                <p className="text-sm text-neutral-400 font-medium">LinkedIn</p>
                 <p className="text-white font-medium">Rukshan Dias</p>
               </div>
             </a>
@@ -93,7 +93,7 @@ export default function Contact() {
                 <FaGithub className="text-neutral-300 group-hover:text-white transition-colors text-xl" />
               </div>
               <div>
-                <p className="text-sm text-neutral-500 font-medium">GitHub</p>
+                <p className="text-sm text-neutral-400 font-medium">GitHub</p>
                 <p className="text-white font-medium">@Ruki-Diaz</p>
               </div>
             </a>
@@ -126,7 +126,7 @@ export default function Contact() {
                       name="name"
                       required
                       placeholder="John Doe"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-400/80 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -137,7 +137,7 @@ export default function Contact() {
                       name="email"
                       required
                       placeholder="john@example.com"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-400/80 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                     />
                   </div>
                 </div>
@@ -150,7 +150,7 @@ export default function Contact() {
                     required
                     rows={5}
                     placeholder="Tell me about your project..."
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 text-white placeholder:text-neutral-400/80 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
                   />
                 </div>
 

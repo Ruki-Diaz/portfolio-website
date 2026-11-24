@@ -138,7 +138,7 @@ function ProjectLinks({ project, layout = "row" }) {
               className="group flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-neutral-950/70 border border-neutral-800 text-sm font-medium text-neutral-300 hover:text-white hover:border-blue-500/40 hover:bg-neutral-900 transition-all duration-300"
             >
               <span className="flex items-center gap-3">
-                <Icon className="text-neutral-500 group-hover:text-blue-400 transition-colors" />
+                <Icon className="text-neutral-400 group-hover:text-blue-400 transition-colors" />
                 {label}
               </span>
               <ArrowUpRight size={16} className="text-neutral-600 group-hover:text-blue-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
@@ -264,7 +264,7 @@ export default async function ProjectPage({ params }) {
 
           <div className="max-w-6xl mx-auto">
             <nav aria-label="Breadcrumb" className="motion-safe:animate-fade-up mb-10">
-              <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-500">
+              <ol className="flex flex-wrap items-center gap-2 text-sm text-neutral-400">
                 <li>
                   <Link href="/" className="group inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors">
                     <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
@@ -276,7 +276,7 @@ export default async function ProjectPage({ params }) {
                   <Link href="/#projects" className="text-neutral-400 hover:text-white transition-colors">Projects</Link>
                 </li>
                 <li aria-hidden="true" className="text-neutral-700">/</li>
-                <li className="text-neutral-500 truncate max-w-[16rem] sm:max-w-none" aria-current="page">{project.title}</li>
+                <li className="text-neutral-400 truncate max-w-[16rem] sm:max-w-none" aria-current="page">{project.title}</li>
               </ol>
             </nav>
 
@@ -372,7 +372,7 @@ export default async function ProjectPage({ params }) {
                 >
                   {hasTech && (
                     <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm">
-                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Tech stack</h2>
+                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Tech stack</h2>
                       <ul className="flex flex-wrap gap-2">
                         {project.tech.map((tech) => (
                           <li
@@ -388,7 +388,7 @@ export default async function ProjectPage({ params }) {
 
                   {hasLinks && (
                     <div className="p-6 rounded-2xl bg-neutral-900/50 border border-neutral-800 backdrop-blur-sm">
-                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-500 mb-4">Links</h2>
+                      <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-neutral-400 mb-4">Links</h2>
                       <ProjectLinks project={project} layout="list" />
                     </div>
                   )}
